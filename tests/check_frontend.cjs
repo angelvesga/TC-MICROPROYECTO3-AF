@@ -38,5 +38,5 @@ assert(element('transition-editor').innerHTML.includes('value="constructor"'));
 vm.runInContext('setMode("manual")', context);
 assert.equal(element('results').hidden, true);
 assert.equal(element('manual-pane').hidden, false);
-assert.equal(element('regex-pane').hidden, true);
+assert.equal(element('language-pane').hidden, true);
 console.log('4 comprobaciones correctas: tabla escapada, SVG, nombres especiales y cambio de modalidad.');

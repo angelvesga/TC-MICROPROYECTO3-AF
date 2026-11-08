@@ -28,9 +28,11 @@ for (const name of ["regex", "manual"]) {
 function error(message) { $("error").textContent = message; $("error").hidden = !message; }
 function signature() { return JSON.stringify([list($("states").value), list($("alphabet").value)]); }
 function editorData() {
-  const edges = Object.create(null);
+  const edges = Object.create(null), states = list($("states").value);
   document.querySelectorAll("#transition-editor input").forEach(input => {
-    (edges[input.dataset.state] ||= {})[input.dataset.symbol] = list(input.value);
+    // Como en clase, «error» (o una celda vacía) indica que no hay transición.
+    const targets = list(input.value).filter(t => !(t.toLowerCase() === "error" && !states.includes(t)));
+    (edges[input.dataset.state] ||= {})[input.dataset.symbol] = targets;
   });
   return edges;
 }
@@ -41,15 +43,17 @@ function buildEditor(edges = null) {
   }
   edges ||= editorData();
   const symbols = [...alphabet, "ε"];
-  $("transition-editor").innerHTML = `<table><thead><tr><th>Estado</th>${symbols.map(s=>`<th>${esc(s)}</th>`).join("")}</tr></thead><tbody>${states.map(q=>`<tr><th>${esc(q)}</th>${symbols.map(s=>`<td><input aria-label="Destinos de ${esc(q)} con ${esc(s)}" data-state="${esc(q)}" data-symbol="${esc(s)}" value="${esc((edges[q]?.[s] || []).join(", "))}"></td>`).join("")}</tr>`).join("")}</tbody></table>`;
+  $("transition-editor").innerHTML = `<table class="class-table"><thead><tr><th>Q</th>${symbols.map(s=>`<th>${esc(s)}</th>`).join("")}</tr></thead><tbody>${states.map(q=>`<tr><th>${esc(q)}</th>${symbols.map(s=>`<td><input aria-label="Destinos de ${esc(q)} con ${esc(s)}" data-state="${esc(q)}" data-symbol="${esc(s)}" placeholder="error" value="${esc((edges[q]?.[s] || []).join(","))}"></td>`).join("")}</tr>`).join("")}</tbody></table>`;
   editorSignature = signature(); error("");
 }
 $("build-table").onclick = () => buildEditor();
 
 const examples = {
-  suffix: {mode:"regex", alphabet:["a","b"], expression:"(a|b)*abb"},
-  nfa: {mode:"manual", automaton:{states:["q0","q1","q2"], alphabet:["a","b"], initial:"q0", finals:["q2"], transitions:{q0:{a:["q0","q1"],b:["q0"]},q1:{b:["q2"]},q2:{}}}},
-  dfa: {mode:"manual", automaton:{states:["A","B","C","X"], alphabet:["a","b"], initial:"A", finals:["B","C"], transitions:{A:{a:["B"],b:["C"]},B:{a:["B"],b:["C"]},C:{a:["B"],b:["C"]},X:{a:["X"],b:["X"]}}}}
+  suffix: {mode:"regex", alphabet:["a","b"], expression:"(a|b)*abb", word:"aabb"},
+  nfa: {mode:"manual", word:"010", automaton:{states:["A","B","C","D"], alphabet:["0","1"], initial:"A", finals:["A"], transitions:{A:{"0":["B"],"1":["A"]},B:{"0":["B","C"],"1":["D"]},C:{"0":["D"],"1":["C"]},D:{"0":["A"],"1":["B"]}}}},
+  dfa: {mode:"manual", word:"ab", automaton:{states:["A","B","C","D"], alphabet:["a","b"], initial:"A", finals:["B","C"], transitions:{A:{a:["B"],b:["C"]},B:{a:["B"],b:["C"]},C:{a:["B"],b:["C"]},D:{a:["D"],b:["D"]}}}},
+  xyzw: {mode:"manual", word:"00", automaton:{states:["X","Y","Z","W"], alphabet:["0","1","2"], initial:"X", finals:["Z"], transitions:{X:{"0":["Y"],"1":["Z"],"2":["W"]},Y:{"0":["Z"],"1":["Y"],"2":["X"]},Z:{"0":["W"],"1":["Y"],"2":["W"]},W:{"0":["X"],"1":["W"],"2":["Y"]}}}},
+  vowels: {mode:"regex", alphabet:["a","e","i","p"], expression:"a|a(a|e|i|p)*a", word:"apa"}
 };
 document.querySelectorAll("[data-example]").forEach(button => button.onclick = () => {
   const data = examples[button.dataset.example];
@@ -62,7 +66,7 @@ document.querySelectorAll("[data-example]").forEach(button => button.onclick = (
     $("finals").value = data.automaton.finals.join(", ");
     buildEditor(data.automaton.transitions);
   }
-  $("word").value = button.dataset.example === "suffix" ? "aabb" : "ab";
+  $("word").value = data.word;
   invalidate(); $("process-button").focus();
 });
 function invalidate() {
@@ -91,17 +95,27 @@ $("process-form").onsubmit = async event => {
     result = await post("/api/process", payload);
     $("empty-state").hidden = true; $("results").hidden = false;
     $("classification").textContent = result.classification; $("classification").hidden = false;
-    $("metrics").innerHTML = [["original_states","Originales"],["reachable_states","Accesibles"],["dfa_states","AFD completo"],["minimal_states","AFD mínimo"]].map(([key,label])=>`<div class="metric"><b>${result.summary[key]}</b><span>${label}</span></div>`).join("");
-    $("stage-nav").innerHTML = ["Entrada","Accesibles","AFD","Mínimo"].map((name,i)=>`<button type="button" data-stage="${i}">${i+1}. ${name}</button>`).join("");
+    const afnd = result.classification.startsWith("AFND");
+    $("metrics").innerHTML = [["original_states","Estados de entrada"],["reachable_states","Accesibles"],["dfa_states",afnd?"AFD (conversión)":"AFD"],["minimal_states","AFD mínimo"]].map(([key,label])=>`<div class="metric"><b>${result.summary[key]}</b><span>${label}</span></div>`).join("");
+    $("language").textContent = `L = {${result.language.join(", ")}${result.language.length >= 8 ? ", …" : ""}}`;
+    $("language").hidden = !result.language.length;
+    $("stage-nav").innerHTML = ["Entrada", "Accesibles", afnd ? "AFND → AFD" : "AFD", "Mínimo"].map((name,i)=>`<button type="button" data-stage="${i}">${i+1}. ${name}</button>`).join("");
     $("stage-nav").querySelectorAll("button").forEach(b=>b.onclick=()=>showStage(Number(b.dataset.stage)));
     showStage(3);
   } catch (e) {invalidate(); error(e.message || "No hay conexión con el servidor.");}
   finally {processing=false; controls.forEach(c=>c.disabled=false); $("process-button").innerHTML="Construir y minimizar <span>→</span>";}
 };
+// Tabla de transición como en clase: columna Q, flecha en el inicial,
+// estado terminal encerrado en un círculo, «C,F» para varios destinos y «error» sin destino.
 function table(a) {
   const symbols = [...a.alphabet];
   if (a.states.some(q=>a.transitions[q]?.["ε"]?.length)) symbols.push("ε");
-  return `<table><thead><tr><th>Estado</th>${symbols.map(s=>`<th>${esc(s)}</th>`).join("")}</tr></thead><tbody>${a.states.map(q=>`<tr><td class="${a.finals.includes(q)?"final":""}">${q===a.initial?"→ ":""}${a.finals.includes(q)?"* ":""}${esc(q)}</td>${symbols.map(s=>`<td>${esc(a.transitions[q]?.[s]?.join(", ") || "∅")}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+  const name = q => a.finals.includes(q) ? `<span class="terminal" title="Estado terminal">${esc(q)}</span>` : esc(q);
+  return `<table class="class-table"><thead><tr><th>Q</th>${symbols.map(s=>`<th>${esc(s)}</th>`).join("")}</tr></thead><tbody>${a.states.map(q=>`<tr><td class="state-cell">${q===a.initial?`<b class="initial-arrow" title="Estado inicial">→</b>`:""}${name(q)}</td>${symbols.map(s=>{const t=a.transitions[q]?.[s]||[];return `<td class="${t.length?"":"error-cell"}">${esc(t.join(",") || "error")}</td>`;}).join("")}</tr>`).join("")}</tbody></table>`;
+}
+// AF = { {Q}, q0, Σ, {Qt}, δ }
+function formal(a) {
+  return `<span>AF = { {Q}, q0, Σ, {Qt}, δ }</span><span>Q = {${esc(a.states.join(", "))}}</span><span>q0 = ${esc(a.initial)}</span><span>Σ = {${esc(a.alphabet.join(", "))}}</span><span>Qt = {${esc(a.finals.join(", "))}}</span>`;
 }
 function showStage(index) {
   stageIndex=index; const stage=result.stages[index]; zoom=1; simulationRequest++;
@@ -109,8 +123,9 @@ function showStage(index) {
   $("stage-nav").querySelectorAll("button").forEach((b,i)=>{b.classList.toggle("active",i===index); b.setAttribute("aria-current",i===index?"step":"false");});
   $("stage-counter").textContent=`ETAPA ${index+1} DE 4`;
   $("stage-title").textContent=stage.title;
+  $("formal").innerHTML=formal(stage.automaton);
   $("transition-result").innerHTML=table(stage.automaton);
-  $("mapping-result").innerHTML=Object.entries(stage.mapping).map(([q,members])=>`<p><b>${esc(q)}</b> = ${esc(members.length ? `{${members.join(", ")}}` : "∅ (sumidero)")}${stage.original_mapping?`<small>En la entrada: ${esc(stage.original_mapping[q].join(", ") || "∅")}</small>`:""}</p>`).join("");
+  $("mapping-result").innerHTML=Object.entries(stage.mapping).map(([q,members])=>`<p><b>${esc(q)}</b> = ${esc(members.length ? `{${members.join(", ")}}` : "∅ (estado ERROR)")}${stage.original_mapping?`<small>En la entrada: ${esc(stage.original_mapping[q].join(", ") || "∅")}</small>`:""}</p>`).join("");
   $("step-list").innerHTML=stage.steps.map(step=>`<li>${esc(step)}</li>`).join("");
   $("step-count").textContent=`${stage.steps.length} operaciones`;
   const min=result.stages[3].automaton;
@@ -125,9 +140,15 @@ for (const name of ["table","mapping"]) $(name+"-tab").onclick=()=>{
   $("transition-result").hidden=name!=="table"; $("mapping-result").hidden=name!=="mapping";
 };
 
+// Diagrama con la presentación de clase: círculos dorados, nombres en rojo,
+// flechas naranjas, flecha de entrada al inicial y doble círculo en los terminales.
+const INK={node:"#b8862f",name:"#c0392b",edge:"#e69a2e",label:"#3b2f1e",fill:"#fffaf3",terminal:"#fff1dc"};
 function drawDiagram(a) {
-  const n=a.states.length, radius=n===1?0:Math.max(115,n*22);
-  const size=Math.max(350, radius*2+180), center=size/2;
+  const n=a.states.length;
+  const r=q=>Math.min(62,Math.max(29,8+Math.min(q.length,14)*5.2));
+  const maxR=Math.max(...a.states.map(r));
+  const radius=n===1?0:Math.max(115,n*(maxR*0.75+8));
+  const size=Math.max(350, radius*2+2*maxR+170), center=size/2;
   const pos=Object.create(null);
   a.states.forEach((q,i)=>{const angle=-Math.PI/2+i*2*Math.PI/n; pos[q]=[center+radius*Math.cos(angle),center+radius*Math.sin(angle)];});
   const grouped=new Map();
@@ -138,24 +159,33 @@ function drawDiagram(a) {
   for(const [key,symbols] of grouped){
     const [q,t]=JSON.parse(key), [x,y]=pos[q], [tx,ty]=pos[t];
     let d,lx,ly;
-    if(q===t){d=`M ${x-18} ${y-22} C ${x-68} ${y-88}, ${x+68} ${y-88}, ${x+18} ${y-22}`;lx=x;ly=y-70;}
+    const rq=r(q), rt=r(t);
+    if(q===t){
+      // El bucle se dibuja hacia afuera del círculo de estados para no cruzar otras aristas.
+      const ox0=x-center,oy0=y-center,len=Math.hypot(ox0,oy0)||1,ox=n===1?0:ox0/len,oy=n===1?-1:oy0/len;
+      const at=(dist,ang)=>[x+dist*(ox*Math.cos(ang)-oy*Math.sin(ang)),y+dist*(ox*Math.sin(ang)+oy*Math.cos(ang))];
+      const [sx,sy]=at(rq,-.45),[ex,ey]=at(rq+3,.45),[c1x,c1y]=at(rq+62,-.75),[c2x,c2y]=at(rq+62,.75);
+      d=`M ${sx} ${sy} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${ex} ${ey}`;[lx,ly]=at(rq+58,0);ly+=4;
+    }
     else {
       const dx=tx-x,dy=ty-y,length=Math.hypot(dx,dy),ux=dx/length,uy=dy/length;
       const bend=grouped.has(JSON.stringify([t,q]))?48:Math.min(28,length*.07);
       const cx=(x+tx)/2-uy*bend,cy=(y+ty)/2+ux*bend;
       const startLen=Math.hypot(cx-x,cy-y),endLen=Math.hypot(tx-cx,ty-cy);
-      d=`M ${x+(cx-x)/startLen*30} ${y+(cy-y)/startLen*30} Q ${cx} ${cy} ${tx-(tx-cx)/endLen*34} ${ty-(ty-cy)/endLen*34}`;
+      d=`M ${x+(cx-x)/startLen*(rq+1)} ${y+(cy-y)/startLen*(rq+1)} Q ${cx} ${cy} ${tx-(tx-cx)/endLen*(rt+5)} ${ty-(ty-cy)/endLen*(rt+5)}`;
       lx=(x+2*cx+tx)/4;ly=(y+2*cy+ty)/4-5;
     }
-    paths+=`<path d="${d}" fill="none" stroke="#73958b" stroke-width="1.5" marker-end="url(#arrow)"/>`;
-    labels+=`<text x="${lx}" y="${ly}" text-anchor="middle" font-size="12" fill="#335e54" stroke="#f8faf7" stroke-width="4" paint-order="stroke" font-family="Consolas,monospace">${esc(symbols.join(","))}</text>`;
+    paths+=`<path d="${d}" fill="none" stroke="${INK.edge}" stroke-width="1.6" marker-end="url(#arrow)"/>`;
+    labels+=`<text x="${lx}" y="${ly}" text-anchor="middle" font-size="13" fill="${INK.label}" stroke="#fffdf8" stroke-width="4" paint-order="stroke" font-family="Arial,sans-serif">${esc(symbols.join(","))}</text>`;
   }
   for(const q of a.states){
-    const [x,y]=pos[q],final=a.finals.includes(q);
-    if(q===a.initial)nodes+=`<path d="M ${x-75} ${y} L ${x-34} ${y}" stroke="#087d70" stroke-width="2" marker-end="url(#arrow)"/>`;
-    nodes+=`<g><title>${esc(q)}${final?" (final)":""}</title><circle cx="${x}" cy="${y}" r="29" fill="${final?"#e3f3e9":"#ffffff"}" stroke="#087d70" stroke-width="1.8"/>${final?`<circle cx="${x}" cy="${y}" r="24" fill="none" stroke="#087d70"/>`:""}<text x="${x}" y="${y+4}" text-anchor="middle" font-family="Consolas,monospace" font-size="${q.length>5?9:12}" fill="#174b42">${esc(q.length>9?q.slice(0,7)+"…":q)}</text></g>`;
+    const [x,y]=pos[q],final=a.finals.includes(q),rq=r(q);
+    if(q===a.initial)nodes+=`<path d="M ${x-rq-48} ${y} L ${x-rq-5} ${y}" stroke="${INK.edge}" stroke-width="2.2" marker-end="url(#arrow)"/>`;
+    const label=q.length>14?q.slice(0,13)+"…":q;
+    nodes+=`<g><title>${esc(q)}${q===a.initial?" (inicial)":""}${final?" (terminal)":""}</title><circle cx="${x}" cy="${y}" r="${rq}" fill="${final?INK.terminal:INK.fill}" stroke="${INK.node}" stroke-width="2.6"/>${final?`<circle cx="${x}" cy="${y}" r="${rq-5}" fill="none" stroke="${INK.node}" stroke-width="1.8"/>`:""}<text x="${x}" y="${y+5}" text-anchor="middle" font-family="Arial,sans-serif" font-size="${label.length>6?12:15}" fill="${INK.name}">${esc(label)}</text></g>`;
   }
-  $("diagram").innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${Math.max(350,Math.min(size,680))}" height="${Math.max(350,Math.min(size,680))}" role="img" aria-label="Autómata de ${n} estados" data-size="${Math.max(350,Math.min(size,680))}"><title>Autómata con ${n} estados; inicial ${esc(a.initial)}; finales ${esc(a.finals.join(", ") || "ninguno")}</title><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="#73958b"/></marker></defs>${paths}${labels}${nodes}</svg>`;
+  const shown=Math.max(350,Math.min(size,680));
+  $("diagram").innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${shown}" height="${shown}" role="img" aria-label="Diagrama de transición de ${n} estados" data-size="${shown}"><title>Diagrama de transición con ${n} estados; inicial ${esc(a.initial)}; terminales ${esc(a.finals.join(", ") || "ninguno")}</title><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="${INK.edge}"/></marker></defs>${paths}${labels}${nodes}</svg>`;
 }
 function changeZoom(factor){const svg=$("diagram").querySelector("svg");if(!svg)return;zoom=Math.max(.5,Math.min(6,zoom*factor));svg.setAttribute("width",svg.dataset.size*zoom);svg.setAttribute("height",svg.dataset.size*zoom);}
 $("zoom-in").onclick=()=>changeZoom(1.3);$("zoom-out").onclick=()=>changeZoom(1/1.3);
@@ -168,7 +198,8 @@ $("simulate-form").onsubmit=async event=>{
   try{
     const data=await post("/api/simulate",{automaton:result.stages[stageIndex].automaton,word:$("word").value});
     if(id!==simulationRequest)return;
-    $("simulation").innerHTML=`<p class="verdict ${data.accepted?"":"rejected"}">${data.accepted?"✓ Cadena aceptada":"× Cadena rechazada"} · ${esc(data.word||"ε")}</p><div class="path">${data.path.map((step,i)=>`${i?`<i>—${esc(step.symbol)}→</i>`:""}<span>${esc(step.states.length?`{${step.states.join(", ")}}`:"∅")}</span>`).join("")}</div>`;
+    const label=states=>states.length===1?states[0]:states.length?`{${states.join(",")}}`:"error";
+    $("simulation").innerHTML=`<p class="verdict ${data.accepted?"":"rejected"}">${data.accepted?"✓ Palabra aceptada":"× Palabra rechazada"} · W = ${esc(data.word||"ε")}</p><div class="path">${data.path.map((step,i)=>`${i?`<i>,${esc(step.symbol)}→</i>`:""}<span>${esc(label(step.states))}</span>`).join("")}</div>`;
   }catch(e){if(id===simulationRequest)$("simulation").innerHTML=`<p class="error">${esc(e.message)}</p>`;}
   finally{$("simulate-button").disabled=false;}
 };

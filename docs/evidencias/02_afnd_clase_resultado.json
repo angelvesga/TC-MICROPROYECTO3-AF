@@ -1,0 +1,859 @@
+{
+  "input": {
+    "mode": "manual",
+    "automaton": {
+      "states": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "alphabet": [
+        "0",
+        "1"
+      ],
+      "initial": "A",
+      "finals": [
+        "A"
+      ],
+      "transitions": {
+        "A": {
+          "0": [
+            "B"
+          ],
+          "1": [
+            "A"
+          ]
+        },
+        "B": {
+          "0": [
+            "B",
+            "C"
+          ],
+          "1": [
+            "D"
+          ]
+        },
+        "C": {
+          "0": [
+            "D"
+          ],
+          "1": [
+            "C"
+          ]
+        },
+        "D": {
+          "0": [
+            "A"
+          ],
+          "1": [
+            "B"
+          ]
+        }
+      }
+    }
+  },
+  "result": {
+    "classification": "AFND",
+    "stages": [
+      {
+        "id": "input",
+        "title": "Entrada y clasificación",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "alphabet": [
+            "0",
+            "1"
+          ],
+          "initial": "A",
+          "finals": [
+            "A"
+          ],
+          "transitions": {
+            "A": {
+              "0": [
+                "B"
+              ],
+              "1": [
+                "A"
+              ]
+            },
+            "B": {
+              "0": [
+                "B",
+                "C"
+              ],
+              "1": [
+                "D"
+              ]
+            },
+            "C": {
+              "0": [
+                "D"
+              ],
+              "1": [
+                "C"
+              ]
+            },
+            "D": {
+              "0": [
+                "A"
+              ],
+              "1": [
+                "B"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Se registran los componentes ingresados sin cambiar sus nombres.",
+          "Clasificación: AFND.",
+          "B,0→B,C: el símbolo 0 va a MÁS de un estado."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ]
+        }
+      },
+      {
+        "id": "reachable",
+        "title": "Estados accesibles",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "alphabet": [
+            "0",
+            "1"
+          ],
+          "initial": "A",
+          "finals": [
+            "A"
+          ],
+          "transitions": {
+            "A": {
+              "0": [
+                "B"
+              ],
+              "1": [
+                "A"
+              ]
+            },
+            "B": {
+              "0": [
+                "B",
+                "C"
+              ],
+              "1": [
+                "D"
+              ]
+            },
+            "C": {
+              "0": [
+                "D"
+              ],
+              "1": [
+                "C"
+              ]
+            },
+            "D": {
+              "0": [
+                "A"
+              ],
+              "1": [
+                "B"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Se inicia la búsqueda en el estado inicial q0 = A.",
+          "A,0→B: B es accesible.",
+          "B,0→C: C es accesible.",
+          "B,1→D: D es accesible.",
+          "Estados inaccesibles eliminados: ninguno."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ]
+        }
+      },
+      {
+        "id": "dfa",
+        "title": "Conversión AFND → AFD",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "BC",
+            "D",
+            "BCD",
+            "CD",
+            "ABCD",
+            "AD",
+            "AB"
+          ],
+          "alphabet": [
+            "0",
+            "1"
+          ],
+          "initial": "A",
+          "finals": [
+            "A",
+            "ABCD",
+            "AD",
+            "AB"
+          ],
+          "transitions": {
+            "A": {
+              "0": [
+                "B"
+              ],
+              "1": [
+                "A"
+              ]
+            },
+            "B": {
+              "0": [
+                "BC"
+              ],
+              "1": [
+                "D"
+              ]
+            },
+            "BC": {
+              "0": [
+                "BCD"
+              ],
+              "1": [
+                "CD"
+              ]
+            },
+            "D": {
+              "0": [
+                "A"
+              ],
+              "1": [
+                "B"
+              ]
+            },
+            "BCD": {
+              "0": [
+                "ABCD"
+              ],
+              "1": [
+                "BCD"
+              ]
+            },
+            "CD": {
+              "0": [
+                "AD"
+              ],
+              "1": [
+                "BC"
+              ]
+            },
+            "ABCD": {
+              "0": [
+                "ABCD"
+              ],
+              "1": [
+                "ABCD"
+              ]
+            },
+            "AD": {
+              "0": [
+                "AB"
+              ],
+              "1": [
+                "AB"
+              ]
+            },
+            "AB": {
+              "0": [
+                "BC"
+              ],
+              "1": [
+                "AD"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Estado inicial del AFD = estado inicial del AFND: A.",
+          "A es terminal porque contiene A, terminal del AFND.",
+          "A,0→B.",
+          "A,1→A.",
+          "B,0→BC   ⟸ B,0→B,C.",
+          "B,1→D.",
+          "BC,0→BCD   ⟸ B,0→B,C · C,0→D.",
+          "BC,1→CD   ⟸ B,1→D · C,1→C.",
+          "D,0→A.",
+          "D,1→B.",
+          "BCD,0→ABCD   ⟸ B,0→B,C · C,0→D · D,0→A.",
+          "BCD,1→BCD   ⟸ B,1→D · C,1→C · D,1→B.",
+          "CD,0→AD   ⟸ C,0→D · D,0→A.",
+          "CD,1→BC   ⟸ C,1→C · D,1→B.",
+          "ABCD es terminal porque contiene A, terminal del AFND.",
+          "ABCD,0→ABCD   ⟸ A,0→B · B,0→B,C · C,0→D · D,0→A.",
+          "ABCD,1→ABCD   ⟸ A,1→A · B,1→D · C,1→C · D,1→B.",
+          "AD es terminal porque contiene A, terminal del AFND.",
+          "AD,0→AB   ⟸ A,0→B · D,0→A.",
+          "AD,1→AB   ⟸ A,1→A · D,1→B.",
+          "AB es terminal porque contiene A, terminal del AFND.",
+          "AB,0→BC   ⟸ A,0→B · B,0→B,C.",
+          "AB,1→AD   ⟸ A,1→A · B,1→D."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "BC": [
+            "B",
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "BCD": [
+            "B",
+            "C",
+            "D"
+          ],
+          "CD": [
+            "C",
+            "D"
+          ],
+          "ABCD": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "AD": [
+            "A",
+            "D"
+          ],
+          "AB": [
+            "A",
+            "B"
+          ]
+        }
+      },
+      {
+        "id": "minimal",
+        "title": "AFD mínimo",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "BC",
+            "D",
+            "BCD",
+            "CD",
+            "ABCD",
+            "AD",
+            "AB"
+          ],
+          "alphabet": [
+            "0",
+            "1"
+          ],
+          "initial": "A",
+          "finals": [
+            "A",
+            "ABCD",
+            "AD",
+            "AB"
+          ],
+          "transitions": {
+            "A": {
+              "0": [
+                "B"
+              ],
+              "1": [
+                "A"
+              ]
+            },
+            "B": {
+              "0": [
+                "BC"
+              ],
+              "1": [
+                "D"
+              ]
+            },
+            "BC": {
+              "0": [
+                "BCD"
+              ],
+              "1": [
+                "CD"
+              ]
+            },
+            "D": {
+              "0": [
+                "A"
+              ],
+              "1": [
+                "B"
+              ]
+            },
+            "BCD": {
+              "0": [
+                "ABCD"
+              ],
+              "1": [
+                "BCD"
+              ]
+            },
+            "CD": {
+              "0": [
+                "AD"
+              ],
+              "1": [
+                "BC"
+              ]
+            },
+            "ABCD": {
+              "0": [
+                "ABCD"
+              ],
+              "1": [
+                "ABCD"
+              ]
+            },
+            "AD": {
+              "0": [
+                "AB"
+              ],
+              "1": [
+                "AB"
+              ]
+            },
+            "AB": {
+              "0": [
+                "BC"
+              ],
+              "1": [
+                "AD"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "P0 separa estados no terminales y terminales: {B, BC, D, BCD, CD} / {A, ABCD, AD, AB}.",
+          "B,0→BC (bloque 1) · B,1→D (bloque 1).",
+          "BC,0→BCD (bloque 1) · BC,1→CD (bloque 1).",
+          "D,0→A (bloque 2) · D,1→B (bloque 1).",
+          "BCD,0→ABCD (bloque 2) · BCD,1→BCD (bloque 1).",
+          "CD,0→AD (bloque 2) · CD,1→BC (bloque 1).",
+          "A,0→B (bloque 1) · A,1→A (bloque 2).",
+          "ABCD,0→ABCD (bloque 2) · ABCD,1→ABCD (bloque 2).",
+          "AD,0→AB (bloque 2) · AD,1→AB (bloque 2).",
+          "AB,0→BC (bloque 1) · AB,1→AD (bloque 2).",
+          "P1: {B, BC} / {D, BCD, CD} / {A, AB} / {ABCD, AD}.",
+          "B,0→BC (bloque 1) · B,1→D (bloque 2).",
+          "BC,0→BCD (bloque 2) · BC,1→CD (bloque 2).",
+          "D,0→A (bloque 3) · D,1→B (bloque 1).",
+          "BCD,0→ABCD (bloque 4) · BCD,1→BCD (bloque 2).",
+          "CD,0→AD (bloque 4) · CD,1→BC (bloque 1).",
+          "A,0→B (bloque 1) · A,1→A (bloque 3).",
+          "AB,0→BC (bloque 1) · AB,1→AD (bloque 4).",
+          "ABCD,0→ABCD (bloque 4) · ABCD,1→ABCD (bloque 4).",
+          "AD,0→AB (bloque 3) · AD,1→AB (bloque 3).",
+          "P2: {B} / {BC} / {D} / {BCD} / {CD} / {A} / {AB} / {ABCD} / {AD}.",
+          "B,0→BC (bloque 2) · B,1→D (bloque 3).",
+          "BC,0→BCD (bloque 4) · BC,1→CD (bloque 5).",
+          "D,0→A (bloque 6) · D,1→B (bloque 1).",
+          "BCD,0→ABCD (bloque 8) · BCD,1→BCD (bloque 4).",
+          "CD,0→AD (bloque 9) · CD,1→BC (bloque 2).",
+          "A,0→B (bloque 1) · A,1→A (bloque 6).",
+          "AB,0→BC (bloque 2) · AB,1→AD (bloque 9).",
+          "ABCD,0→ABCD (bloque 8) · ABCD,1→ABCD (bloque 8).",
+          "AD,0→AB (bloque 7) · AD,1→AB (bloque 7).",
+          "P3: {B} / {BC} / {D} / {BCD} / {CD} / {A} / {AB} / {ABCD} / {AD}.",
+          "La partición no cambia: sus bloques son las clases de equivalencia."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "BC": [
+            "BC"
+          ],
+          "D": [
+            "D"
+          ],
+          "BCD": [
+            "BCD"
+          ],
+          "CD": [
+            "CD"
+          ],
+          "ABCD": [
+            "ABCD"
+          ],
+          "AD": [
+            "AD"
+          ],
+          "AB": [
+            "AB"
+          ]
+        },
+        "original_mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "BC": [
+            "B",
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "BCD": [
+            "B",
+            "C",
+            "D"
+          ],
+          "CD": [
+            "C",
+            "D"
+          ],
+          "ABCD": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "AD": [
+            "A",
+            "D"
+          ],
+          "AB": [
+            "A",
+            "B"
+          ]
+        },
+        "partitions": [
+          [
+            [
+              "B",
+              "BC",
+              "D",
+              "BCD",
+              "CD"
+            ],
+            [
+              "A",
+              "ABCD",
+              "AD",
+              "AB"
+            ]
+          ],
+          [
+            [
+              "B",
+              "BC"
+            ],
+            [
+              "D",
+              "BCD",
+              "CD"
+            ],
+            [
+              "A",
+              "AB"
+            ],
+            [
+              "ABCD",
+              "AD"
+            ]
+          ],
+          [
+            [
+              "B"
+            ],
+            [
+              "BC"
+            ],
+            [
+              "D"
+            ],
+            [
+              "BCD"
+            ],
+            [
+              "CD"
+            ],
+            [
+              "A"
+            ],
+            [
+              "AB"
+            ],
+            [
+              "ABCD"
+            ],
+            [
+              "AD"
+            ]
+          ],
+          [
+            [
+              "B"
+            ],
+            [
+              "BC"
+            ],
+            [
+              "D"
+            ],
+            [
+              "BCD"
+            ],
+            [
+              "CD"
+            ],
+            [
+              "A"
+            ],
+            [
+              "AB"
+            ],
+            [
+              "ABCD"
+            ],
+            [
+              "AD"
+            ]
+          ]
+        ]
+      }
+    ],
+    "language": [
+      "ε",
+      "1",
+      "11",
+      "010",
+      "111",
+      "0000",
+      "0010",
+      "0101"
+    ],
+    "summary": {
+      "original_states": 4,
+      "reachable_states": 4,
+      "dfa_states": 9,
+      "minimal_states": 9
+    }
+  },
+  "simulations": [
+    {
+      "word": "",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "1",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "1",
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "11",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "1",
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "1",
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "010",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "1",
+          "states": [
+            "D"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "0",
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "0",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "00",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "0",
+          "states": [
+            "BC"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "10",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "1",
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    }
+  ]
+}

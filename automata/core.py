@@ -2,6 +2,11 @@
 
 Las transiciones usan conjuntos: incluso un AFD tiene destinos de tamaño uno.
 Ningún algoritmo modifica el autómata recibido ni utiliza estado global mutable.
+
+Notación (la usada en clase): AF = { {Q}, q0, Σ, {Qt}, δ }. Los estados se nombran
+con letras mayúsculas; una transición se escribe «A,0→B»; un estado del AFD
+obtenido por subconjuntos se nombra concatenando sus estados («AC», «ABC») y el
+subconjunto vacío es el estado ERROR.
 """
 from collections import deque
 from dataclasses import dataclass
@@ -15,6 +20,10 @@ MAX_STATES = 256
 MAX_DFA_STATES = 128
 MAX_REGEX = 120
 MAX_WORD = 1000
+ERROR_STATE = "ERROR"
+STRICT_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_-]{0,31}")
+# Los estados generados (AC, q0q2, ERROR…) pueden ser más largos que los manuales.
+GENERATED_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_-]{0,599}")
 
 
 class InputError(ValueError):
@@ -58,14 +67,15 @@ class Automaton:
         }
 
 
-def automaton_from(data, max_states=MAX_INPUT_STATES):
+def automaton_from(data, max_states=MAX_INPUT_STATES, generated=False):
     if not isinstance(data, dict):
         raise InputError("El autómata debe ser un objeto con estados y transiciones.")
     alphabet = alphabet_from(data.get("alphabet"))
     states = data.get("states")
     if not isinstance(states, list) or not 1 <= len(states) <= max_states:
         raise InputError(f"Ingrese entre 1 y {max_states} estados.")
-    if any(not isinstance(q, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_-]{0,31}", q) for q in states):
+    pattern = GENERATED_NAME if generated else STRICT_NAME
+    if any(not isinstance(q, str) or not pattern.fullmatch(q) for q in states):
         raise InputError("Los estados deben comenzar por letra o _, y usar hasta 32 letras ASCII, números, _ o -.")
     if len(states) != len(set(states)):
         raise InputError("Hay estados duplicados.")
@@ -100,20 +110,33 @@ def automaton_from(data, max_states=MAX_INPUT_STATES):
     return Automaton(tuple(states), alphabet, initial, frozenset(finals), clean)
 
 
+def ordered(a, states):
+    """Estados de un conjunto en el orden de Q (A, B, C… o q0, q1…)."""
+    rank = {q: i for i, q in enumerate(a.states)}
+    return sorted(states, key=lambda q: (rank.get(q, len(rank)), q))
+
+
+def targets_text(a, states, separator=","):
+    return separator.join(ordered(a, states))
+
+
 def classify(a):
     reasons = []
     for q in a.states:
         if a.targets(q, EPSILON):
-            reasons.append(f"{q} tiene transición ε, que no consume símbolos.")
+            reasons.append(f"{q},ε→{targets_text(a, a.targets(q, EPSILON))}: transición vacía, no consume símbolo.")
         for symbol in a.alphabet:
             if len(a.targets(q, symbol)) > 1:
-                reasons.append(f"({q}, {symbol}) tiene varios destinos: {', '.join(sorted(a.targets(q, symbol)))}.")
+                reasons.append(f"{q},{symbol}→{targets_text(a, a.targets(q, symbol))}: el símbolo {symbol} va a MÁS de un estado.")
     if reasons:
-        return "AFN-ε" if any(a.targets(q, EPSILON) for q in a.states) else "AFN", reasons
+        return "AFND-ε" if any(a.targets(q, EPSILON) for q in a.states) else "AFND", reasons
     missing = [(q, s) for q in a.states for s in a.alphabet if not a.targets(q, s)]
     if missing:
-        return "AFD incompleto", [f"No hay ε ni varios destinos. Faltan {len(missing)} transiciones; se completarán con un sumidero."]
-    return "AFD", ["Cada estado tiene exactamente un destino por símbolo y no hay transiciones ε."]
+        return "AFD incompleto", [
+            "Cada símbolo del alfabeto va a un solo estado (X,a→Y), pero hay casillas en error: "
+            + ", ".join(f"{q},{s}→error" for q, s in missing[:8]) + ("…" if len(missing) > 8 else "") + ".",
+            f"Se completarán con el estado {ERROR_STATE}."]
+    return "AFD", ["Cada símbolo del alfabeto va a un solo estado (X,a→Y) y no hay transiciones ε."]
 
 
 def closure(a, states):
@@ -130,7 +153,7 @@ def closure(a, states):
 def reachable(a):
     seen = {a.initial}
     pending = deque([a.initial])
-    log = [f"Se inicia la búsqueda en {a.initial}."]
+    log = [f"Se inicia la búsqueda en el estado inicial q0 = {a.initial}."]
     while pending:
         q = pending.popleft()
         for s in (*a.alphabet, EPSILON):
@@ -138,58 +161,96 @@ def reachable(a):
                 if nxt not in seen:
                     seen.add(nxt)
                     pending.append(nxt)
-                    log.append(f"{q} --{s}→ {nxt}: se descubre un estado accesible.")
+                    log.append(f"{q},{s}→{nxt}: {nxt} es accesible.")
     removed = [q for q in a.states if q not in seen]
     log.append("Estados inaccesibles eliminados: " + (", ".join(removed) if removed else "ninguno") + ".")
     return Automaton(tuple(q for q in a.states if q in seen), a.alphabet, a.initial,
                      a.finals & seen, {q: dict(a.transitions.get(q, {})) for q in a.states if q in seen}), log
 
 
-def format_set(states):
-    return "{" + ", ".join(sorted(states)) + "}" if states else "∅"
+def format_set(states, a=None):
+    if not states:
+        return "∅"
+    return "{" + ", ".join(ordered(a, states) if a else sorted(states)) + "}"
+
+
+def subset_namer(a):
+    """Nombra cada subconjunto concatenando sus estados en el orden de Q: {A,C} → AC.
+
+    El vacío es ERROR. Si dos subconjuntos producirían el mismo nombre (posible solo
+    con nombres de varios caracteres) se separan con guiones y, si hace falta, sufijo.
+    """
+    used = {}
+
+    def name(subset):
+        members = ordered(a, subset)
+        candidates = ["".join(members) if members else ERROR_STATE]
+        if members:
+            candidates.append("-".join(members))
+        for candidate in candidates:
+            if used.get(candidate, subset) == subset:
+                used[candidate] = subset
+                return candidate
+        base, n = candidates[-1], 2
+        while f"{base}_{n}" in used:
+            n += 1
+        used[f"{base}_{n}"] = subset
+        return f"{base}_{n}"
+    return name
 
 
 def determinize(a):
+    """Construcción por subconjuntos, explicada con la notación de clase."""
     start = closure(a, {a.initial})
-    names = {start: "D0"}
+    namer = subset_namer(a)
+    names = {start: namer(start)}
     pending = deque([start])
     transitions, finals = {}, set()
-    log = [f"D0 = cierre-ε({{{a.initial}}}) = {format_set(start)}."]
+    if start == {a.initial}:
+        log = [f"Estado inicial del AFD = estado inicial del AFND: {names[start]}."]
+    else:
+        log = [f"Estado inicial del AFD = cierre-ε({a.initial}) = {format_set(start, a)} → se nombra {names[start]}."]
     while pending:
         subset = pending.popleft()
         q = names[subset]
         transitions[q] = {}
         if subset & a.finals:
             finals.add(q)
-            log.append(f"{q} es final porque contiene {format_set(subset & a.finals)}.")
+            log.append(f"{q} es terminal porque contiene {targets_text(a, subset & a.finals, ', ')}, terminal del AFND.")
         for s in a.alphabet:
             moved = frozenset(t for state in subset for t in a.targets(state, s))
             target = closure(a, moved)
             if target not in names:
                 if len(names) >= MAX_DFA_STATES:
                     raise InputError(f"La determinización supera {MAX_DFA_STATES} estados. Simplifique la entrada; no se entrega un resultado parcial.")
-                names[target] = f"D{len(names)}"
+                names[target] = namer(target)
                 pending.append(target)
             transitions[q][s] = frozenset({names[target]})
-            log.append(f"{q}, símbolo {s}: mover = {format_set(moved)}; cierre-ε = {format_set(target)} = {names[target]}.")
-    result = Automaton(tuple(names.values()), a.alphabet, "D0", frozenset(finals), transitions)
-    return result, log, {name: sorted(subset) for subset, name in names.items()}
+            parts = " · ".join(f"{m},{s}→{targets_text(a, a.targets(m, s)) or 'error'}" for m in ordered(a, subset))
+            extra = target - moved
+            note = f"; cierre-ε añade {targets_text(a, extra, ', ')}" if extra else ""
+            if len(subset) == 1 and not extra and parts == f"{q},{s}→{names[target]}":
+                log.append(f"{q},{s}→{names[target]}.")
+            else:
+                log.append(f"{q},{s}→{names[target]}   ⟸ {parts}{note}.")
+    result = Automaton(tuple(names.values()), a.alphabet, names[start], frozenset(finals), transitions)
+    return result, log, {name: ordered(a, subset) for subset, name in names.items()}
 
 
 def complete(a):
     missing = [(q, s) for q in a.states for s in a.alphabet if not a.targets(q, s)]
     if not missing:
-        return a, ["El autómata ya es un AFD completo: se omite la construcción por subconjuntos."], {q: [q] for q in a.states}
-    sink, suffix = "SUMIDERO", 0
+        return a, ["El autómata ya es un AFD completo: se omite la conversión AFND → AFD y se continúa con la minimización."], {q: [q] for q in a.states}
+    sink, suffix = ERROR_STATE, 0
     while sink in a.states:
         suffix += 1
-        sink = f"SUMIDERO_{suffix}"
+        sink = f"{ERROR_STATE}_{suffix}"
     transitions = {q: dict(a.transitions.get(q, {})) for q in a.states}
     transitions[sink] = {s: frozenset({sink}) for s in a.alphabet}
-    log = [f"El autómata es determinista. Se añade {sink}, no final, con bucles para todos los símbolos."]
+    log = [f"El autómata es determinista pero tiene casillas en error. Se añade el estado {sink}, no terminal, que con todo símbolo vuelve a sí mismo."]
     for q, s in missing:
         transitions.setdefault(q, {})[s] = frozenset({sink})
-        log.append(f"Se completa ({q}, {s}) → {sink}.")
+        log.append(f"{q},{s}→{sink}.")
     return Automaton((*a.states, sink), a.alphabet, a.initial, a.finals, transitions), log, {**{q: [q] for q in a.states}, sink: []}
 
 
@@ -200,7 +261,7 @@ def minimize(a):
     blocks = [tuple(q for q in a.states if (q in a.finals) == final) for final in (False, True)]
     blocks = [b for b in blocks if b]
     partitions = [[list(b) for b in blocks]]
-    log = ["P0 separa no finales y finales: " + " / ".join(format_set(b) for b in blocks) + "."]
+    log = ["P0 separa estados no terminales y terminales: " + " / ".join(format_set(b, a) for b in blocks) + "."]
     iteration = 0
     while True:
         block_of = {q: i for i, block in enumerate(blocks) for q in block}
@@ -210,11 +271,12 @@ def minimize(a):
             for q in block:
                 signature = tuple(block_of[next(iter(a.targets(q, s)))] for s in a.alphabet)
                 groups.setdefault(signature, []).append(q)
-                log.append(f"{q}: firma {signature}, en el orden de símbolos {a.alphabet}.")
+                log.append(" · ".join(f"{q},{s}→{next(iter(a.targets(q, s)))} (bloque {i + 1})"
+                                      for s, i in zip(a.alphabet, signature)) + ".")
             refined.extend(tuple(group) for group in groups.values())
         iteration += 1
         partitions.append([list(b) for b in refined])
-        log.append(f"P{iteration}: " + " / ".join(format_set(b) for b in refined) + ".")
+        log.append(f"P{iteration}: " + " / ".join(format_set(b, a) for b in refined) + ".")
         if refined == blocks:
             log.append("La partición no cambia: sus bloques son las clases de equivalencia.")
             break
@@ -231,7 +293,12 @@ def minimize(a):
             if target not in seen:
                 seen.add(target)
                 pending.append(target)
-    names = {old: f"M{i}" for i, old in enumerate(order)}
+    # Cada clase conserva el nombre de su primer estado: así el AFD mínimo se lee
+    # con los mismos nombres de la etapa anterior.
+    names = {i: blocks[i][0] for i in order}
+    for i in order:
+        if len(blocks[i]) > 1:
+            log.append(f"{', '.join(blocks[i])} son equivalentes: se fusionan en {names[i]}.")
     transitions = {names[i]: {s: frozenset({names[block_of[next(iter(a.targets(blocks[i][0], s)))]]})
                               for s in a.alphabet} for i in order}
     result = Automaton(tuple(names.values()), a.alphabet, names[start],
@@ -301,17 +368,22 @@ class RegexParser:
         self.error(f"'{token}' no es un operando válido o no pertenece al alfabeto.")
 
 
+def state_names(count):
+    """A, B, C… como en clase; con más de 26 estados se usa q0, q1, q2…"""
+    if count <= 26:
+        return [chr(ord("A") + i) for i in range(count)]
+    return [f"q{i}" for i in range(count)]
+
+
 def thompson(expression, alphabet):
     ast = RegexParser(expression, alphabet).parse()
-    states, transitions, log = [], {}, []
+    transitions, log = [], []  # Estados numerados; se nombran al final.
 
     def state():
-        if len(states) >= MAX_STATES:
+        if len(transitions) >= MAX_STATES:
             raise InputError(f"La construcción supera {MAX_STATES} estados.")
-        q = f"q{len(states)}"
-        states.append(q)
-        transitions[q] = {}
-        return q
+        transitions.append({})
+        return len(transitions) - 1
 
     def edge(source, symbol, target):
         transitions[source].setdefault(symbol, set()).add(target)
@@ -322,31 +394,36 @@ def thompson(expression, alphabet):
             start, end = state(), state()
             if node[1] != "∅":
                 edge(start, node[1], end)
-            log.append(f"Fragmento {node[1]}: entrada {start}, salida {end}; " +
-                       ("sin transición (lenguaje vacío)." if node[1] == "∅" else f"{start} --{node[1]}→ {end}."))
+                log.append((f"Fragmento {node[1]}: {{0}},{node[1]}→{{1}}.", (start, end)))
+            else:
+                log.append(("Fragmento ∅: {0} y {1} sin transición (lenguaje vacío).", (start, end)))
         elif op == "concat":
             start, middle = build(node[1])
             other, end = build(node[2])
             edge(middle, EPSILON, other)
-            log.append(f"Concatenación: {middle} --ε→ {other}; fragmento {start} a {end}.")
+            log.append(("Concatenación: {0},ε→{1}; el fragmento va de {2} a {3}.", (middle, other, start, end)))
         elif op == "union":
             start, end = state(), state()
             a, b = build(node[1])
             c, d = build(node[2])
             for x, y in ((start, a), (start, c), (b, end), (d, end)):
                 edge(x, EPSILON, y)
-            log.append(f"Unión: {start} --ε→ {{{a}, {c}}}; {{{b}, {d}}} --ε→ {end}.")
+            log.append(("Unión: {0},ε→{1},{2}; {3},ε→{5} y {4},ε→{5}.", (start, a, c, b, d, end)))
         else:
             start, end = state(), state()
             a, b = build(node[1])
             for x, y in ((start, a), (start, end), (b, a), (b, end)):
                 edge(x, EPSILON, y)
-            log.append(f"Estrella: {start} --ε→ {{{a}, {end}}}; {b} --ε→ {{{a}, {end}}}; permite cero o más repeticiones.")
+            log.append(("Estrella: {0},ε→{1},{2}; {3},ε→{1},{2}; permite cero o más repeticiones.", (start, a, end, b)))
         return start, end
 
     start, end = build(ast)
-    return Automaton(tuple(states), alphabet, start, frozenset({end}),
-                     {q: {s: frozenset(t) for s, t in edges.items()} for q, edges in transitions.items()}), log
+    names = state_names(len(transitions))
+    text = [template.format(*(names[i] for i in ids)) for template, ids in log]
+    text.append(f"Resultado: Q = {{{', '.join(names)}}}, q0 = {names[start]}, Qt = {{{names[end]}}}.")
+    return Automaton(tuple(names), alphabet, names[start], frozenset({names[end]}),
+                     {names[q]: {s: frozenset(names[t] for t in targets) for s, targets in edges.items()}
+                      for q, edges in enumerate(transitions)}), text
 
 
 def simulate(a, word):
@@ -361,6 +438,24 @@ def simulate(a, word):
         current = closure(a, {t for q in current for t in a.targets(q, symbol)})
         path.append({"position": i, "symbol": symbol, "states": sorted(current)})
     return {"word": word, "accepted": bool(current & a.finals), "path": path}
+
+
+def language_sample(a, limit=8, max_length=10):
+    """Primeras palabras aceptadas, en orden de longitud, para escribir L = {…}."""
+    found, frontier = [], [("", closure(a, {a.initial}))]
+    for _ in range(max_length + 1):
+        nxt = []
+        for word, current in frontier:
+            if current & a.finals:
+                found.append(word or EPSILON)
+                if len(found) >= limit:
+                    return found
+            for s in a.alphabet:
+                states = closure(a, {t for q in current for t in a.targets(q, s)})
+                if states:
+                    nxt.append((word + s, states))
+        frontier = nxt[:4096]
+    return found
 
 
 def process(data):
@@ -383,17 +478,19 @@ def process(data):
 
     stages = [stage("input", "Construcción y clasificación" if mode == "regex" else "Entrada y clasificación",
                     a, construction + [f"Clasificación: {kind}."] + reasons)]
+    if kind == "AFD":
+        stages[0]["steps"].append("El autómata ya es determinista: se indica y se continúa con su minimización.")
     accessible, trace = reachable(a)
     stages.append(stage("reachable", "Estados accesibles", accessible, trace))
-    if classify(accessible)[0].startswith("AFN"):
+    if classify(accessible)[0].startswith("AFND"):
         dfa, trace, mapping = determinize(accessible)
     else:
         dfa, trace, mapping = complete(accessible)
-    stages.append(stage("dfa", "AFD completo", dfa, trace, mapping))
+    stages.append(stage("dfa", "Conversión AFND → AFD" if kind.startswith("AFND") else "AFD completo", dfa, trace, mapping))
     minimal, trace, groups, partitions = minimize(dfa)
     original = {q: sorted({original for member in members for original in mapping[member]}) for q, members in groups.items()}
     stages.append(stage("minimal", "AFD mínimo", minimal, trace, groups,
                         original_mapping=original, partitions=partitions))
-    return {"classification": kind, "stages": stages,
+    return {"classification": kind, "stages": stages, "language": language_sample(minimal),
             "summary": {"original_states": len(a.states), "reachable_states": len(accessible.states),
                         "dfa_states": len(dfa.states), "minimal_states": len(minimal.states)}}

@@ -6,7 +6,7 @@
         "A",
         "B",
         "C",
-        "X"
+        "D"
       ],
       "alphabet": [
         "a",
@@ -42,12 +42,12 @@
             "C"
           ]
         },
-        "X": {
+        "D": {
           "a": [
-            "X"
+            "D"
           ],
           "b": [
-            "X"
+            "D"
           ]
         }
       }
@@ -64,7 +64,7 @@
             "A",
             "B",
             "C",
-            "X"
+            "D"
           ],
           "alphabet": [
             "a",
@@ -100,12 +100,12 @@
                 "C"
               ]
             },
-            "X": {
+            "D": {
               "a": [
-                "X"
+                "D"
               ],
               "b": [
-                "X"
+                "D"
               ]
             }
           }
@@ -113,7 +113,8 @@
         "steps": [
           "Se registran los componentes ingresados sin cambiar sus nombres.",
           "Clasificación: AFD.",
-          "Cada estado tiene exactamente un destino por símbolo y no hay transiciones ε."
+          "Cada símbolo del alfabeto va a un solo estado (X,a→Y) y no hay transiciones ε.",
+          "El autómata ya es determinista: se indica y se continúa con su minimización."
         ],
         "mapping": {
           "A": [
@@ -125,8 +126,8 @@
           "C": [
             "C"
           ],
-          "X": [
-            "X"
+          "D": [
+            "D"
           ]
         }
       },
@@ -176,10 +177,10 @@
           }
         },
         "steps": [
-          "Se inicia la búsqueda en A.",
-          "A --a→ B: se descubre un estado accesible.",
-          "A --b→ C: se descubre un estado accesible.",
-          "Estados inaccesibles eliminados: X."
+          "Se inicia la búsqueda en el estado inicial q0 = A.",
+          "A,a→B: B es accesible.",
+          "A,b→C: C es accesible.",
+          "Estados inaccesibles eliminados: D."
         ],
         "mapping": {
           "A": [
@@ -239,7 +240,7 @@
           }
         },
         "steps": [
-          "El autómata ya es un AFD completo: se omite la construcción por subconjuntos."
+          "El autómata ya es un AFD completo: se omite la conversión AFND → AFD y se continúa con la minimización."
         ],
         "mapping": {
           "A": [
@@ -258,58 +259,59 @@
         "title": "AFD mínimo",
         "automaton": {
           "states": [
-            "M0",
-            "M1"
+            "A",
+            "B"
           ],
           "alphabet": [
             "a",
             "b"
           ],
-          "initial": "M0",
+          "initial": "A",
           "finals": [
-            "M1"
+            "B"
           ],
           "transitions": {
-            "M0": {
+            "A": {
               "a": [
-                "M1"
+                "B"
               ],
               "b": [
-                "M1"
+                "B"
               ]
             },
-            "M1": {
+            "B": {
               "a": [
-                "M1"
+                "B"
               ],
               "b": [
-                "M1"
+                "B"
               ]
             }
           }
         },
         "steps": [
-          "P0 separa no finales y finales: {A} / {B, C}.",
-          "A: firma (1, 1), en el orden de símbolos ('a', 'b').",
-          "B: firma (1, 1), en el orden de símbolos ('a', 'b').",
-          "C: firma (1, 1), en el orden de símbolos ('a', 'b').",
+          "P0 separa estados no terminales y terminales: {A} / {B, C}.",
+          "A,a→B (bloque 2) · A,b→C (bloque 2).",
+          "B,a→B (bloque 2) · B,b→C (bloque 2).",
+          "C,a→B (bloque 2) · C,b→C (bloque 2).",
           "P1: {A} / {B, C}.",
-          "La partición no cambia: sus bloques son las clases de equivalencia."
+          "La partición no cambia: sus bloques son las clases de equivalencia.",
+          "B, C son equivalentes: se fusionan en B."
         ],
         "mapping": {
-          "M0": [
+          "A": [
             "A"
           ],
-          "M1": [
+          "B": [
             "B",
             "C"
           ]
         },
         "original_mapping": {
-          "M0": [
+          "A": [
             "A"
           ],
-          "M1": [
+          "B": [
             "B",
             "C"
           ]
@@ -336,6 +338,16 @@
         ]
       }
     ],
+    "language": [
+      "a",
+      "b",
+      "aa",
+      "ab",
+      "ba",
+      "bb",
+      "aaa",
+      "aab"
+    ],
     "summary": {
       "original_states": 4,
       "reachable_states": 3,
@@ -345,19 +357,6 @@
   },
   "simulations": [
     {
-      "word": "",
-      "accepted": false,
-      "path": [
-        {
-          "position": 0,
-          "symbol": null,
-          "states": [
-            "M0"
-          ]
-        }
-      ]
-    },
-    {
       "word": "a",
       "accepted": true,
       "path": [
@@ -365,14 +364,61 @@
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "A"
           ]
         },
         {
           "position": 1,
           "symbol": "a",
           "states": [
-            "M1"
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "b",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "b",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "aa",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "a",
+          "states": [
+            "B"
           ]
         }
       ]
@@ -385,137 +431,61 @@
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "A"
           ]
         },
         {
           "position": 1,
           "symbol": "a",
           "states": [
-            "M1"
+            "B"
           ]
         },
         {
           "position": 2,
           "symbol": "b",
           "states": [
-            "M1"
+            "B"
           ]
         }
       ]
     },
     {
-      "word": "abb",
+      "word": "",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "ba",
       "accepted": true,
       "path": [
         {
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "A"
           ]
         },
         {
           "position": 1,
-          "symbol": "a",
-          "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 2,
           "symbol": "b",
           "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 3,
-          "symbol": "b",
-          "states": [
-            "M1"
-          ]
-        }
-      ]
-    },
-    {
-      "word": "aabb",
-      "accepted": true,
-      "path": [
-        {
-          "position": 0,
-          "symbol": null,
-          "states": [
-            "M0"
-          ]
-        },
-        {
-          "position": 1,
-          "symbol": "a",
-          "states": [
-            "M1"
+            "B"
           ]
         },
         {
           "position": 2,
           "symbol": "a",
           "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 3,
-          "symbol": "b",
-          "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 4,
-          "symbol": "b",
-          "states": [
-            "M1"
-          ]
-        }
-      ]
-    },
-    {
-      "word": "abba",
-      "accepted": true,
-      "path": [
-        {
-          "position": 0,
-          "symbol": null,
-          "states": [
-            "M0"
-          ]
-        },
-        {
-          "position": 1,
-          "symbol": "a",
-          "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 2,
-          "symbol": "b",
-          "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 3,
-          "symbol": "b",
-          "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 4,
-          "symbol": "a",
-          "states": [
-            "M1"
+            "B"
           ]
         }
       ]
@@ -528,28 +498,28 @@
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "A"
           ]
         },
         {
           "position": 1,
           "symbol": "a",
           "states": [
-            "M1"
+            "B"
           ]
         },
         {
           "position": 2,
           "symbol": "b",
           "states": [
-            "M1"
+            "B"
           ]
         },
         {
           "position": 3,
           "symbol": "a",
           "states": [
-            "M1"
+            "B"
           ]
         }
       ]

@@ -1,1 +1,0 @@
-{"mode":"manual","automaton":{"states":["q0","q1","q2"],"alphabet":["a","b"],"initial":"q0","finals":["q2"],"transitions":{"q0":{"a":["q0","q1"],"b":["q0"]},"q1":{"b":["q2"]},"q2":{}}}}

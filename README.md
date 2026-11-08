@@ -1,18 +1,20 @@
 # Autómata Lab · Microproyecto 3
 
-Software educativo en **Python 3.13 + Flask** para construir un autómata desde una expresión regular, registrar AFD/AFN manualmente, determinizar, eliminar inaccesibles y minimizar. Cada etapa tiene tabla, diagrama, correspondencias y explicación del algoritmo; el simulador muestra el recorrido de cada cadena.
+Software educativo en **Python 3.13 + Flask** para construir un autómata desde una expresión regular, registrar AFD/AFND manualmente, convertir AFND → AFD, eliminar inaccesibles y minimizar. Cada etapa tiene tabla de transición, diagrama de transición, correspondencias y explicación del algoritmo; el simulador muestra el recorrido de cada palabra.
 
-Los algoritmos de Thompson, subconjuntos con clausura épsilon y Moore están implementados en `automata/core.py`. No se usan bibliotecas que resuelvan autómatas.
+Los resultados usan la notación de clase: AF = { {Q}, q0, Σ, {Qt}, δ }, estados A, B, C…, transiciones A,0→B, estados del AFD con nombres concatenados (AC, ABC), estado ERROR y casillas «error». El ejemplo 02 reproduce la conversión AFND → AFD del material del curso.
+
+Los algoritmos de Thompson, subconjuntos con cierre-ε y Moore están implementados en `automata/core.py`. No se usan bibliotecas que resuelvan autómatas.
 
 ## Entregables
 
-- [Documento técnico, editable](docs/documento_tecnico.md) / [PDF](output/pdf/documento_tecnico.pdf).
-- [Manual de usuario, editable](docs/manual_usuario.md) / [PDF](output/pdf/manual_usuario.pdf).
-- [Matriz de pruebas](docs/matriz_pruebas.csv) / [PDF](output/pdf/matriz_pruebas.pdf).
+- Documento técnico: [Word, normas APA](output/word/documento_tecnico_APA.docx) / [fuente](docs/documento_tecnico.md).
+- Manual de usuario: [Word, normas APA](output/word/manual_usuario_APA.docx) / [fuente](docs/manual_usuario.md).
+- Matriz de pruebas: [Excel](output/excel/matriz_pruebas.xlsx) / [CSV](docs/matriz_pruebas.csv).
 - [Evidencias reproducibles](docs/evidencias/) y [casos de ejemplo](examples/).
 - Código fuente, pruebas e instrucciones de instalación en este repositorio.
 
-La sustentación es oral; no se incluyen diapositivas ni guion.
+Los documentos Word en normas APA se generan con `scripts/build_office_apa.py`; la matriz en Excel, con `scripts/build_office.py`.
 
 ## Ejecutar en Windows
 
@@ -42,49 +44,22 @@ Para producción Linux:
 .venv/bin/gunicorn app:app --bind 0.0.0.0:10000 --workers 1 --threads 4 --timeout 60
 ```
 
-## Desplegar en Render (para el compañero)
-
-El proyecto está preparado; no hay que modificar código ni proporcionar claves o base de datos.
-
-1. En Render, conecta tu cuenta de GitHub con acceso a `angelvesga/TC-MICROPROYECTO3-AF`.
-2. Selecciona **New > Blueprint**, elige el repositorio y la rama `main`.
-3. Render leerá `render.yaml`. Revisa que sea un servicio web Python con plan **Free** y crea el servicio.
-4. Espera a que termine el despliegue. Abre la URL `https://<nombre-asignado>.onrender.com` y verifica también `/health`, que debe responder `{"status":"ok"}`.
-5. Carga el ejemplo «Palabras que terminan en abb»: el resultado debe tener 4 estados y aceptar `aabb`.
-
-Si no tienes acceso al repositorio mediante la integración, tu compañero puede hacer un fork en su cuenta y conectar ese fork. No es necesario renombrar módulos ni cambiar los comandos.
-
-Alternativa con **New > Web Service**:
-
-| Campo | Valor |
-| --- | --- |
-| Repository | Este repositorio, o el fork del compañero |
-| Branch | `main` |
-| Language / Runtime | Python 3 |
-| Root Directory | Dejar vacío |
-| Build Command | `pip install -r requirements.txt` |
-| Start Command | `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 60` |
-| Health Check Path | `/health` |
-| Instance Type | Free |
-| Python | `.python-version` fija 3.13.9 |
-
-El arranque usa el puerto asignado por Render. El servicio no escribe resultados en disco ni depende de almacenamiento persistente. El plan gratuito puede suspender el servicio por inactividad y tardar en responder a la primera visita; espera al arranque antes de repetir la operación. El despliegue en Render queda a cargo del compañero; publicar el código no equivale a desplegarlo.
-
-Documentación oficial: [Flask en Render](https://render.com/docs/deploy-flask), [Blueprint](https://render.com/docs/blueprint-spec), [versión de Python](https://render.com/docs/python-version), [plan gratuito](https://render.com/docs/free).
-
 ## Pruebas y evidencias
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest -q --junitxml=docs/evidencias/pytest-windows.xml
 .\.venv\Scripts\python.exe scripts/build_deliverables.py
+.\.venv\Scripts\python.exe scripts/build_office.py
+.\.venv\Scripts\python.exe scripts/build_office_apa.py
+powershell -ExecutionPolicy Bypass -File scripts/finalize_office.ps1
 ```
 
 En Linux sustituye `.\.venv\Scripts\python.exe` por `.venv/bin/python` y usa `pytest-linux.xml` para conservar por separado la evidencia de cada plataforma. GitHub Actions prueba cada publicación en Linux, incluyendo el arranque real de Gunicorn. Consulta la [pestaña Actions](https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions).
 
-El generador de documentos requiere las dependencias de desarrollo y fuentes Arial/Segoe UI Symbol en Windows o DejaVu Sans en Linux. No son necesarias para ejecutar el software. Las pruebas comparan simulación por configuraciones, enumeración de cadenas, equivalencia exacta por producto de AFD y distinguibilidad de cada par de estados del resultado mínimo.
+El generador de documentos requiere las dependencias de desarrollo y fuentes Arial/Segoe UI Symbol en Windows o DejaVu Sans en Linux. No son necesarias para ejecutar el software. Las pruebas comparan simulación por configuraciones, enumeración de palabras, equivalencia exacta por producto de AFD y distinguibilidad de cada par de estados del resultado mínimo.
 
-La validación registrada en `docs/evidencias/ci-linux.json` pasó **22 pruebas en Linux**, incluido Gunicorn. `node tests/check_frontend.cjs` añade **4 comprobaciones de formato** de tabla/SVG y cambios de modalidad, sin abrir un navegador. La interfaz se revisó visualmente en Chrome de escritorio (capturas en `docs/evidencias/capturas/`), también con el diseño móvil activo (657 px de ancho visible).
+La validación registrada en `docs/evidencias/ci-linux.json` pasó **22 pruebas en Linux**, incluido Gunicorn. `node tests/check_frontend.cjs` añade **4 comprobaciones de formato** de tabla/SVG y cambios de modalidad, sin abrir un navegador. La interfaz con la notación de clase se revisó visualmente en Chrome de escritorio (capturas en `docs/evidencias/capturas/`); la revisión en ancho de teléfono de esta versión está pendiente.
 
 Para preparar el archivo de entrega después de generar documentos:
 
@@ -104,7 +79,7 @@ static/                Estilos, interacción y diagramas SVG
 examples/              Entradas JSON reproducibles
 tests/                 Pruebas y oráculos independientes
 docs/                  Documentos editables, matriz y evidencias
-output/pdf/            Tres documentos PDF para entregar
+output/                Documentos Word (APA) y matriz en Excel para entregar
 scripts/               Generación de documentos y ZIP
 render.yaml            Despliegue en Render
 .github/workflows/      Verificación automatizada en Linux
@@ -112,4 +87,4 @@ render.yaml            Despliegue en Render
 
 ## Convenciones del enunciado
 
-El enunciado de referencia es `MICROPROYECTO3-AF.pdf` (**Microproyecto #3**). Se interpreta RF-06 como **AFN a AFD**, coherente con los objetivos. Se conserva la numeración original: el enunciado no contiene RF-08. Se reserva ε para las transiciones vacías y se documenta explícitamente la sintaxis del lenguaje.
+El enunciado de referencia es `MICROPROYECTO3-AF.pdf` (**Microproyecto #3**). Se interpreta RF-06 como **AFND a AFD**, coherente con los objetivos. Se conserva la numeración original: el enunciado no contiene RF-08. Se reserva ε para las transiciones vacías y se documenta explícitamente la sintaxis del lenguaje.

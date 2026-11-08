@@ -33,6 +33,8 @@ OUTPUT = ROOT / "output" / "pdf"
 INK = colors.HexColor("#172a31")
 GREEN = colors.HexColor("#087d70")
 PALE = colors.HexColor("#e7f3ed")
+# Colores de la presentación de clase para diagramas de transición.
+NODE, NAME, EDGE = colors.HexColor("#b8862f"), colors.HexColor("#c0392b"), colors.HexColor("#e69a2e")
 PAGE_WIDTH, PAGE_HEIGHT = A4
 WIDTH = PAGE_WIDTH - 96
 
@@ -159,12 +161,17 @@ class AutomatonDiagram(Flowable):
     def __init__(self, automaton):
         super().__init__()
         self.a = automaton
-        self.width, self.height = WIDTH, 260
+        n = len(automaton.states)
+        self.node = max(23, max(len(q) for q in automaton.states) * 3.4 + 9)
+        # Radio tal que la cuerda entre estados vecinos supere dos radios de nodo.
+        self.radius = 0 if n == 1 else max(66, (self.node + 16) / math.sin(math.pi / n))
+        self.width, self.height = WIDTH, 2 * self.radius + 2 * self.node + 90
 
     def draw(self):
         c, a = self.canv, self.a
         n = len(a.states)
-        cx, cy, radius = WIDTH/2, 110, 66 if n > 1 else 0
+        node = self.node
+        cx, cy, radius = WIDTH/2, self.height/2 - 6, self.radius
         pos = {q:(cx+radius*math.cos(math.pi/2-i*2*math.pi/n),cy+radius*math.sin(math.pi/2-i*2*math.pi/n)) for i,q in enumerate(a.states)}
         groups = {}
         for q in a.states:
@@ -182,20 +189,20 @@ class AutomatonDiagram(Flowable):
 
         for (q,t), symbols in groups.items():
             x,y=pos[q];tx,ty=pos[t]
-            c.setStrokeColor(colors.HexColor("#73958b"));c.setFillColor(GREEN)
+            c.setStrokeColor(EDGE);c.setFillColor(EDGE)
             if q==t:
-                path=c.beginPath();path.moveTo(x-15,y+17)
-                path.curveTo(x-55,y+64,x+55,y+64,x+15,y+17)
-                c.drawPath(path);arrow(x+15,y+17,-2.2)
-                lx,ly=x,y+51
+                path=c.beginPath();path.moveTo(x-15,y+node-6)
+                path.curveTo(x-55,y+node+47,x+55,y+node+47,x+15,y+node-6)
+                c.drawPath(path);arrow(x+15,y+node-6,-2.2)
+                lx,ly=x,y+node+34
             else:
                 dx,dy=tx-x,ty-y;length=math.hypot(dx,dy)
                 ux,uy=dx/length,dy/length
                 bend=30 if (t,q) in groups else 12
                 mx,my=(x+tx)/2-uy*bend,(y+ty)/2+ux*bend
                 start_angle=math.atan2(my-y,mx-x);end_angle=math.atan2(ty-my,tx-mx)
-                sx,sy=x+24*math.cos(start_angle),y+24*math.sin(start_angle)
-                ex,ey=tx-26*math.cos(end_angle),ty-26*math.sin(end_angle)
+                sx,sy=x+(node+1)*math.cos(start_angle),y+(node+1)*math.sin(start_angle)
+                ex,ey=tx-(node+3)*math.cos(end_angle),ty-(node+3)*math.sin(end_angle)
                 path=c.beginPath();path.moveTo(sx,sy)
                 path.curveTo(sx+2*(mx-sx)/3,sy+2*(my-sy)/3,ex+2*(mx-ex)/3,ey+2*(my-ey)/3,ex,ey)
                 c.drawPath(path);arrow(ex,ey,end_angle)
@@ -204,12 +211,15 @@ class AutomatonDiagram(Flowable):
             c.setFillColor(colors.white);c.rect(lx-tw/2-2,ly-2,tw+4,12,fill=1,stroke=0)
             c.setFillColor(INK);c.drawCentredString(lx,ly,label)
         for q in a.states:
-            x,y=pos[q];c.setStrokeColor(GREEN);c.setFillColor(PALE if q in a.finals else colors.white)
-            c.circle(x,y,23,fill=1,stroke=1)
-            if q in a.finals:c.circle(x,y,19,fill=0,stroke=1)
-            c.setFillColor(INK);c.drawCentredString(x,y-3,q)
+            x,y=pos[q];c.setStrokeColor(NODE);c.setLineWidth(1.6)
+            c.setFillColor(colors.HexColor("#fff1dc") if q in a.finals else colors.HexColor("#fffaf3"))
+            c.circle(x,y,node,fill=1,stroke=1)
+            if q in a.finals:c.circle(x,y,node-4,fill=0,stroke=1)
+            c.setLineWidth(1)
+            c.setFillColor(NAME);c.drawCentredString(x,y-3,q)
             if q==a.initial:
-                c.line(x-53,y,x-26,y);arrow(x-26,y,0)
+                c.setStrokeColor(EDGE);c.setFillColor(EDGE)
+                c.line(x-node-30,y,x-node-3,y);arrow(x-node-3,y,0)
 
 
 def descriptions():
@@ -249,11 +259,11 @@ def matrix_rows():
                      "esperado":frontend["description"],"resultado":"APROBADO" if frontend["result"]=="success" else "FALLÓ",
                      "evidencia":"docs/evidencias/frontend.json"})
     rows.append({"id":"V01","requisito":"RF-05,11,12,13 / interfaz","caso":"revision_visual_web",
-                 "esperado":"En Chrome de escritorio (1366 px): ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla; aabb se acepta con recorrido M0→M1→M1→M2→M3; ejemplo 02 se clasifica como AFN; las cuatro etapas son consultables; cambiar de modalidad limpia resultados; sin errores de la aplicación en consola.",
+                 "esperado":"En Chrome de escritorio (1366 px): notación de clase (Q, q0, Σ, Qt; A,0→B; estados A, B, C…). Ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla y acepta aabb con su recorrido; ejemplo 02 (AFND de clase) se clasifica AFND y su conversión reproduce la tabla A, B, BC, D, BCD, CD, ABCD, AD, AB; las cuatro etapas son consultables; sin errores de la aplicación en consola.",
                  "resultado":"APROBADO","evidencia":"docs/evidencias/capturas/"})
     rows.append({"id":"V02","requisito":"RF-11 / interfaz móvil","caso":"revision_visual_movil",
-                 "esperado":"Con área visible de 657 px (mínimo de ventana de Chrome; activa el corte móvil de 760 px): diseño en una columna, ejemplo 01 construido y simulado, sin desbordamiento horizontal.",
-                 "resultado":"APROBADO","evidencia":"docs/evidencias/capturas/04_vista_movil_657px.jpg"})
+                 "esperado":"Revisar en ancho de teléfono la versión con notación de clase (una columna, sin desplazamiento horizontal).","resultado":"PENDIENTE",
+                 "evidencia":"La versión anterior se aprobó con 657 px de ancho; tras los cambios de notación no se pudo redimensionar la ventana maximizada de Chrome. No se fabricaron capturas."})
     return rows
 
 
@@ -263,12 +273,23 @@ def generate_evidence():
     for path in sorted((ROOT/"examples").glob("*.json")):
         request=json.loads(path.read_text(encoding="utf-8"))
         result=process(request)
-        minimum=automaton_from(result["stages"][-1]["automaton"])
-        simulations=[simulate(minimum,word) for word in ["","a","ab","abb","aabb","abba","aba"]]
+        minimum=automaton_from(result["stages"][-1]["automaton"],generated=True)
+        sigma=minimum.alphabet
+        accepted=[w if w!="ε" else "" for w in result["language"][:4]]
+        candidates=accepted+["",sigma[0],sigma[0]*2,sigma[-1]+sigma[0],sigma[0]+sigma[-1]+sigma[0]]
+        words=list(dict.fromkeys(candidates))[:8]
+        simulations=[simulate(minimum,word) for word in words]
         evidence={"input":request,"result":result,"simulations":simulations}
         (EVIDENCE/(path.stem+"_resultado.json")).write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         samples.append((path.stem,evidence,minimum))
     return samples
+
+
+def render_path(simulation):
+    """Recorrido con la notación de clase: A,0→B,1→AB…"""
+    label = lambda states: states[0] if len(states) == 1 else ("{" + ",".join(states) + "}" if states else "error")
+    path = simulation["path"]
+    return label(path[0]["states"]) + "".join(f",{step['symbol']}→{label(step['states'])}" for step in path[1:])
 
 
 def main():
@@ -285,8 +306,8 @@ def main():
     intro=("# Autómata Lab\n## Matriz de pruebas y evidencias\n\n"
            "Microproyecto 3 · Teoría de la Computación · 2026/02\n\n"
            f"Registros: {passed} aprobados, {omitted} omitidos y {pending} pendientes. Los resultados proceden de reportes reales; consulte el CSV y XML para los identificadores completos.\n\n"
-           "La suite local corre en Windows con Python 3.13.9. Gunicorn se verifica únicamente en Linux. La comprobación exacta de equivalencia usa el producto de AFD y la minimalidad se verifica por distinguibilidad de pares. Los ensayos con AFN incluyen 30 casos reproducibles de semilla 202602.\n\n"
-           "La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. También se revisó con el diseño móvil activo (657 px de ancho visible). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.\n\n")
+           "La suite local corre en Windows con Python 3.13.9. Gunicorn se verifica únicamente en Linux. La comprobación exacta de equivalencia usa el producto de AFD y la minimalidad se verifica por distinguibilidad de pares. Los ensayos con AFND incluyen 30 casos reproducibles de semilla 202602.\n\n"
+           "La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. La revisión en ancho de teléfono de esta versión queda pendiente (V02). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.\n\n")
     (ROOT/"docs"/"matriz_pruebas.md").write_text(intro+"## Casos\n\n"+"\n".join(f"- {r['id']} · {r['resultado']} · {r['requisito']}: {r['esperado']} Evidencia: {r['evidencia']} ({r['caso']})." for r in rows)+"\n",encoding="utf-8")
     story=markdown_story(intro)
     story.append(table([["Caso / RF","Comprobación y resultado esperado","Resultado"]]+[
@@ -299,11 +320,13 @@ def main():
     for name,evidence,a in samples:
         story.extend([PageBreak(),p("Evidencia · "+name.replace("_"," "),"Section")])
         summary=evidence["result"]["summary"]
-        story.append(p(f"Estados: {summary['original_states']} originales; {summary['reachable_states']} accesibles; {summary['dfa_states']} deterministas; {summary['minimal_states']} mínimos. Clasificación de entrada: {evidence['result']['classification']}."))
+        story.append(p(f"Estados: {summary['original_states']} de entrada; {summary['reachable_states']} accesibles; {summary['dfa_states']} en el AFD; {summary['minimal_states']} en el AFD mínimo. Clasificación de entrada: {evidence['result']['classification']}."))
+        story.append(p("L = {" + ", ".join(evidence["result"]["language"]) + ", …}"))
         story.append(AutomatonDiagram(a))
-        story.append(table([["Estado",*a.alphabet]]+[[('→ ' if q==a.initial else '')+('* ' if q in a.finals else '')+q,*[", ".join(sorted(a.targets(q,s))) for s in a.alphabet]] for q in a.states]))
-        story.extend([Spacer(1,12),p("Simulaciones comprobadas","Subsection"),table([["Cadena","Resultado","Recorrido"]]+[
-            [s["word"] or "ε","Aceptada" if s["accepted"] else "Rechazada"," → ".join(",".join(step["states"]) or "∅" for step in s["path"])] for s in evidence["simulations"]],[60,80,WIDTH-140]),Spacer(1,10),p("Datos y pasos completos: docs/evidencias/"+name+"_resultado.json","SmallBody")])
+        story.append(table([["Q",*a.alphabet]]+[[('→ ' if q==a.initial else '')+(f'({q})' if q in a.finals else q),*[",".join(sorted(a.targets(q,s))) or "error" for s in a.alphabet]] for q in a.states]))
+        story.append(p("→ estado inicial q0; (X) estado terminal de Qt.","SmallBody"))
+        story.extend([Spacer(1,12),p("Simulaciones comprobadas","Subsection"),table([["Palabra W","Resultado","Recorrido"]]+[
+            [s["word"] or "ε","Aceptada" if s["accepted"] else "Rechazada",render_path(s)] for s in evidence["simulations"]],[70,80,WIDTH-150]),Spacer(1,10),p("Datos y pasos completos: docs/evidencias/"+name+"_resultado.json","SmallBody")])
     pdf("matriz_pruebas.pdf",story,"Matriz de pruebas y evidencias")
     print(json.dumps({"pdfs":[p.name for p in OUTPUT.glob("*.pdf")],"approved":passed,"omitted":omitted,"pending":pending}))
 

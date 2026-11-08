@@ -5,30 +5,48 @@ Microproyecto 3 · Teoría de la Computación · 2026/02
 
 ## 1. Propósito y alcance
 
-El software permite estudiar cómo distintas representaciones describen el mismo lenguaje regular. A partir de una expresión regular o de un autómata manual, obtiene un AFD mínimo y permite revisar las operaciones realizadas, su tabla, su diagrama y sus simulaciones.
+El software permite estudiar cómo distintas representaciones describen el mismo lenguaje regular. A partir de una expresión regular o de un autómata registrado manualmente, obtiene un AFD mínimo y permite revisar las operaciones realizadas, su tabla de transición, su diagrama de transición y sus simulaciones.
 
-El público son estudiantes y docentes de Teoría de la Computación. Las dos modalidades comparten el mismo motor Python. Se admiten AFD completos, AFD incompletos, AFN y AFN con transiciones ε. La aplicación se ejecuta localmente o como servicio web en Render; no requiere cuentas de usuario ni una base de datos.
+El público son estudiantes y docentes de Teoría de la Computación. Las dos modalidades comparten el mismo motor Python. Se admiten AFD completos, AFD con casillas en error, AFND y AFND con transiciones ε. La aplicación se ejecuta localmente o como servicio web en Render; no requiere cuentas de usuario ni base de datos.
 
-Se excluyen expresiones regulares avanzadas de programación (capturas, referencias, rangos y lookahead), conversión a autómatas de pila, máquinas de Turing, almacenamiento de sesiones y edición gráfica por arrastre. La representación gráfica acompaña las transformaciones; la tabla es la referencia exacta para revisar cada transición.
+Se excluyen expresiones regulares avanzadas de programación (capturas, referencias, rangos y lookahead), autómatas de pila, máquinas de Turing, almacenamiento de sesiones y edición gráfica por arrastre. El diagrama acompaña las transformaciones; la tabla de transición es la referencia exacta para revisar cada transición.
 
-El documento de referencia tiene una errata en RF-06: se implementa AFN → AFD, conforme a los objetivos. RF-01 queda incompleto después de «reservando»; esta implementación reserva ε, ∅ y los operadores. No existe RF-08 en la lista original. Python fue el lenguaje solicitado para esta entrega.
+El documento de referencia tiene una errata en RF-06: se implementa AFND → AFD, conforme a los objetivos. RF-01 queda incompleto después de «reservando»; esta implementación reserva ε, ∅ y los operadores. No existe RF-08 en la lista original. Python fue el lenguaje solicitado para esta entrega.
 
-## 2. Casos de uso
+## 2. Notación de clase
+
+La presentación de resultados sigue la notación y la forma de desarrollar ejercicios del material del curso («Autómatas de Estados Finitos» y «Conversión de AFND a AFD»), para que la lectura resulte familiar:
+
+| Elemento | Notación en el software |
+| --- | --- |
+| Definición formal | AF = { {Q}, q0, Σ, {Qt}, δ }, mostrada en cada etapa |
+| Estados | Letras mayúsculas A, B, C…; con más de 26 estados, q0, q1, q2… |
+| Transición | A,0→B; si el símbolo va a MÁS de un estado, A,1→A,C |
+| Tabla de transición | Columna Q, una columna por símbolo, → en el estado inicial y círculo en los terminales |
+| Casilla sin destino | error |
+| Estado del AFD | Concatenación de los estados del subconjunto: AC, ABC, BCD |
+| Subconjunto vacío | Estado ERROR, no terminal, que vuelve a sí mismo con todo símbolo |
+| Clasificación | AFD (cada símbolo va a un solo estado) o AFND (algún símbolo va a MÁS de un estado; AFND-ε si hay transiciones vacías) |
+| Lenguaje | L = {…} con las primeras palabras W aceptadas |
+
+En la conversión, cada transición del AFD se justifica como en clase: AC,0→B ⟸ A,0→B · C,0→error. El estado inicial del AFD es el mismo q0 del AFND y son terminales los estados que contienen algún terminal del AFND.
+
+## 3. Casos de uso
 
 | Caso | Entrada y acción | Resultado observable |
 | --- | --- | --- |
-| CU-01 Construir | Registrar alfabeto y expresión; pulsar Construir y minimizar | Construcción Thompson, accesibilidad, AFD completo y AFD mínimo |
-| CU-02 Registrar | Registrar estados, inicial, finales y tabla de destinos | Clasificación justificada y procesamiento del autómata |
-| CU-03 Explorar | Seleccionar una de las cuatro etapas | Tabla, diagrama, correspondencias y operaciones concretas |
-| CU-04 Simular | Elegir etapa y escribir una cadena | Conjunto de estados por paso y aceptación o rechazo |
-| CU-05 Comparar | Abrir comparación con el AFD mínimo | Número de estados y tabla final, sin perder la etapa seleccionada |
+| CU-01 Construir | Registrar alfabeto y expresión; pulsar Construir y minimizar | Construcción de Thompson, accesibles, conversión AFND → AFD y AFD mínimo |
+| CU-02 Registrar | Registrar Q, q0, Qt y la tabla de transición | Clasificación AFD/AFND justificada y procesamiento |
+| CU-03 Explorar | Seleccionar una de las cuatro etapas | Definición formal, tabla, diagrama, correspondencias y operaciones |
+| CU-04 Simular | Elegir etapa y escribir una palabra W | Recorrido A,a→B… y aceptación o rechazo |
+| CU-05 Comparar | Abrir la comparación con el AFD mínimo | Número de estados y tabla final, sin perder la etapa seleccionada |
 | CU-06 Exportar | Descargar resultado o SVG | JSON de todas las etapas o diagrama de la etapa actual |
 
-Si la entrada es inválida se informa qué debe corregirse y no se entrega un resultado parcial. Si el autómata ya es determinista se indica expresamente y se omite la construcción por subconjuntos. Al editar la entrada se descartan los resultados anteriores para evitar asociarlos a datos nuevos.
+Si la entrada es inválida se informa qué debe corregirse y no se entrega un resultado parcial. Si el autómata ya es determinista se indica expresamente y se continúa con su minimización. Al editar la entrada se descartan los resultados anteriores para evitar asociarlos a datos nuevos.
 
-## 3. Sintaxis, entradas y restricciones
+## 4. Sintaxis, entradas y restricciones
 
-El alfabeto es una lista no vacía de hasta 12 caracteres Unicode visibles. Cada símbolo ocupa un carácter; no se permiten duplicados, espacios, coma, barra inversa, paréntesis, |, *, ε ni ∅. En la interfaz se escribe, por ejemplo, `a, b`; en la API, `["a", "b"]`.
+El alfabeto Σ es una lista no vacía de hasta 12 caracteres Unicode visibles. Cada símbolo ocupa un carácter; no se permiten duplicados, espacios, coma, barra inversa, paréntesis, |, *, ε ni ∅. En la interfaz se escribe, por ejemplo, `0, 1`; en la API, `["0", "1"]`.
 
 Gramática de expresiones:
 
@@ -39,89 +57,116 @@ repeticion    := atomo ("*")*
 atomo         := simbolo | "ε" | "∅" | "(" expresion ")"
 ```
 
-La prioridad descendente es estrella, concatenación y unión. `ab|c` significa `(ab)|c`. `ε` representa únicamente la cadena vacía y `∅` el lenguaje sin cadenas. Las expresiones no admiten espacios ni operandos implícitamente vacíos: use `a|ε`, no `a|`. Los caracteres + y ? son literales únicamente si se incluyen en el alfabeto; no son operadores. La longitud máxima de expresión es 120 caracteres.
+La prioridad descendente es estrella, concatenación y unión. `ab|c` significa `(ab)|c`. `ε` representa únicamente la palabra vacía y `∅` el lenguaje sin palabras. Las expresiones no admiten espacios ni operandos implícitamente vacíos: use `a|ε`, no `a|`. Los caracteres + y ? son literales solo si se incluyen en el alfabeto. La longitud máxima de expresión es 120 caracteres.
 
-Los autómatas manuales admiten de 1 a 80 estados y hasta 4000 aristas. Los nombres comienzan con letra ASCII o _, seguidos de letras ASCII, números, _ o -, hasta 32 caracteres. Hay exactamente un estado inicial y cualquier cantidad de finales, incluso cero. Los destinos son listas sin duplicados de estados existentes. Una celda sin destinos representa ausencia de transición, no una transición ε.
+Los autómatas manuales admiten de 1 a 80 estados y hasta 4000 aristas. Los nombres comienzan con letra ASCII o _, seguidos de letras ASCII, números, _ o -, hasta 32 caracteres; se recomiendan letras mayúsculas como en clase. Hay exactamente un estado inicial q0 y cualquier cantidad de terminales Qt, incluso cero. En cada casilla se escriben los destinos separados por comas (C,F). Una casilla vacía o con la palabra error representa ausencia de transición, no una transición ε.
 
-La construcción interna admite 256 estados; la determinización se detiene con un error explícito antes de superar 128. Las cadenas tienen hasta 1000 caracteres. En el simulador, el campo vacío representa ε; escribir el símbolo ε literal se rechaza porque no pertenece al alfabeto. Las solicitudes HTTP se limitan a 256 KiB. Estos límites son educativos y protegen frente al crecimiento exponencial de la determinización.
+La construcción interna admite 256 estados; la conversión AFND → AFD se detiene con un error explícito antes de superar 128. Las palabras tienen hasta 1000 caracteres. En el simulador, el campo vacío representa ε. Las solicitudes HTTP se limitan a 256 KiB. Estos límites son educativos y protegen frente al crecimiento exponencial de la conversión.
 
-## 4. Arquitectura y estructuras de datos
+## 5. Arquitectura y estructuras de datos
 
-La aplicación tiene tres capas: motor matemático independiente en Python, adaptador HTTP Flask e interfaz HTML/CSS/JavaScript. El motor puede probarse sin navegador ni servidor. JavaScript gestiona formularios y SVG, pero las transformaciones y simulaciones se calculan en Python.
+La aplicación tiene tres capas: motor matemático independiente en Python, adaptador HTTP Flask e interfaz HTML/CSS/JavaScript. El motor puede probarse sin navegador ni servidor. JavaScript gestiona formularios, tablas y diagramas SVG, pero las transformaciones y simulaciones se calculan en Python.
 
-`Automaton` es una dataclass con `states` y `alphabet` como tuplas ordenadas, `initial` como cadena, `finals` como frozenset y `transitions` como diccionario de origen a símbolo a frozenset de destinos. Incluso en un AFD cada destino es un conjunto de un elemento. La serialización JSON convierte conjuntos a listas ordenadas; ε se representa con la clave `"ε"`.
+`Automaton` es una dataclass con `states` (Q) y `alphabet` (Σ) como tuplas ordenadas, `initial` (q0) como cadena, `finals` (Qt) como frozenset y `transitions` (δ) como diccionario de origen a símbolo a frozenset de destinos. Incluso en un AFD cada destino es un conjunto de un elemento. La serialización JSON convierte conjuntos a listas ordenadas según Q; ε se representa con la clave `"ε"`.
 
-La cola de accesibilidad y la de determinización usan `deque`. Un subconjunto se almacena como `frozenset`, lo que permite usarlo como clave del diccionario que asigna nombres D0, D1, etc. Los bloques de Moore son tuplas de estados y sus firmas son tuplas de índices de bloques.
+La cola de accesibilidad y la de conversión usan `deque`. Un subconjunto se almacena como `frozenset`, lo que permite usarlo como clave del diccionario que le asigna su nombre concatenado (AC, ABC). El nombrador garantiza unicidad: si dos subconjuntos produjeran el mismo nombre, lo que solo es posible con nombres de varios caracteres, el segundo se separa con guiones o recibe un sufijo. Los bloques de Moore son tuplas de estados.
 
-Cada función devuelve un autómata nuevo o conserva el original cuando no necesita cambiarlo; no modifica los datos recibidos. Los registros de operaciones son listas de texto producidas durante los cálculos. No hay estado mutable compartido entre solicitudes. La interfaz conserva el resultado en memoria de la pestaña; al recargar se pierde, aunque puede descargarse como JSON.
+Cada función devuelve un autómata nuevo o conserva el original cuando no necesita cambiarlo; no modifica los datos recibidos. Los registros de operaciones son listas de texto producidas durante los cálculos con la notación A,0→B. No hay estado mutable compartido entre solicitudes.
 
-## 5. Construcción de Thompson
+## 6. Construcción de Thompson
 
-El analizador de descenso recursivo genera un árbol de operaciones según la gramática. Cada nodo se transforma en un fragmento con una entrada y una salida. Para un literal se crean dos estados y una arista con ese símbolo. Para ε se usa una arista vacía; para ∅ se crean dos estados sin conectarlos.
+El analizador de descenso recursivo genera un árbol de operaciones según la gramática. Cada nodo se transforma en un fragmento con una entrada y una salida. Para un literal se crean dos estados y una arista con ese símbolo (A,a→B). Para ε se usa una arista vacía; para ∅ se crean dos estados sin conectarlos.
 
-La concatenación conecta por ε la salida del primer fragmento con la entrada del segundo. La unión crea una entrada que bifurca por ε y una salida que reúne ambos fragmentos. La estrella crea caminos para cero repeticiones, para entrar al fragmento, para repetirlo y para salir. Cada conexión queda descrita en la traza, con sus estados concretos.
+La concatenación conecta por ε la salida del primer fragmento con la entrada del segundo. La unión crea una entrada que bifurca por ε y una salida que reúne ambos fragmentos. La estrella crea caminos para cero repeticiones, para entrar al fragmento, para repetirlo y para salir. Al terminar, los estados se nombran A, B, C… en el orden de creación y la traza muestra cada conexión con esos nombres.
 
-La corrección se justifica por inducción sobre el árbol: los fragmentos base reconocen su símbolo, ε o ningún lenguaje; las conexiones realizan respectivamente producto, unión y cierre de Kleene. Por ello el fragmento final reconoce exactamente la expresión. El análisis y la construcción son lineales en la longitud de la expresión, salvo el coste de construir las explicaciones.
+La corrección se justifica por inducción sobre el árbol: los fragmentos base reconocen su símbolo, ε o ningún lenguaje; las conexiones realizan respectivamente producto, unión y cierre de Kleene. El análisis y la construcción son lineales en la longitud de la expresión.
 
-## 6. Clasificación y accesibilidad
+## 7. Clasificación y accesibilidad
 
-Si existe alguna transición ε, la entrada es AFN-ε. Sin ε, si alguna pareja estado/símbolo tiene más de un destino, es AFN. Si cada pareja tiene exactamente un destino, es AFD completo. Si ninguna tiene más de uno pero algunas no tienen destino, se informa AFD incompleto.
+Si existe alguna transición ε, la entrada es AFND-ε. Sin ε, si algún símbolo va a MÁS de un estado (X,a→Y,Z), es AFND. Si cada símbolo va a un solo estado (X,a→Y) en todas las casillas, es AFD. Si ninguna casilla tiene más de un destino pero algunas están en error, se informa AFD incompleto y se indican esas casillas.
 
-Una búsqueda desde el inicial recorre todas las aristas, incluidas ε. Los estados no visitados se eliminan junto con sus transiciones y su condición de finales. El lenguaje no cambia porque ninguna ejecución iniciada en el estado inicial puede llegar a ellos. El coste es O(n + e), con n estados y e aristas. La clasificación de entrada se conserva aunque al eliminar inaccesibles desaparezca la única fuente de no determinismo.
+Una búsqueda desde q0 recorre todas las aristas, incluidas ε. Los estados no visitados se eliminan junto con sus transiciones y su condición de terminales. El lenguaje no cambia porque ninguna ejecución iniciada en q0 puede llegar a ellos. El coste es O(n + e), con n estados y e aristas.
 
-## 7. Determinización y completado
+## 8. Conversión AFND → AFD
 
-El cierre-ε(S) contiene los estados alcanzables desde S mediante cero o más transiciones ε. Se calcula con un conjunto de visitados, por lo que los ciclos ε terminan. El estado inicial del AFD es cierre-ε({inicial}). Para cada subconjunto T y símbolo a se calcula:
+El cierre-ε(S) contiene los estados alcanzables desde S mediante cero o más transiciones ε. Se calcula con un conjunto de visitados, por lo que los ciclos ε terminan. El estado inicial del AFD es el q0 del AFND (o su cierre-ε si tiene transiciones vacías). Para cada estado T del AFD y símbolo a se calcula:
 
 ```text
 mover(T, a) = unión de los destinos por a de cada estado de T
 δAFD(T, a) = cierre-ε(mover(T, a))
 ```
 
-Se crean solo subconjuntos alcanzables, en orden BFS; D0 es el inicial. Un subconjunto es final si intersecta los finales originales. El conjunto vacío es un estado no final y sus transiciones vuelven a él. Se conserva el diccionario D → subconjunto original.
+Se crean solo los estados alcanzables, en orden de anchura. Cada uno se nombra concatenando sus estados en el orden de Q y el conjunto vacío es el estado ERROR. Un estado es terminal si contiene algún terminal del AFND. Se conserva el diccionario nombre → subconjunto original para la pestaña de correspondencia.
 
-El invariante es que, después de leer cualquier prefijo, el estado del AFD contiene exactamente los posibles estados del AFN tras consumirlo y cerrar por ε. Por tanto ambos aceptan las mismas cadenas. Si el AFN tiene n estados pueden aparecer hasta 2^n subconjuntos. Una cota conservadora del coste de esta implementación es O(k · 2^n · (n + e)), con k símbolos, al calcular movimientos y cierres sin precalcular todos los cierres.
+El invariante es que, después de leer cualquier prefijo, el estado del AFD contiene exactamente los posibles estados del AFND tras consumirlo y cerrar por ε. Por tanto ambos aceptan las mismas palabras. Si el AFND tiene n estados pueden aparecer hasta 2^n subconjuntos; una cota conservadora es O(k · 2^n · (n + e)), con k símbolos.
 
-Si el autómata accesible ya es determinista, se omite la construcción por subconjuntos. Si está incompleto se crea un estado sumidero no final, se redirigen a él las transiciones ausentes y se añaden sus bucles. Su nombre evita colisiones y su correspondencia original es vacía porque es un estado nuevo. Completar no cambia el lenguaje: las ejecuciones antes indefinidas siguen rechazándose.
+Si el autómata accesible ya es determinista, se indica y no se aplica la conversión. Si tiene casillas en error, se añade el estado ERROR, no terminal, se dirigen a él las casillas vacías y se añaden sus bucles. Completar no cambia el lenguaje: las ejecuciones antes indefinidas siguen rechazándose.
 
-## 8. Minimización de Moore
+## 9. Minimización de Moore
 
-Se parte de P0 formada por estados finales y no finales, omitiendo bloques vacíos. Para cada estado se construye la firma de los bloques destino, siguiendo el orden del alfabeto. Dentro de cada bloque se agrupan estados con la misma firma. Se repite hasta que la partición no cambia.
+Se parte de P0 formada por estados terminales y no terminales, omitiendo bloques vacíos. Para cada estado se registra a qué bloque va con cada símbolo (por ejemplo, B,0→BC (bloque 2)). Dentro de cada bloque se agrupan estados que van a los mismos bloques. Se repite hasta que la partición no cambia.
 
-Cada separación revela una diferencia observable: inicialmente la aceptación de ε y después la aceptación de alguna continuación. En el punto fijo, estados de un mismo bloque tienen igual aceptación y transiciones a los mismos bloques, de modo que son equivalentes para cualquier continuación. Como el AFD era accesible y completo, su cociente por estas clases es un AFD mínimo.
+Cada separación revela una diferencia observable: inicialmente la aceptación de ε y después la aceptación de alguna continuación. En el punto fijo, los estados de un mismo bloque son equivalentes para cualquier continuación. Como el AFD era accesible y completo, su cociente es un AFD mínimo.
 
-El algoritmo registra cada firma y cada partición. El cociente se enumera por BFS desde el bloque inicial: M0 siempre es inicial. Se mantienen M → estados del AFD y M → estados de entrada. Una cota del algoritmo es O(k · n²), con hasta n refinamientos que inspeccionan n estados y k símbolos. Las trazas añaden memoria proporcional al número de operaciones registradas.
+Cada clase conserva el nombre de su primer estado, de modo que el AFD mínimo se lee con los mismos nombres de la etapa anterior: si B y C son equivalentes, se fusionan en B y la correspondencia muestra B = {B, C}. El estado inicial del mínimo es la clase que contiene q0. Una cota del algoritmo es O(k · n²).
 
-## 9. Ejemplos desarrollados
+## 10. Ejemplos desarrollados
 
-### 9.1 Expresión (a|b)*abb
+### 10.1 Expresión (a|b)*abb
 
-El lenguaje contiene las cadenas binarias sobre {a,b} cuyo sufijo es abb. La construcción genera 14 estados; todos son accesibles. La determinización alcanza 5 subconjuntos y Moore obtiene 4 clases.
+El lenguaje contiene las palabras sobre Σ = {a, b} que terminan en abb: L = {abb, aabb, babb, aaabb, …}. La construcción de Thompson genera 14 estados, de A a N, con q0 = A y Qt = {N}; todos son accesibles y la entrada se clasifica AFND-ε.
 
-Las particiones comienzan separando {D0,D1,D2,D3} de {D4}. D3 se separa porque con b alcanza el bloque final. Después se separa D1 porque con b alcanza D3. D0 y D2 permanecen equivalentes. Las clases son M0={D0,D2}, M1={D1}, M2={D3}, M3={D4}.
+La conversión parte de cierre-ε(A) = {A, B, C, E, G, I}, que se nombra ABCEGI, y alcanza 5 estados: ABCEGI, BCDEFGIJK, BCDEGHI, BCDEGHILM y BCDEGHIN. Por ejemplo, ABCEGI,a→BCDEFGIJK porque E,a→F e I,a→J, y el cierre-ε añade los estados del bucle. BCDEGHIN es terminal porque contiene N.
 
-| Estado | a | b | Interpretación |
+Moore separa primero BCDEGHIN, luego BCDEGHILM (con b llega al bloque terminal) y después BCDEFGIJK (con b llega a BCDEGHILM). ABCEGI y BCDEGHI quedan equivalentes y se fusionan en ABCEGI.
+
+| Q | a | b | Interpretación |
 | --- | --- | --- | --- |
-| → M0 | M1 | M0 | No hay prefijo útil del sufijo abb |
-| M1 | M1 | M2 | El sufijo actual es a |
-| M2 | M1 | M3 | El sufijo actual es ab |
-| * M3 | M1 | M0 | El sufijo actual es abb |
+| → ABCEGI | BCDEFGIJK | ABCEGI | No hay prefijo útil de abb |
+| BCDEFGIJK | BCDEFGIJK | BCDEGHILM | Se leyó a |
+| BCDEGHILM | BCDEFGIJK | BCDEGHIN | Se leyó ab |
+| (BCDEGHIN) | BCDEFGIJK | ABCEGI | Se leyó abb: terminal |
 
-`aabb` recorre M0 → M1 → M1 → M2 → M3 y se acepta. `abba` termina en M1 y se rechaza. ε se rechaza. Los cuatro estados son distinguibles: M3 se distingue por ε; M2 de M0/M1 por b; M1 de M0 por bb.
+La palabra aabb recorre ABCEGI,a→BCDEFGIJK,a→BCDEFGIJK,b→BCDEGHILM,b→BCDEGHIN y se acepta; abba termina en BCDEFGIJK y se rechaza.
 
-### 9.2 AFN manual: cadenas que terminan en ab
+### 10.2 AFND de clase: conversión AFND → AFD
 
-Estados {q0,q1,q2}, inicial q0, final q2. q0 tiene a → {q0,q1} y b → {q0}; q1 tiene b → {q2}; el resto no tiene destinos. Es AFN porque (q0,a) tiene dos destinos.
+Es el ejercicio de conversión del material del curso: Q = {A, B, C, D}, Σ = {0, 1}, q0 = A, Qt = {A}.
 
-Los subconjuntos alcanzables son D0={q0}, D1={q0,q1} y D2={q0,q2}. Solo D2 es final. La tabla determinista es: D0: a→D1,b→D0; D1: a→D1,b→D2; D2: a→D1,b→D0. Ya es mínimo y se renombra M0,M1,M2. `ab` y `aab` se aceptan; `aba` se rechaza.
+| Q | 0 | 1 |
+| --- | --- | --- |
+| → (A) | B | A |
+| B | B,C | D |
+| C | D | C |
+| D | A | B |
 
-### 9.3 AFD con equivalentes e inaccesible
+Es AFND porque B,0→B,C: el símbolo 0 va a MÁS de un estado. La conversión reproduce la tabla del material:
 
-Estados {A,B,C,X}, inicial A, finales {B,C}. A, B y C tienen a→B,b→C. X tiene bucles con ambos símbolos. Desde A nunca se visita X, por lo que se elimina.
+| Q | 0 | 1 | Justificación de la primera columna |
+| --- | --- | --- | --- |
+| → (A) | B | A | A,0→B |
+| B | BC | D | B,0→B,C |
+| BC | BCD | CD | B,0→B,C · C,0→D |
+| D | A | B | D,0→A |
+| BCD | ABCD | BCD | B,0→B,C · C,0→D · D,0→A |
+| CD | AD | BC | C,0→D · D,0→A |
+| (ABCD) | ABCD | ABCD | A,0→B · B,0→B,C · C,0→D · D,0→A |
+| (AD) | AB | AB | A,0→B · D,0→A |
+| (AB) | BC | AD | A,0→B · B,0→B,C |
 
-P0={{A},{B,C}}. B y C tienen la misma firma y permanecen juntos. El cociente tiene M0={A}, no final, y M1={B,C}, final. Ambos símbolos llevan de M0 a M1 y de M1 a sí mismo. Se reconoce toda cadena no vacía sobre {a,b}. ε se rechaza.
+A, AD, ABCD y AB son terminales porque contienen A. Moore no fusiona ningún par: los 9 estados son distinguibles y el AFD ya es mínimo. L = {ε, 1, 11, 010, 111, 0000, …}.
 
-## 10. Interfaz HTTP y representación gráfica
+### 10.3 AFD con un inaccesible y estados equivalentes
+
+Q = {A, B, C, D}, Σ = {a, b}, q0 = A, Qt = {B, C}. A, B y C tienen a→B y b→C; D vuelve a sí mismo con ambos símbolos. Es AFD: cada símbolo va a un solo estado. Desde A nunca se llega a D, por lo que se elimina.
+
+Al ser AFD completo se indica y se continúa con la minimización. P0 = {A} / {B, C}; B y C van con a y con b al mismo bloque, así que se fusionan en B. El AFD mínimo tiene A (a→B, b→B) y el terminal B (a→B, b→B): acepta toda palabra no vacía sobre {a, b} y rechaza ε.
+
+### 10.4 AFD de clase con estados X, Y, Z, W
+
+Es la tabla de transición del material del curso: Σ = {0, 1, 2}, q0 = X, Qt = {Z}; X: Y, Z, W; Y: Z, Y, X; Z: W, Y, W; W: X, W, Y. Ya es AFD y Moore separa los cuatro estados en la primera ronda, por lo que también es mínimo. L = {1, 00, 010, 021, 110, 201, 220, …}, que incluye las palabras 00 y 1 del ejemplo del curso.
+
+## 11. Interfaz HTTP y representación gráfica
 
 | Ruta | Contrato |
 | --- | --- |
@@ -130,51 +175,49 @@ P0={{A},{B,C}}. B y C tienen la misma firma y permanecen juntos. El cociente tie
 | POST /api/process | Objeto con mode regex, alphabet y expression; o mode manual y automaton |
 | POST /api/simulate | Objeto con automaton y word; devuelve word, accepted y path |
 
-`automaton` contiene `states`, `alphabet`, `initial`, `finals` y `transitions`. Cada fila de `transitions` es un objeto símbolo → lista de destinos. Consulte los tres archivos JSON de `examples/` para solicitudes completas. `process` devuelve `classification`, `summary` y cuatro `stages`: input, reachable, dfa y minimal. Cada etapa contiene automaton, steps y mapping; la mínima añade original_mapping y partitions. La simulación devuelve una entrada de path para la posición cero y otra por símbolo consumido.
+`automaton` contiene `states`, `alphabet`, `initial`, `finals` y `transitions`. Cada fila de `transitions` es un objeto símbolo → lista de destinos. Consulte los cinco archivos JSON de `examples/` para solicitudes completas. `process` devuelve `classification`, `summary`, `language` (primeras palabras de L) y cuatro `stages`: input, reachable, dfa y minimal. Cada etapa contiene automaton, steps y mapping; la mínima añade original_mapping y partitions.
 
-Una entrada inválida devuelve HTTP 400 con `error`. Una solicitud demasiado grande devuelve 413. No se utiliza eval, no se interpreta código enviado por el usuario y las etiquetas de diagramas y tablas se escapan antes de insertarse en HTML. Las claves de estados en el cliente usan objetos sin prototipo donde se construyen diccionarios.
+Una entrada inválida devuelve HTTP 400 con `error`; una solicitud demasiado grande devuelve 413. No se utiliza eval ni se interpreta código enviado por el usuario, y las etiquetas se escapan antes de insertarse en HTML.
 
-Los diagramas son SVG producidos por JavaScript a partir de los mismos datos de la tabla. Los estados se disponen circularmente, las aristas opuestas se curvan, los bucles tienen trazado propio y los símbolos que comparten origen y destino se agrupan. Una flecha marca el inicial y un doble círculo los finales. Los nombres largos se abrevian en el círculo y se conservan completos en el título accesible y la tabla. Zoom y desplazamiento permiten revisar grafos mayores; los grafos densos pueden requerir consultar la tabla para evitar ambigüedad visual.
+El diagrama de transición es un SVG producido por JavaScript con los mismos datos de la tabla y con la presentación de clase: estados en círculos dorados con el nombre en rojo, flechas naranjas, flecha de entrada en q0 y doble círculo en los terminales. Los estados se disponen circularmente, las aristas opuestas se curvan, los bucles tienen trazado propio y los símbolos que comparten origen y destino se agrupan (0,1). El tamaño de cada círculo se adapta al largo del nombre. La tabla usa encabezado Q naranja, filas en tonos durazno, → en el inicial, círculo en los terminales y error en las casillas sin destino.
 
-## 11. Dependencias y operación
+## 12. Dependencias y operación
 
-Flask sirve HTML, recursos y API; Gunicorn ejecuta el servidor en Linux/Render. HTML, CSS y SVG usan capacidades nativas del navegador, sin bibliotecas gráficas externas, CDN ni Graphviz. Pytest se utiliza solo para verificar. ReportLab genera los PDF; pypdf permite inspeccionarlos y pypdfium2 renderizarlos durante revisión. Ninguna dependencia implementa las transformaciones de autómatas.
+Flask sirve HTML, recursos y API; Gunicorn ejecuta el servidor en Linux/Render. HTML, CSS y SVG usan capacidades nativas del navegador, sin bibliotecas gráficas externas, CDN ni Graphviz. Pytest se utiliza solo para verificar. ReportLab genera los PDF; python-docx y openpyxl generan los documentos Word y Excel. Ninguna dependencia implementa las transformaciones de autómatas.
 
-El despliegue usa `render.yaml`, Python 3.13.9, el comando de instalación de requirements.txt y Gunicorn enlazado a 0.0.0.0:$PORT. `/health` comprueba que el proceso responde. Los logs del servidor quedan disponibles en Render. No hay migraciones, secretos, almacenamiento permanente ni servicios adicionales. Las instrucciones completas están en README.md.
+El despliegue usa `render.yaml`, Python 3.13.9, el comando de instalación de requirements.txt y Gunicorn enlazado a 0.0.0.0:$PORT. `/health` comprueba que el proceso responde. No hay migraciones, secretos, almacenamiento permanente ni servicios adicionales. Las instrucciones completas están en README.md.
 
-## 12. Estrategia de validación
+## 13. Estrategia de validación
 
-La matriz se genera a partir del XML real de pytest, sin inventar resultados. Un oráculo independiente explora configuraciones (estado, posición), incluidos ciclos ε. Para los ejemplos y 30 AFN generados con semilla 202602, se enumeran todas las cadenas hasta longitud 6 y se comparan todas las etapas. El ejemplo abb se compara además con el predicado de sufijo hasta longitud 8.
+La matriz se genera a partir del XML real de pytest, sin inventar resultados. Un oráculo independiente explora configuraciones (estado, posición), incluidos ciclos ε. Para los ejemplos y 30 AFND generados con semilla 202602, se enumeran todas las palabras hasta longitud 6 y se comparan todas las etapas. El ejemplo abb se compara además con el predicado de sufijo hasta longitud 8, y el AFND de clase se compara transición por transición con la tabla AFD del material del curso.
 
-La equivalencia entre AFD completo y mínimo se comprueba exactamente mediante BFS del producto: una pareja con aceptación distinta sería un contraejemplo. La minimalidad se verifica buscando una cadena que distinga cada par de estados diferentes. Estos controles aportan más evidencia que comprobar únicamente el número de estados o unas cadenas concretas.
+La equivalencia entre AFD completo y mínimo se comprueba exactamente mediante el producto de autómatas: una pareja con aceptación distinta sería un contraejemplo. La minimalidad se verifica buscando una palabra que distinga cada par de estados diferentes.
 
-Se verifican errores de entrada, límites, trazas, reproducibilidad, API y solicitudes concurrentes. La prueba de Gunicorn solo corre en Linux; GitHub Actions instala desde cero y ejecuta toda la suite. La revisión visual web no pudo completarse en esta sesión: el control de escritorio detuvo el acceso al no poder verificar la URL activa. Esa limitación no se registra como prueba aprobada. Los documentos PDF se renderizan para su revisión por separado.
+Se verifican errores de entrada, límites, trazas, la notación de clase, reproducibilidad, API y solicitudes concurrentes. La prueba de Gunicorn solo corre en Linux; GitHub Actions instala desde cero y ejecuta toda la suite. La interfaz web se revisó visualmente en Chrome de escritorio, con capturas reales en docs/evidencias/capturas/; la revisión en ancho de teléfono de esta versión está pendiente (V02).
 
-### 12.1 Trazabilidad con el enunciado
+### 13.1 Trazabilidad con el enunciado
 
 | Requisito | Implementación | Evidencia |
 | --- | --- | --- |
-| RF-01 | Validación de alfabeto y símbolos reservados | test_alphabet_validation |
-| RF-02 | Analizador de expresiones y pertenencia al alfabeto | test_regex_validation, test_regex_precedence |
-| RF-03 | Construcción propia de Thompson | test_suffix_abb, test_empty_word_language |
-| RF-04 | Registro de estados y tabla de transiciones | test_manual_nfa, test_manual_validation |
-| RF-05 | Clasificación justificada, incluido AFD incompleto | test_partial_sink, test_epsilon_cycle |
-| RF-06 | Conversión AFN a AFD | test_manual_nfa, test_generated_automata |
+| RF-01 | Validación de Σ y símbolos reservados | test_alphabet_validation |
+| RF-02 | Analizador de expresiones y pertenencia a Σ | test_regex_validation, test_regex_precedence |
+| RF-03 | Construcción propia de Thompson con estados A, B, C… | test_suffix_abb, test_class_notation |
+| RF-04 | Registro de Q, q0, Qt y tabla de transición | test_manual_nfa, test_manual_validation |
+| RF-05 | Clasificación AFD/AFND justificada con X,a→Y | test_class_notation, test_partial_sink |
+| RF-06 | Conversión AFND → AFD con nombres concatenados | test_manual_nfa, test_generated_automata |
 | RF-07 | Búsqueda y eliminación de inaccesibles | test_equivalent_unreachable |
 | RF-09 | Refinamiento de Moore y cociente | test_equivalent_unreachable, test_already_minimal_and_roundtrip |
-| RF-10 | Trazas de construcción, movimientos y particiones | test_traces_mapping_stability |
-| RF-11 | Tabla y diagrama SVG del AFD mínimo | check_frontend.cjs; revisión visual en Chrome (V01) |
+| RF-10 | Trazas de construcción, conversión y particiones | test_traces_mapping_stability, test_class_notation |
+| RF-11 | Tabla y diagrama de transición del AFD mínimo | check_frontend.cjs; revisión visual en Chrome (V01) |
 | RF-12 | Simulación con recorrido y aceptación | test_simulation_validation, test_process_and_simulate |
-| RF-13 | Cuatro etapas consultables y comparación final | test_traces_mapping_stability, check_frontend.cjs; revisión visual en Chrome (V01) |
+| RF-13 | Cuatro etapas consultables y comparación final | test_traces_mapping_stability; revisión visual en Chrome (V01) |
 
-La ejecución Linux registrada en docs/evidencias/ci-linux.json terminó con 22 pruebas aprobadas, incluido Gunicorn, y cuatro comprobaciones de formato del cliente. Estas últimas se ejecutan con un DOM mínimo de prueba; además se revisó la interfaz en Chrome de escritorio (V01, capturas en docs/evidencias/capturas/). El diseño móvil se revisó con 657 px de ancho visible, el mínimo que permite la ventana de Chrome (V02). Los datos de ejecución, enlace y commit verificado se conservan para auditoría.
-
-## 13. Fuentes
+## 14. Fuentes
 
 Enunciado proporcionado: MICROPROYECTO3-AF.pdf, «Microproyecto #3», tres páginas, lineamientos 2026/02.
+
+Material del curso usado como referencia de notación: «Autómatas de Estados Finitos», «Conversión de AFND a AFD» y «Enunciados de ejercicios», Teoría General de la Computación.
 
 Documentación de Flask: https://flask.palletsprojects.com/en/stable/
 
 Documentación de Render: https://render.com/docs/deploy-flask ; https://render.com/docs/blueprint-spec ; https://render.com/docs/python-version
-
-Los procedimientos de Thompson, subconjuntos y Moore están expuestos y justificados en este documento; su implementación y sus pruebas pueden inspeccionarse en el código fuente.

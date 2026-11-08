@@ -35,7 +35,7 @@ def process_route():
 @app.post("/api/simulate")
 def simulate_route():
     data = json_body()
-    return jsonify(simulate(automaton_from(data.get("automaton"), MAX_STATES), data.get("word")))
+    return jsonify(simulate(automaton_from(data.get("automaton"), MAX_STATES, generated=True), data.get("word")))
 
 
 @app.errorhandler(InputError)

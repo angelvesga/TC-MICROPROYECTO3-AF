@@ -58,9 +58,12 @@ def test_isolation():
 
 
 def test_shipped_examples():
-    """RF-03,04,13: los tres ejemplos de entrega son utilizables a través de la API."""
+    """RF-03,04,13: los cinco ejemplos de entrega (incluidos los de clase) son utilizables a través de la API."""
     with app.test_client() as client:
         for path in sorted((Path(__file__).resolve().parents[1]/"examples").glob("*.json")):
             response = client.post("/api/process", json=json.loads(path.read_text(encoding="utf-8")))
             assert response.status_code == 200, response.json
             assert len(response.json["stages"]) == 4
+            minimum = response.json["stages"][-1]["automaton"]
+            sim = client.post("/api/simulate", json={"automaton":minimum,"word":""})
+            assert sim.status_code == 200, sim.json

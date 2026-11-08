@@ -1,0 +1,1 @@
+{"mode":"manual","automaton":{"states":["A","B","C","D"],"alphabet":["0","1"],"initial":"A","finals":["A"],"transitions":{"A":{"0":["B"],"1":["A"]},"B":{"0":["B","C"],"1":["D"]},"C":{"0":["D"],"1":["C"]},"D":{"0":["A"],"1":["B"]}}}}

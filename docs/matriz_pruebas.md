@@ -3,11 +3,11 @@
 
 Microproyecto 3 · Teoría de la Computación · 2026/02
 
-Registros: 25 aprobados, 1 omitidos y 0 pendientes. Los resultados proceden de reportes reales; consulte el CSV y XML para los identificadores completos.
+Registros: 25 aprobados, 1 omitidos y 1 pendientes. Los resultados proceden de reportes reales; consulte el CSV y XML para los identificadores completos.
 
-La suite local corre en Windows con Python 3.13.9. Gunicorn se verifica únicamente en Linux. La comprobación exacta de equivalencia usa el producto de AFD y la minimalidad se verifica por distinguibilidad de pares. Los ensayos con AFN incluyen 30 casos reproducibles de semilla 202602.
+La suite local corre en Windows con Python 3.13.9. Gunicorn se verifica únicamente en Linux. La comprobación exacta de equivalencia usa el producto de AFD y la minimalidad se verifica por distinguibilidad de pares. Los ensayos con AFND incluyen 30 casos reproducibles de semilla 202602.
 
-La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. También se revisó con el diseño móvil activo (657 px de ancho visible). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.
+La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. La revisión en ancho de teléfono de esta versión queda pendiente (V02). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.
 
 ## Casos
 
@@ -15,15 +15,15 @@ La interfaz web se revisó visualmente en Chrome de escritorio; las capturas rea
 - P02 · APROBADO · RF-03,06,09,12: contrato completo desde petición de construcción hasta simulación. Evidencia: docs/evidencias/pytest-windows.xml (test_process_and_simulate).
 - P03 · APROBADO · RF-01,02,04: JSON malformado, tipos incorrectos y entradas inválidas devuelven 400. Evidencia: docs/evidencias/pytest-windows.xml (test_api_invalid_requests).
 - P04 · APROBADO · RF-12,13: solicitudes concurrentes de usuarios distintos no comparten resultados. Evidencia: docs/evidencias/pytest-windows.xml (test_isolation).
-- P05 · APROBADO · RF-03,04,13: los tres ejemplos de entrega son utilizables a través de la API. Evidencia: docs/evidencias/pytest-windows.xml (test_shipped_examples).
+- P05 · APROBADO · RF-03,04,13: los cinco ejemplos de entrega (incluidos los de clase) son utilizables a través de la API. Evidencia: docs/evidencias/pytest-windows.xml (test_shipped_examples).
 - P06 · APROBADO · RF-02,03,06,09,12: abb produce cuatro estados y reconoce exactamente el sufijo. Evidencia: docs/evidencias/pytest-windows.xml (test_suffix_abb).
-- P07 · APROBADO · RF-04,05,06: varios destinos se identifican y determinizar preserva el lenguaje. Evidencia: docs/evidencias/pytest-windows.xml (test_manual_nfa).
-- P08 · APROBADO · RF-07,09: elimina X y fusiona B,C; el AFD mínimo tiene dos estados. Evidencia: docs/evidencias/pytest-windows.xml (test_equivalent_unreachable).
+- P07 · APROBADO · RF-04,05,06: el AFND de clase da exactamente la tabla AFD de la docente (A, B, BC, D, BCD, CD, ABCD, AD, AB). Evidencia: docs/evidencias/pytest-windows.xml (test_manual_nfa).
+- P08 · APROBADO · RF-07,09: elimina D (inaccesible) y fusiona B,C en B; el AFD mínimo tiene dos estados. Evidencia: docs/evidencias/pytest-windows.xml (test_equivalent_unreachable).
 - P09 · APROBADO · RF-02,03: estrella, concatenación, unión y paréntesis respetan la precedencia. Evidencia: docs/evidencias/pytest-windows.xml (test_regex_precedence).
 - P10 · APROBADO · RF-03,09,12: ε acepta solo cadena vacía; ∅ no acepta ninguna cadena. Evidencia: docs/evidencias/pytest-windows.xml (test_empty_word_language).
 - P11 · APROBADO · RF-05,06,12: ciclos ε terminan y reconocen aceptación sin consumir entrada. Evidencia: docs/evidencias/pytest-windows.xml (test_epsilon_cycle).
 - P12 · APROBADO · RF-09: particiones vacías no fallan; lenguajes vacío y universal tienen un estado. Evidencia: docs/evidencias/pytest-windows.xml (test_no_finals_and_all_finals).
-- P13 · APROBADO · RF-05,09: un AFD incompleto sigue siendo determinista y se completa sin colisiones. Evidencia: docs/evidencias/pytest-windows.xml (test_partial_sink).
+- P13 · APROBADO · RF-05,09: un AFD incompleto sigue siendo determinista y se completa con el estado ERROR sin colisiones. Evidencia: docs/evidencias/pytest-windows.xml (test_partial_sink).
 - P14 · APROBADO · RF-01: rechaza duplicados, operadores reservados, espacios y símbolos múltiples. Evidencia: docs/evidencias/pytest-windows.xml (test_alphabet_validation).
 - P15 · APROBADO · RF-02: expresiones inválidas y símbolos externos producen errores con posición. Evidencia: docs/evidencias/pytest-windows.xml (test_regex_validation).
 - P16 · APROBADO · RF-04: valida nombres, inicial, finales, destinos, símbolos y estructura de transiciones. Evidencia: docs/evidencias/pytest-windows.xml (test_manual_validation).
@@ -32,8 +32,9 @@ La interfaz web se revisó visualmente en Chrome de escritorio; las capturas rea
 - P19 · APROBADO · RF-10,11,13: etapas consultables, trazas, particiones y nombres reproducibles. Evidencia: docs/evidencias/pytest-windows.xml (test_traces_mapping_stability).
 - P20 · APROBADO · RF-06,09,12: 30 AFN aleatorios reproducibles preservan lenguaje y generan AFD mínimos. Evidencia: docs/evidencias/pytest-windows.xml (test_generated_automata).
 - P21 · APROBADO · RF-09,11: minimizar dos veces conserva el lenguaje y el número mínimo de estados. Evidencia: docs/evidencias/pytest-windows.xml (test_already_minimal_and_roundtrip).
-- P22 · OMITIDO · Despliegue: Gunicorn escucha en 0.0.0.0 y sirve salud, interfaz y procesamiento real. Evidencia: docs/evidencias/pytest-windows.xml (test_gunicorn_linux).
-- P23 · APROBADO · Despliegue Linux: Instalación limpia, suite completa y arranque real de Gunicorn. Evidencia: https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595 (github_actions).
-- P24 · APROBADO · RF-11,13 / formato: Tabla con caracteres escapados, SVG sin coordenadas inválidas, estados con nombres especiales y limpieza al cambiar de modalidad. Evidencia: docs/evidencias/frontend.json (check_frontend.cjs).
-- V01 · APROBADO · RF-05,11,12,13 / interfaz: En Chrome de escritorio (1366 px): ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla; aabb se acepta con recorrido M0→M1→M1→M2→M3; ejemplo 02 se clasifica como AFN; las cuatro etapas son consultables; cambiar de modalidad limpia resultados; sin errores de la aplicación en consola. Evidencia: docs/evidencias/capturas/ (revision_visual_web).
-- V02 · APROBADO · RF-11 / interfaz móvil: Con área visible de 657 px (mínimo de ventana de Chrome; activa el corte móvil de 760 px): diseño en una columna, ejemplo 01 construido y simulado, sin desbordamiento horizontal. Evidencia: docs/evidencias/capturas/04_vista_movil_657px.jpg (revision_visual_movil).
+- P22 · APROBADO · RF-03,05,06,10: notación de clase: estados A, B, C…; X,a→Y; subconjuntos concatenados; ERROR; L = {…}. Evidencia: docs/evidencias/pytest-windows.xml (test_class_notation).
+- P23 · OMITIDO · Despliegue: Gunicorn escucha en 0.0.0.0 y sirve salud, interfaz y procesamiento real. Evidencia: docs/evidencias/pytest-windows.xml (test_gunicorn_linux).
+- P24 · APROBADO · Despliegue Linux: Instalación limpia, suite completa y arranque real de Gunicorn. Evidencia: https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595 (github_actions).
+- P25 · APROBADO · RF-11,13 / formato: Tabla con caracteres escapados, SVG sin coordenadas inválidas, estados con nombres especiales y limpieza al cambiar de modalidad. Evidencia: docs/evidencias/frontend.json (check_frontend.cjs).
+- V01 · APROBADO · RF-05,11,12,13 / interfaz: En Chrome de escritorio (1366 px): notación de clase (Q, q0, Σ, Qt; A,0→B; estados A, B, C…). Ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla y acepta aabb con su recorrido; ejemplo 02 (AFND de clase) se clasifica AFND y su conversión reproduce la tabla A, B, BC, D, BCD, CD, ABCD, AD, AB; las cuatro etapas son consultables; sin errores de la aplicación en consola. Evidencia: docs/evidencias/capturas/ (revision_visual_web).
+- V02 · PENDIENTE · RF-11 / interfaz móvil: Revisar en ancho de teléfono la versión con notación de clase (una columna, sin desplazamiento horizontal). Evidencia: La versión anterior se aprobó con 657 px de ancho; tras los cambios de notación no se pudo redimensionar la ventana maximizada de Chrome. No se fabricaron capturas. (revision_visual_movil).

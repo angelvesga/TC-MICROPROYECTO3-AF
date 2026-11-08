@@ -1,0 +1,708 @@
+{
+  "input": {
+    "mode": "manual",
+    "automaton": {
+      "states": [
+        "X",
+        "Y",
+        "Z",
+        "W"
+      ],
+      "alphabet": [
+        "0",
+        "1",
+        "2"
+      ],
+      "initial": "X",
+      "finals": [
+        "Z"
+      ],
+      "transitions": {
+        "X": {
+          "0": [
+            "Y"
+          ],
+          "1": [
+            "Z"
+          ],
+          "2": [
+            "W"
+          ]
+        },
+        "Y": {
+          "0": [
+            "Z"
+          ],
+          "1": [
+            "Y"
+          ],
+          "2": [
+            "X"
+          ]
+        },
+        "Z": {
+          "0": [
+            "W"
+          ],
+          "1": [
+            "Y"
+          ],
+          "2": [
+            "W"
+          ]
+        },
+        "W": {
+          "0": [
+            "X"
+          ],
+          "1": [
+            "W"
+          ],
+          "2": [
+            "Y"
+          ]
+        }
+      }
+    }
+  },
+  "result": {
+    "classification": "AFD",
+    "stages": [
+      {
+        "id": "input",
+        "title": "Entrada y clasificación",
+        "automaton": {
+          "states": [
+            "X",
+            "Y",
+            "Z",
+            "W"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "X",
+          "finals": [
+            "Z"
+          ],
+          "transitions": {
+            "X": {
+              "0": [
+                "Y"
+              ],
+              "1": [
+                "Z"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "Y": {
+              "0": [
+                "Z"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "X"
+              ]
+            },
+            "Z": {
+              "0": [
+                "W"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "W": {
+              "0": [
+                "X"
+              ],
+              "1": [
+                "W"
+              ],
+              "2": [
+                "Y"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Se registran los componentes ingresados sin cambiar sus nombres.",
+          "Clasificación: AFD.",
+          "Cada símbolo del alfabeto va a un solo estado (X,a→Y) y no hay transiciones ε.",
+          "El autómata ya es determinista: se indica y se continúa con su minimización."
+        ],
+        "mapping": {
+          "X": [
+            "X"
+          ],
+          "Y": [
+            "Y"
+          ],
+          "Z": [
+            "Z"
+          ],
+          "W": [
+            "W"
+          ]
+        }
+      },
+      {
+        "id": "reachable",
+        "title": "Estados accesibles",
+        "automaton": {
+          "states": [
+            "X",
+            "Y",
+            "Z",
+            "W"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "X",
+          "finals": [
+            "Z"
+          ],
+          "transitions": {
+            "X": {
+              "0": [
+                "Y"
+              ],
+              "1": [
+                "Z"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "Y": {
+              "0": [
+                "Z"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "X"
+              ]
+            },
+            "Z": {
+              "0": [
+                "W"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "W": {
+              "0": [
+                "X"
+              ],
+              "1": [
+                "W"
+              ],
+              "2": [
+                "Y"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Se inicia la búsqueda en el estado inicial q0 = X.",
+          "X,0→Y: Y es accesible.",
+          "X,1→Z: Z es accesible.",
+          "X,2→W: W es accesible.",
+          "Estados inaccesibles eliminados: ninguno."
+        ],
+        "mapping": {
+          "X": [
+            "X"
+          ],
+          "Y": [
+            "Y"
+          ],
+          "Z": [
+            "Z"
+          ],
+          "W": [
+            "W"
+          ]
+        }
+      },
+      {
+        "id": "dfa",
+        "title": "AFD completo",
+        "automaton": {
+          "states": [
+            "X",
+            "Y",
+            "Z",
+            "W"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "X",
+          "finals": [
+            "Z"
+          ],
+          "transitions": {
+            "X": {
+              "0": [
+                "Y"
+              ],
+              "1": [
+                "Z"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "Y": {
+              "0": [
+                "Z"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "X"
+              ]
+            },
+            "Z": {
+              "0": [
+                "W"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "W": {
+              "0": [
+                "X"
+              ],
+              "1": [
+                "W"
+              ],
+              "2": [
+                "Y"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "El autómata ya es un AFD completo: se omite la conversión AFND → AFD y se continúa con la minimización."
+        ],
+        "mapping": {
+          "X": [
+            "X"
+          ],
+          "Y": [
+            "Y"
+          ],
+          "Z": [
+            "Z"
+          ],
+          "W": [
+            "W"
+          ]
+        }
+      },
+      {
+        "id": "minimal",
+        "title": "AFD mínimo",
+        "automaton": {
+          "states": [
+            "X",
+            "Y",
+            "Z",
+            "W"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "X",
+          "finals": [
+            "Z"
+          ],
+          "transitions": {
+            "X": {
+              "0": [
+                "Y"
+              ],
+              "1": [
+                "Z"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "Y": {
+              "0": [
+                "Z"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "X"
+              ]
+            },
+            "Z": {
+              "0": [
+                "W"
+              ],
+              "1": [
+                "Y"
+              ],
+              "2": [
+                "W"
+              ]
+            },
+            "W": {
+              "0": [
+                "X"
+              ],
+              "1": [
+                "W"
+              ],
+              "2": [
+                "Y"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "P0 separa estados no terminales y terminales: {X, Y, W} / {Z}.",
+          "X,0→Y (bloque 1) · X,1→Z (bloque 2) · X,2→W (bloque 1).",
+          "Y,0→Z (bloque 2) · Y,1→Y (bloque 1) · Y,2→X (bloque 1).",
+          "W,0→X (bloque 1) · W,1→W (bloque 1) · W,2→Y (bloque 1).",
+          "Z,0→W (bloque 1) · Z,1→Y (bloque 1) · Z,2→W (bloque 1).",
+          "P1: {X} / {Y} / {W} / {Z}.",
+          "X,0→Y (bloque 2) · X,1→Z (bloque 4) · X,2→W (bloque 3).",
+          "Y,0→Z (bloque 4) · Y,1→Y (bloque 2) · Y,2→X (bloque 1).",
+          "W,0→X (bloque 1) · W,1→W (bloque 3) · W,2→Y (bloque 2).",
+          "Z,0→W (bloque 3) · Z,1→Y (bloque 2) · Z,2→W (bloque 3).",
+          "P2: {X} / {Y} / {W} / {Z}.",
+          "La partición no cambia: sus bloques son las clases de equivalencia."
+        ],
+        "mapping": {
+          "X": [
+            "X"
+          ],
+          "Y": [
+            "Y"
+          ],
+          "Z": [
+            "Z"
+          ],
+          "W": [
+            "W"
+          ]
+        },
+        "original_mapping": {
+          "X": [
+            "X"
+          ],
+          "Y": [
+            "Y"
+          ],
+          "Z": [
+            "Z"
+          ],
+          "W": [
+            "W"
+          ]
+        },
+        "partitions": [
+          [
+            [
+              "X",
+              "Y",
+              "W"
+            ],
+            [
+              "Z"
+            ]
+          ],
+          [
+            [
+              "X"
+            ],
+            [
+              "Y"
+            ],
+            [
+              "W"
+            ],
+            [
+              "Z"
+            ]
+          ],
+          [
+            [
+              "X"
+            ],
+            [
+              "Y"
+            ],
+            [
+              "W"
+            ],
+            [
+              "Z"
+            ]
+          ]
+        ]
+      }
+    ],
+    "language": [
+      "1",
+      "00",
+      "010",
+      "021",
+      "110",
+      "201",
+      "220",
+      "0010"
+    ],
+    "summary": {
+      "original_states": 4,
+      "reachable_states": 4,
+      "dfa_states": 4,
+      "minimal_states": 4
+    }
+  },
+  "simulations": [
+    {
+      "word": "1",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "1",
+          "states": [
+            "Z"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "00",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "Y"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "0",
+          "states": [
+            "Z"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "010",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "Y"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "1",
+          "states": [
+            "Y"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "0",
+          "states": [
+            "Z"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "021",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "Y"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "2",
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "1",
+          "states": [
+            "Z"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "0",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "Y"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "20",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "2",
+          "states": [
+            "W"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "0",
+          "states": [
+            "X"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "020",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "Y"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "2",
+          "states": [
+            "X"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "0",
+          "states": [
+            "Y"
+          ]
+        }
+      ]
+    }
+  ]
+}

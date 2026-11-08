@@ -8,171 +8,172 @@
     "expression": "(a|b)*abb"
   },
   "result": {
-    "classification": "AFN-ε",
+    "classification": "AFND-ε",
     "stages": [
       {
         "id": "input",
         "title": "Construcción y clasificación",
         "automaton": {
           "states": [
-            "q0",
-            "q1",
-            "q2",
-            "q3",
-            "q4",
-            "q5",
-            "q6",
-            "q7",
-            "q8",
-            "q9",
-            "q10",
-            "q11",
-            "q12",
-            "q13"
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N"
           ],
           "alphabet": [
             "a",
             "b"
           ],
-          "initial": "q0",
+          "initial": "A",
           "finals": [
-            "q13"
+            "N"
           ],
           "transitions": {
-            "q0": {
+            "A": {
               "ε": [
-                "q1",
-                "q2"
+                "B",
+                "C"
               ]
             },
-            "q1": {
+            "B": {
               "ε": [
-                "q8"
+                "I"
               ]
             },
-            "q2": {
+            "C": {
               "ε": [
-                "q4",
-                "q6"
+                "E",
+                "G"
               ]
             },
-            "q3": {
+            "D": {
               "ε": [
-                "q1",
-                "q2"
+                "B",
+                "C"
               ]
             },
-            "q4": {
+            "E": {
               "a": [
-                "q5"
+                "F"
               ]
             },
-            "q5": {
+            "F": {
               "ε": [
-                "q3"
+                "D"
               ]
             },
-            "q6": {
+            "G": {
               "b": [
-                "q7"
+                "H"
               ]
             },
-            "q7": {
+            "H": {
               "ε": [
-                "q3"
+                "D"
               ]
             },
-            "q8": {
+            "I": {
               "a": [
-                "q9"
+                "J"
               ]
             },
-            "q9": {
+            "J": {
               "ε": [
-                "q10"
+                "K"
               ]
             },
-            "q10": {
+            "K": {
               "b": [
-                "q11"
+                "L"
               ]
             },
-            "q11": {
+            "L": {
               "ε": [
-                "q12"
+                "M"
               ]
             },
-            "q12": {
+            "M": {
               "b": [
-                "q13"
+                "N"
               ]
             },
-            "q13": {}
+            "N": {}
           }
         },
         "steps": [
-          "Fragmento a: entrada q4, salida q5; q4 --a→ q5.",
-          "Fragmento b: entrada q6, salida q7; q6 --b→ q7.",
-          "Unión: q2 --ε→ {q4, q6}; {q5, q7} --ε→ q3.",
-          "Estrella: q0 --ε→ {q2, q1}; q3 --ε→ {q2, q1}; permite cero o más repeticiones.",
-          "Fragmento a: entrada q8, salida q9; q8 --a→ q9.",
-          "Concatenación: q1 --ε→ q8; fragmento q0 a q9.",
-          "Fragmento b: entrada q10, salida q11; q10 --b→ q11.",
-          "Concatenación: q9 --ε→ q10; fragmento q0 a q11.",
-          "Fragmento b: entrada q12, salida q13; q12 --b→ q13.",
-          "Concatenación: q11 --ε→ q12; fragmento q0 a q13.",
-          "Clasificación: AFN-ε.",
-          "q0 tiene transición ε, que no consume símbolos.",
-          "q1 tiene transición ε, que no consume símbolos.",
-          "q2 tiene transición ε, que no consume símbolos.",
-          "q3 tiene transición ε, que no consume símbolos.",
-          "q5 tiene transición ε, que no consume símbolos.",
-          "q7 tiene transición ε, que no consume símbolos.",
-          "q9 tiene transición ε, que no consume símbolos.",
-          "q11 tiene transición ε, que no consume símbolos."
+          "Fragmento a: E,a→F.",
+          "Fragmento b: G,b→H.",
+          "Unión: C,ε→E,G; F,ε→D y H,ε→D.",
+          "Estrella: A,ε→C,B; D,ε→C,B; permite cero o más repeticiones.",
+          "Fragmento a: I,a→J.",
+          "Concatenación: B,ε→I; el fragmento va de A a J.",
+          "Fragmento b: K,b→L.",
+          "Concatenación: J,ε→K; el fragmento va de A a L.",
+          "Fragmento b: M,b→N.",
+          "Concatenación: L,ε→M; el fragmento va de A a N.",
+          "Resultado: Q = {A, B, C, D, E, F, G, H, I, J, K, L, M, N}, q0 = A, Qt = {N}.",
+          "Clasificación: AFND-ε.",
+          "A,ε→B,C: transición vacía, no consume símbolo.",
+          "B,ε→I: transición vacía, no consume símbolo.",
+          "C,ε→E,G: transición vacía, no consume símbolo.",
+          "D,ε→B,C: transición vacía, no consume símbolo.",
+          "F,ε→D: transición vacía, no consume símbolo.",
+          "H,ε→D: transición vacía, no consume símbolo.",
+          "J,ε→K: transición vacía, no consume símbolo.",
+          "L,ε→M: transición vacía, no consume símbolo."
         ],
         "mapping": {
-          "q0": [
-            "q0"
+          "A": [
+            "A"
           ],
-          "q1": [
-            "q1"
+          "B": [
+            "B"
           ],
-          "q2": [
-            "q2"
+          "C": [
+            "C"
           ],
-          "q3": [
-            "q3"
+          "D": [
+            "D"
           ],
-          "q4": [
-            "q4"
+          "E": [
+            "E"
           ],
-          "q5": [
-            "q5"
+          "F": [
+            "F"
           ],
-          "q6": [
-            "q6"
+          "G": [
+            "G"
           ],
-          "q7": [
-            "q7"
+          "H": [
+            "H"
           ],
-          "q8": [
-            "q8"
+          "I": [
+            "I"
           ],
-          "q9": [
-            "q9"
+          "J": [
+            "J"
           ],
-          "q10": [
-            "q10"
+          "K": [
+            "K"
           ],
-          "q11": [
-            "q11"
+          "L": [
+            "L"
           ],
-          "q12": [
-            "q12"
+          "M": [
+            "M"
           ],
-          "q13": [
-            "q13"
+          "N": [
+            "N"
           ]
         }
       },
@@ -181,288 +182,288 @@
         "title": "Estados accesibles",
         "automaton": {
           "states": [
-            "q0",
-            "q1",
-            "q2",
-            "q3",
-            "q4",
-            "q5",
-            "q6",
-            "q7",
-            "q8",
-            "q9",
-            "q10",
-            "q11",
-            "q12",
-            "q13"
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N"
           ],
           "alphabet": [
             "a",
             "b"
           ],
-          "initial": "q0",
+          "initial": "A",
           "finals": [
-            "q13"
+            "N"
           ],
           "transitions": {
-            "q0": {
+            "A": {
               "ε": [
-                "q1",
-                "q2"
+                "B",
+                "C"
               ]
             },
-            "q1": {
+            "B": {
               "ε": [
-                "q8"
+                "I"
               ]
             },
-            "q2": {
+            "C": {
               "ε": [
-                "q4",
-                "q6"
+                "E",
+                "G"
               ]
             },
-            "q3": {
+            "D": {
               "ε": [
-                "q1",
-                "q2"
+                "B",
+                "C"
               ]
             },
-            "q4": {
+            "E": {
               "a": [
-                "q5"
+                "F"
               ]
             },
-            "q5": {
+            "F": {
               "ε": [
-                "q3"
+                "D"
               ]
             },
-            "q6": {
+            "G": {
               "b": [
-                "q7"
+                "H"
               ]
             },
-            "q7": {
+            "H": {
               "ε": [
-                "q3"
+                "D"
               ]
             },
-            "q8": {
+            "I": {
               "a": [
-                "q9"
+                "J"
               ]
             },
-            "q9": {
+            "J": {
               "ε": [
-                "q10"
+                "K"
               ]
             },
-            "q10": {
+            "K": {
               "b": [
-                "q11"
+                "L"
               ]
             },
-            "q11": {
+            "L": {
               "ε": [
-                "q12"
+                "M"
               ]
             },
-            "q12": {
+            "M": {
               "b": [
-                "q13"
+                "N"
               ]
             },
-            "q13": {}
+            "N": {}
           }
         },
         "steps": [
-          "Se inicia la búsqueda en q0.",
-          "q0 --ε→ q1: se descubre un estado accesible.",
-          "q0 --ε→ q2: se descubre un estado accesible.",
-          "q1 --ε→ q8: se descubre un estado accesible.",
-          "q2 --ε→ q4: se descubre un estado accesible.",
-          "q2 --ε→ q6: se descubre un estado accesible.",
-          "q8 --a→ q9: se descubre un estado accesible.",
-          "q4 --a→ q5: se descubre un estado accesible.",
-          "q6 --b→ q7: se descubre un estado accesible.",
-          "q9 --ε→ q10: se descubre un estado accesible.",
-          "q5 --ε→ q3: se descubre un estado accesible.",
-          "q10 --b→ q11: se descubre un estado accesible.",
-          "q11 --ε→ q12: se descubre un estado accesible.",
-          "q12 --b→ q13: se descubre un estado accesible.",
+          "Se inicia la búsqueda en el estado inicial q0 = A.",
+          "A,ε→B: B es accesible.",
+          "A,ε→C: C es accesible.",
+          "B,ε→I: I es accesible.",
+          "C,ε→E: E es accesible.",
+          "C,ε→G: G es accesible.",
+          "I,a→J: J es accesible.",
+          "E,a→F: F es accesible.",
+          "G,b→H: H es accesible.",
+          "J,ε→K: K es accesible.",
+          "F,ε→D: D es accesible.",
+          "K,b→L: L es accesible.",
+          "L,ε→M: M es accesible.",
+          "M,b→N: N es accesible.",
           "Estados inaccesibles eliminados: ninguno."
         ],
         "mapping": {
-          "q0": [
-            "q0"
+          "A": [
+            "A"
           ],
-          "q1": [
-            "q1"
+          "B": [
+            "B"
           ],
-          "q2": [
-            "q2"
+          "C": [
+            "C"
           ],
-          "q3": [
-            "q3"
+          "D": [
+            "D"
           ],
-          "q4": [
-            "q4"
+          "E": [
+            "E"
           ],
-          "q5": [
-            "q5"
+          "F": [
+            "F"
           ],
-          "q6": [
-            "q6"
+          "G": [
+            "G"
           ],
-          "q7": [
-            "q7"
+          "H": [
+            "H"
           ],
-          "q8": [
-            "q8"
+          "I": [
+            "I"
           ],
-          "q9": [
-            "q9"
+          "J": [
+            "J"
           ],
-          "q10": [
-            "q10"
+          "K": [
+            "K"
           ],
-          "q11": [
-            "q11"
+          "L": [
+            "L"
           ],
-          "q12": [
-            "q12"
+          "M": [
+            "M"
           ],
-          "q13": [
-            "q13"
+          "N": [
+            "N"
           ]
         }
       },
       {
         "id": "dfa",
-        "title": "AFD completo",
+        "title": "Conversión AFND → AFD",
         "automaton": {
           "states": [
-            "D0",
-            "D1",
-            "D2",
-            "D3",
-            "D4"
+            "ABCEGI",
+            "BCDEFGIJK",
+            "BCDEGHI",
+            "BCDEGHILM",
+            "BCDEGHIN"
           ],
           "alphabet": [
             "a",
             "b"
           ],
-          "initial": "D0",
+          "initial": "ABCEGI",
           "finals": [
-            "D4"
+            "BCDEGHIN"
           ],
           "transitions": {
-            "D0": {
+            "ABCEGI": {
               "a": [
-                "D1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "D2"
+                "BCDEGHI"
               ]
             },
-            "D1": {
+            "BCDEFGIJK": {
               "a": [
-                "D1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "D3"
+                "BCDEGHILM"
               ]
             },
-            "D2": {
+            "BCDEGHI": {
               "a": [
-                "D1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "D2"
+                "BCDEGHI"
               ]
             },
-            "D3": {
+            "BCDEGHILM": {
               "a": [
-                "D1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "D4"
+                "BCDEGHIN"
               ]
             },
-            "D4": {
+            "BCDEGHIN": {
               "a": [
-                "D1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "D2"
+                "BCDEGHI"
               ]
             }
           }
         },
         "steps": [
-          "D0 = cierre-ε({q0}) = {q0, q1, q2, q4, q6, q8}.",
-          "D0, símbolo a: mover = {q5, q9}; cierre-ε = {q1, q10, q2, q3, q4, q5, q6, q8, q9} = D1.",
-          "D0, símbolo b: mover = {q7}; cierre-ε = {q1, q2, q3, q4, q6, q7, q8} = D2.",
-          "D1, símbolo a: mover = {q5, q9}; cierre-ε = {q1, q10, q2, q3, q4, q5, q6, q8, q9} = D1.",
-          "D1, símbolo b: mover = {q11, q7}; cierre-ε = {q1, q11, q12, q2, q3, q4, q6, q7, q8} = D3.",
-          "D2, símbolo a: mover = {q5, q9}; cierre-ε = {q1, q10, q2, q3, q4, q5, q6, q8, q9} = D1.",
-          "D2, símbolo b: mover = {q7}; cierre-ε = {q1, q2, q3, q4, q6, q7, q8} = D2.",
-          "D3, símbolo a: mover = {q5, q9}; cierre-ε = {q1, q10, q2, q3, q4, q5, q6, q8, q9} = D1.",
-          "D3, símbolo b: mover = {q13, q7}; cierre-ε = {q1, q13, q2, q3, q4, q6, q7, q8} = D4.",
-          "D4 es final porque contiene {q13}.",
-          "D4, símbolo a: mover = {q5, q9}; cierre-ε = {q1, q10, q2, q3, q4, q5, q6, q8, q9} = D1.",
-          "D4, símbolo b: mover = {q7}; cierre-ε = {q1, q2, q3, q4, q6, q7, q8} = D2."
+          "Estado inicial del AFD = cierre-ε(A) = {A, B, C, E, G, I} → se nombra ABCEGI.",
+          "ABCEGI,a→BCDEFGIJK   ⟸ A,a→error · B,a→error · C,a→error · E,a→F · G,a→error · I,a→J; cierre-ε añade B, C, D, E, G, I, K.",
+          "ABCEGI,b→BCDEGHI   ⟸ A,b→error · B,b→error · C,b→error · E,b→error · G,b→H · I,b→error; cierre-ε añade B, C, D, E, G, I.",
+          "BCDEFGIJK,a→BCDEFGIJK   ⟸ B,a→error · C,a→error · D,a→error · E,a→F · F,a→error · G,a→error · I,a→J · J,a→error · K,a→error; cierre-ε añade B, C, D, E, G, I, K.",
+          "BCDEFGIJK,b→BCDEGHILM   ⟸ B,b→error · C,b→error · D,b→error · E,b→error · F,b→error · G,b→H · I,b→error · J,b→error · K,b→L; cierre-ε añade B, C, D, E, G, I, M.",
+          "BCDEGHI,a→BCDEFGIJK   ⟸ B,a→error · C,a→error · D,a→error · E,a→F · G,a→error · H,a→error · I,a→J; cierre-ε añade B, C, D, E, G, I, K.",
+          "BCDEGHI,b→BCDEGHI   ⟸ B,b→error · C,b→error · D,b→error · E,b→error · G,b→H · H,b→error · I,b→error; cierre-ε añade B, C, D, E, G, I.",
+          "BCDEGHILM,a→BCDEFGIJK   ⟸ B,a→error · C,a→error · D,a→error · E,a→F · G,a→error · H,a→error · I,a→J · L,a→error · M,a→error; cierre-ε añade B, C, D, E, G, I, K.",
+          "BCDEGHILM,b→BCDEGHIN   ⟸ B,b→error · C,b→error · D,b→error · E,b→error · G,b→H · H,b→error · I,b→error · L,b→error · M,b→N; cierre-ε añade B, C, D, E, G, I.",
+          "BCDEGHIN es terminal porque contiene N, terminal del AFND.",
+          "BCDEGHIN,a→BCDEFGIJK   ⟸ B,a→error · C,a→error · D,a→error · E,a→F · G,a→error · H,a→error · I,a→J · N,a→error; cierre-ε añade B, C, D, E, G, I, K.",
+          "BCDEGHIN,b→BCDEGHI   ⟸ B,b→error · C,b→error · D,b→error · E,b→error · G,b→H · H,b→error · I,b→error · N,b→error; cierre-ε añade B, C, D, E, G, I."
         ],
         "mapping": {
-          "D0": [
-            "q0",
-            "q1",
-            "q2",
-            "q4",
-            "q6",
-            "q8"
+          "ABCEGI": [
+            "A",
+            "B",
+            "C",
+            "E",
+            "G",
+            "I"
           ],
-          "D1": [
-            "q1",
-            "q10",
-            "q2",
-            "q3",
-            "q4",
-            "q5",
-            "q6",
-            "q8",
-            "q9"
+          "BCDEFGIJK": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "I",
+            "J",
+            "K"
           ],
-          "D2": [
-            "q1",
-            "q2",
-            "q3",
-            "q4",
-            "q6",
-            "q7",
-            "q8"
+          "BCDEGHI": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "G",
+            "H",
+            "I"
           ],
-          "D3": [
-            "q1",
-            "q11",
-            "q12",
-            "q2",
-            "q3",
-            "q4",
-            "q6",
-            "q7",
-            "q8"
+          "BCDEGHILM": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "G",
+            "H",
+            "I",
+            "L",
+            "M"
           ],
-          "D4": [
-            "q1",
-            "q13",
-            "q2",
-            "q3",
-            "q4",
-            "q6",
-            "q7",
-            "q8"
+          "BCDEGHIN": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "G",
+            "H",
+            "I",
+            "N"
           ]
         }
       },
@@ -471,192 +472,203 @@
         "title": "AFD mínimo",
         "automaton": {
           "states": [
-            "M0",
-            "M1",
-            "M2",
-            "M3"
+            "ABCEGI",
+            "BCDEFGIJK",
+            "BCDEGHILM",
+            "BCDEGHIN"
           ],
           "alphabet": [
             "a",
             "b"
           ],
-          "initial": "M0",
+          "initial": "ABCEGI",
           "finals": [
-            "M3"
+            "BCDEGHIN"
           ],
           "transitions": {
-            "M0": {
+            "ABCEGI": {
               "a": [
-                "M1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "M0"
+                "ABCEGI"
               ]
             },
-            "M1": {
+            "BCDEFGIJK": {
               "a": [
-                "M1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "M2"
+                "BCDEGHILM"
               ]
             },
-            "M2": {
+            "BCDEGHILM": {
               "a": [
-                "M1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "M3"
+                "BCDEGHIN"
               ]
             },
-            "M3": {
+            "BCDEGHIN": {
               "a": [
-                "M1"
+                "BCDEFGIJK"
               ],
               "b": [
-                "M0"
+                "ABCEGI"
               ]
             }
           }
         },
         "steps": [
-          "P0 separa no finales y finales: {D0, D1, D2, D3} / {D4}.",
-          "D0: firma (0, 0), en el orden de símbolos ('a', 'b').",
-          "D1: firma (0, 0), en el orden de símbolos ('a', 'b').",
-          "D2: firma (0, 0), en el orden de símbolos ('a', 'b').",
-          "D3: firma (0, 1), en el orden de símbolos ('a', 'b').",
-          "D4: firma (0, 0), en el orden de símbolos ('a', 'b').",
-          "P1: {D0, D1, D2} / {D3} / {D4}.",
-          "D0: firma (0, 0), en el orden de símbolos ('a', 'b').",
-          "D1: firma (0, 1), en el orden de símbolos ('a', 'b').",
-          "D2: firma (0, 0), en el orden de símbolos ('a', 'b').",
-          "D3: firma (0, 2), en el orden de símbolos ('a', 'b').",
-          "D4: firma (0, 0), en el orden de símbolos ('a', 'b').",
-          "P2: {D0, D2} / {D1} / {D3} / {D4}.",
-          "D0: firma (1, 0), en el orden de símbolos ('a', 'b').",
-          "D2: firma (1, 0), en el orden de símbolos ('a', 'b').",
-          "D1: firma (1, 2), en el orden de símbolos ('a', 'b').",
-          "D3: firma (1, 3), en el orden de símbolos ('a', 'b').",
-          "D4: firma (1, 0), en el orden de símbolos ('a', 'b').",
-          "P3: {D0, D2} / {D1} / {D3} / {D4}.",
-          "La partición no cambia: sus bloques son las clases de equivalencia."
+          "P0 separa estados no terminales y terminales: {ABCEGI, BCDEFGIJK, BCDEGHI, BCDEGHILM} / {BCDEGHIN}.",
+          "ABCEGI,a→BCDEFGIJK (bloque 1) · ABCEGI,b→BCDEGHI (bloque 1).",
+          "BCDEFGIJK,a→BCDEFGIJK (bloque 1) · BCDEFGIJK,b→BCDEGHILM (bloque 1).",
+          "BCDEGHI,a→BCDEFGIJK (bloque 1) · BCDEGHI,b→BCDEGHI (bloque 1).",
+          "BCDEGHILM,a→BCDEFGIJK (bloque 1) · BCDEGHILM,b→BCDEGHIN (bloque 2).",
+          "BCDEGHIN,a→BCDEFGIJK (bloque 1) · BCDEGHIN,b→BCDEGHI (bloque 1).",
+          "P1: {ABCEGI, BCDEFGIJK, BCDEGHI} / {BCDEGHILM} / {BCDEGHIN}.",
+          "ABCEGI,a→BCDEFGIJK (bloque 1) · ABCEGI,b→BCDEGHI (bloque 1).",
+          "BCDEFGIJK,a→BCDEFGIJK (bloque 1) · BCDEFGIJK,b→BCDEGHILM (bloque 2).",
+          "BCDEGHI,a→BCDEFGIJK (bloque 1) · BCDEGHI,b→BCDEGHI (bloque 1).",
+          "BCDEGHILM,a→BCDEFGIJK (bloque 1) · BCDEGHILM,b→BCDEGHIN (bloque 3).",
+          "BCDEGHIN,a→BCDEFGIJK (bloque 1) · BCDEGHIN,b→BCDEGHI (bloque 1).",
+          "P2: {ABCEGI, BCDEGHI} / {BCDEFGIJK} / {BCDEGHILM} / {BCDEGHIN}.",
+          "ABCEGI,a→BCDEFGIJK (bloque 2) · ABCEGI,b→BCDEGHI (bloque 1).",
+          "BCDEGHI,a→BCDEFGIJK (bloque 2) · BCDEGHI,b→BCDEGHI (bloque 1).",
+          "BCDEFGIJK,a→BCDEFGIJK (bloque 2) · BCDEFGIJK,b→BCDEGHILM (bloque 3).",
+          "BCDEGHILM,a→BCDEFGIJK (bloque 2) · BCDEGHILM,b→BCDEGHIN (bloque 4).",
+          "BCDEGHIN,a→BCDEFGIJK (bloque 2) · BCDEGHIN,b→BCDEGHI (bloque 1).",
+          "P3: {ABCEGI, BCDEGHI} / {BCDEFGIJK} / {BCDEGHILM} / {BCDEGHIN}.",
+          "La partición no cambia: sus bloques son las clases de equivalencia.",
+          "ABCEGI, BCDEGHI son equivalentes: se fusionan en ABCEGI."
         ],
         "mapping": {
-          "M0": [
-            "D0",
-            "D2"
+          "ABCEGI": [
+            "ABCEGI",
+            "BCDEGHI"
           ],
-          "M1": [
-            "D1"
+          "BCDEFGIJK": [
+            "BCDEFGIJK"
           ],
-          "M2": [
-            "D3"
+          "BCDEGHILM": [
+            "BCDEGHILM"
           ],
-          "M3": [
-            "D4"
+          "BCDEGHIN": [
+            "BCDEGHIN"
           ]
         },
         "original_mapping": {
-          "M0": [
-            "q0",
-            "q1",
-            "q2",
-            "q3",
-            "q4",
-            "q6",
-            "q7",
-            "q8"
+          "ABCEGI": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "G",
+            "H",
+            "I"
           ],
-          "M1": [
-            "q1",
-            "q10",
-            "q2",
-            "q3",
-            "q4",
-            "q5",
-            "q6",
-            "q8",
-            "q9"
+          "BCDEFGIJK": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "I",
+            "J",
+            "K"
           ],
-          "M2": [
-            "q1",
-            "q11",
-            "q12",
-            "q2",
-            "q3",
-            "q4",
-            "q6",
-            "q7",
-            "q8"
+          "BCDEGHILM": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "G",
+            "H",
+            "I",
+            "L",
+            "M"
           ],
-          "M3": [
-            "q1",
-            "q13",
-            "q2",
-            "q3",
-            "q4",
-            "q6",
-            "q7",
-            "q8"
+          "BCDEGHIN": [
+            "B",
+            "C",
+            "D",
+            "E",
+            "G",
+            "H",
+            "I",
+            "N"
           ]
         },
         "partitions": [
           [
             [
-              "D0",
-              "D1",
-              "D2",
-              "D3"
+              "ABCEGI",
+              "BCDEFGIJK",
+              "BCDEGHI",
+              "BCDEGHILM"
             ],
             [
-              "D4"
+              "BCDEGHIN"
             ]
           ],
           [
             [
-              "D0",
-              "D1",
-              "D2"
+              "ABCEGI",
+              "BCDEFGIJK",
+              "BCDEGHI"
             ],
             [
-              "D3"
+              "BCDEGHILM"
             ],
             [
-              "D4"
+              "BCDEGHIN"
             ]
           ],
           [
             [
-              "D0",
-              "D2"
+              "ABCEGI",
+              "BCDEGHI"
             ],
             [
-              "D1"
+              "BCDEFGIJK"
             ],
             [
-              "D3"
+              "BCDEGHILM"
             ],
             [
-              "D4"
+              "BCDEGHIN"
             ]
           ],
           [
             [
-              "D0",
-              "D2"
+              "ABCEGI",
+              "BCDEGHI"
             ],
             [
-              "D1"
+              "BCDEFGIJK"
             ],
             [
-              "D3"
+              "BCDEGHILM"
             ],
             [
-              "D4"
+              "BCDEGHIN"
             ]
           ]
         ]
       }
+    ],
+    "language": [
+      "abb",
+      "aabb",
+      "babb",
+      "aaabb",
+      "ababb",
+      "baabb",
+      "bbabb",
+      "aaaabb"
     ],
     "summary": {
       "original_states": 14,
@@ -667,66 +679,6 @@
   },
   "simulations": [
     {
-      "word": "",
-      "accepted": false,
-      "path": [
-        {
-          "position": 0,
-          "symbol": null,
-          "states": [
-            "M0"
-          ]
-        }
-      ]
-    },
-    {
-      "word": "a",
-      "accepted": false,
-      "path": [
-        {
-          "position": 0,
-          "symbol": null,
-          "states": [
-            "M0"
-          ]
-        },
-        {
-          "position": 1,
-          "symbol": "a",
-          "states": [
-            "M1"
-          ]
-        }
-      ]
-    },
-    {
-      "word": "ab",
-      "accepted": false,
-      "path": [
-        {
-          "position": 0,
-          "symbol": null,
-          "states": [
-            "M0"
-          ]
-        },
-        {
-          "position": 1,
-          "symbol": "a",
-          "states": [
-            "M1"
-          ]
-        },
-        {
-          "position": 2,
-          "symbol": "b",
-          "states": [
-            "M2"
-          ]
-        }
-      ]
-    },
-    {
       "word": "abb",
       "accepted": true,
       "path": [
@@ -734,28 +686,28 @@
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "ABCEGI"
           ]
         },
         {
           "position": 1,
           "symbol": "a",
           "states": [
-            "M1"
+            "BCDEFGIJK"
           ]
         },
         {
           "position": 2,
           "symbol": "b",
           "states": [
-            "M2"
+            "BCDEGHILM"
           ]
         },
         {
           "position": 3,
           "symbol": "b",
           "states": [
-            "M3"
+            "BCDEGHIN"
           ]
         }
       ]
@@ -768,110 +720,211 @@
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "ABCEGI"
           ]
         },
         {
           "position": 1,
           "symbol": "a",
           "states": [
-            "M1"
+            "BCDEFGIJK"
           ]
         },
         {
           "position": 2,
           "symbol": "a",
           "states": [
-            "M1"
+            "BCDEFGIJK"
           ]
         },
         {
           "position": 3,
           "symbol": "b",
           "states": [
-            "M2"
+            "BCDEGHILM"
           ]
         },
         {
           "position": 4,
           "symbol": "b",
           "states": [
-            "M3"
+            "BCDEGHIN"
           ]
         }
       ]
     },
     {
-      "word": "abba",
-      "accepted": false,
+      "word": "babb",
+      "accepted": true,
       "path": [
         {
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "ABCEGI"
           ]
         },
         {
           "position": 1,
-          "symbol": "a",
+          "symbol": "b",
           "states": [
-            "M1"
+            "ABCEGI"
           ]
         },
         {
           "position": 2,
-          "symbol": "b",
+          "symbol": "a",
           "states": [
-            "M2"
+            "BCDEFGIJK"
           ]
         },
         {
           "position": 3,
           "symbol": "b",
           "states": [
-            "M3"
+            "BCDEGHILM"
           ]
         },
         {
           "position": 4,
-          "symbol": "a",
+          "symbol": "b",
           "states": [
-            "M1"
+            "BCDEGHIN"
           ]
         }
       ]
     },
     {
-      "word": "aba",
-      "accepted": false,
+      "word": "aaabb",
+      "accepted": true,
       "path": [
         {
           "position": 0,
           "symbol": null,
           "states": [
-            "M0"
+            "ABCEGI"
           ]
         },
         {
           "position": 1,
           "symbol": "a",
           "states": [
-            "M1"
+            "BCDEFGIJK"
           ]
         },
         {
           "position": 2,
-          "symbol": "b",
+          "symbol": "a",
           "states": [
-            "M2"
+            "BCDEFGIJK"
           ]
         },
         {
           "position": 3,
           "symbol": "a",
           "states": [
-            "M1"
+            "BCDEFGIJK"
+          ]
+        },
+        {
+          "position": 4,
+          "symbol": "b",
+          "states": [
+            "BCDEGHILM"
+          ]
+        },
+        {
+          "position": 5,
+          "symbol": "b",
+          "states": [
+            "BCDEGHIN"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "ABCEGI"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "a",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "ABCEGI"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "BCDEFGIJK"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "aa",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "ABCEGI"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "BCDEFGIJK"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "a",
+          "states": [
+            "BCDEFGIJK"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "ba",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "ABCEGI"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "b",
+          "states": [
+            "ABCEGI"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "a",
+          "states": [
+            "BCDEFGIJK"
           ]
         }
       ]

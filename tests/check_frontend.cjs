@@ -23,6 +23,7 @@ context.sample = a;
 const html = vm.runInContext('table(sample)', context);
 assert(html.includes('&amp;') && html.includes('&lt;'));
 assert(html.includes('constructor'));
+assert(html.includes('<th>Q</th>') && html.includes('class="terminal"'));
 vm.runInContext('drawDiagram(sample)', context);
 const svg = element('diagram').innerHTML;
 assert(svg.includes('<svg') && svg.includes('</svg>'));

@@ -1,0 +1,8 @@
+{
+  "command": "node tests/check_frontend.cjs",
+  "result": "success",
+  "checks": 4,
+  "description": "Tabla con caracteres escapados, SVG sin coordenadas inválidas, estados con nombres especiales y limpieza al cambiar de modalidad.",
+  "scope": "Pruebas unitarias del código de formato con DOM mínimo; no equivalen a revisión visual en navegador.",
+  "ci_url": "https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595"
+}

@@ -84,6 +84,8 @@ En Linux sustituye `.\.venv\Scripts\python.exe` por `.venv/bin/python` y usa `py
 
 El generador de documentos requiere las dependencias de desarrollo y fuentes Arial/Segoe UI Symbol en Windows o DejaVu Sans en Linux. No son necesarias para ejecutar el software. Las pruebas comparan simulación por configuraciones, enumeración de cadenas, equivalencia exacta por producto de AFD y distinguibilidad de cada par de estados del resultado mínimo.
 
+La validación registrada en `docs/evidencias/ci-linux.json` pasó **22 pruebas en Linux**, incluido Gunicorn. `node tests/check_frontend.cjs` añade **4 comprobaciones de formato** de tabla/SVG y cambios de modalidad, sin abrir un navegador. La interfaz se revisó visualmente en Chrome de escritorio (capturas en `docs/evidencias/capturas/`), también con el diseño móvil activo (657 px de ancho visible).
+
 Para preparar el archivo de entrega después de generar documentos:
 
 ```powershell
@@ -110,4 +112,4 @@ render.yaml            Despliegue en Render
 
 ## Convenciones del enunciado
 
-El archivo de referencia se llama `MICROPROYECTO1-AF.pdf`, pero su contenido indica **Microproyecto #3**. Se interpreta RF-06 como **AFN a AFD**, coherente con los objetivos. Se conserva la numeración original: el enunciado no contiene RF-08. Se reserva ε para las transiciones vacías y se documenta explícitamente la sintaxis del lenguaje.
+El enunciado de referencia es `MICROPROYECTO3-AF.pdf` (**Microproyecto #3**). Se interpreta RF-06 como **AFN a AFD**, coherente con los objetivos. Se conserva la numeración original: el enunciado no contiene RF-08. Se reserva ε para las transiciones vacías y se documenta explícitamente la sintaxis del lenguaje.

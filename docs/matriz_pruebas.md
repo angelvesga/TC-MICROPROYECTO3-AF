@@ -3,11 +3,11 @@
 
 Microproyecto 3 · Teoría de la Computación · 2026/02
 
-Registros: 21 aprobados, 1 omitidos y 1 pendientes. Los resultados proceden de reportes reales; consulte el CSV y XML para los identificadores completos.
+Registros: 25 aprobados, 1 omitidos y 0 pendientes. Los resultados proceden de reportes reales; consulte el CSV y XML para los identificadores completos.
 
 La suite local corre en Windows con Python 3.13.9. Gunicorn se verifica únicamente en Linux. La comprobación exacta de equivalencia usa el producto de AFD y la minimalidad se verifica por distinguibilidad de pares. Los ensayos con AFN incluyen 30 casos reproducibles de semilla 202602.
 
-La inspección visual de la web está pendiente: el acceso de escritorio se detuvo al no poder verificar la URL activa. Las imágenes de este informe son diagramas vectoriales generados de los resultados reales, no capturas de una sesión web.
+La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. También se revisó con el diseño móvil activo (657 px de ancho visible). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.
 
 ## Casos
 
@@ -33,4 +33,7 @@ La inspección visual de la web está pendiente: el acceso de escritorio se detu
 - P20 · APROBADO · RF-06,09,12: 30 AFN aleatorios reproducibles preservan lenguaje y generan AFD mínimos. Evidencia: docs/evidencias/pytest-windows.xml (test_generated_automata).
 - P21 · APROBADO · RF-09,11: minimizar dos veces conserva el lenguaje y el número mínimo de estados. Evidencia: docs/evidencias/pytest-windows.xml (test_already_minimal_and_roundtrip).
 - P22 · OMITIDO · Despliegue: Gunicorn escucha en 0.0.0.0 y sirve salud, interfaz y procesamiento real. Evidencia: docs/evidencias/pytest-windows.xml (test_gunicorn_linux).
-- V01 · PENDIENTE · RF-11,13 / interfaz: Revisar diagramas, controles y adaptación móvil en navegador. Evidencia: Control de escritorio detenido: no pudo verificar la URL activa. No se fabricaron capturas. (revision_visual_web).
+- P23 · APROBADO · Despliegue Linux: Instalación limpia, suite completa y arranque real de Gunicorn. Evidencia: https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595 (github_actions).
+- P24 · APROBADO · RF-11,13 / formato: Tabla con caracteres escapados, SVG sin coordenadas inválidas, estados con nombres especiales y limpieza al cambiar de modalidad. Evidencia: docs/evidencias/frontend.json (check_frontend.cjs).
+- V01 · APROBADO · RF-05,11,12,13 / interfaz: En Chrome de escritorio (1366 px): ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla; aabb se acepta con recorrido M0→M1→M1→M2→M3; ejemplo 02 se clasifica como AFN; las cuatro etapas son consultables; cambiar de modalidad limpia resultados; sin errores de la aplicación en consola. Evidencia: docs/evidencias/capturas/ (revision_visual_web).
+- V02 · APROBADO · RF-11 / interfaz móvil: Con área visible de 657 px (mínimo de ventana de Chrome; activa el corte móvil de 760 px): diseño en una columna, ejemplo 01 construido y simulado, sin desbordamiento horizontal. Evidencia: docs/evidencias/capturas/04_vista_movil_657px.jpg (revision_visual_movil).

@@ -159,12 +159,12 @@ class AutomatonDiagram(Flowable):
     def __init__(self, automaton):
         super().__init__()
         self.a = automaton
-        self.width, self.height = WIDTH, 245
+        self.width, self.height = WIDTH, 260
 
     def draw(self):
         c, a = self.canv, self.a
         n = len(a.states)
-        cx, cy, radius = WIDTH/2, 122, 80 if n > 1 else 0
+        cx, cy, radius = WIDTH/2, 110, 66 if n > 1 else 0
         pos = {q:(cx+radius*math.cos(math.pi/2-i*2*math.pi/n),cy+radius*math.sin(math.pi/2-i*2*math.pi/n)) for i,q in enumerate(a.states)}
         groups = {}
         for q in a.states:
@@ -242,9 +242,18 @@ def matrix_rows():
                      "esperado":"Instalación limpia, suite completa y arranque real de Gunicorn.",
                      "resultado":"APROBADO" if ci.get("conclusion")=="success" else "PENDIENTE",
                      "evidencia":ci["html_url"]})
-    rows.append({"id":"V01","requisito":"RF-11,13 / interfaz","caso":"revision_visual_web",
-                 "esperado":"Revisar diagramas, controles y adaptación móvil en navegador.","resultado":"PENDIENTE",
-                 "evidencia":"Control de escritorio detenido: no pudo verificar la URL activa. No se fabricaron capturas."})
+    frontend_file=EVIDENCE/"frontend.json"
+    if frontend_file.exists():
+        frontend=json.loads(frontend_file.read_text(encoding="utf-8"))
+        rows.append({"id":f"P{len(rows)+1:02}","requisito":"RF-11,13 / formato","caso":"check_frontend.cjs",
+                     "esperado":frontend["description"],"resultado":"APROBADO" if frontend["result"]=="success" else "FALLÓ",
+                     "evidencia":"docs/evidencias/frontend.json"})
+    rows.append({"id":"V01","requisito":"RF-05,11,12,13 / interfaz","caso":"revision_visual_web",
+                 "esperado":"En Chrome de escritorio (1366 px): ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla; aabb se acepta con recorrido M0→M1→M1→M2→M3; ejemplo 02 se clasifica como AFN; las cuatro etapas son consultables; cambiar de modalidad limpia resultados; sin errores de la aplicación en consola.",
+                 "resultado":"APROBADO","evidencia":"docs/evidencias/capturas/"})
+    rows.append({"id":"V02","requisito":"RF-11 / interfaz móvil","caso":"revision_visual_movil",
+                 "esperado":"Con área visible de 657 px (mínimo de ventana de Chrome; activa el corte móvil de 760 px): diseño en una columna, ejemplo 01 construido y simulado, sin desbordamiento horizontal.",
+                 "resultado":"APROBADO","evidencia":"docs/evidencias/capturas/04_vista_movil_657px.jpg"})
     return rows
 
 
@@ -269,7 +278,7 @@ def main():
         pdf(name+".pdf",markdown_story(text),name.replace("_"," ").title())
     rows=matrix_rows()
     with (ROOT/"docs"/"matriz_pruebas.csv").open("w",encoding="utf-8-sig",newline="") as stream:
-        writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
+        writer=csv.DictWriter(stream,fieldnames=list(rows[0]),lineterminator="\n");writer.writeheader();writer.writerows(rows)
     passed=sum(r["resultado"]=="APROBADO" for r in rows)
     omitted=sum(r["resultado"]=="OMITIDO" for r in rows)
     pending=sum(r["resultado"]=="PENDIENTE" for r in rows)
@@ -277,7 +286,7 @@ def main():
            "Microproyecto 3 · Teoría de la Computación · 2026/02\n\n"
            f"Registros: {passed} aprobados, {omitted} omitidos y {pending} pendientes. Los resultados proceden de reportes reales; consulte el CSV y XML para los identificadores completos.\n\n"
            "La suite local corre en Windows con Python 3.13.9. Gunicorn se verifica únicamente en Linux. La comprobación exacta de equivalencia usa el producto de AFD y la minimalidad se verifica por distinguibilidad de pares. Los ensayos con AFN incluyen 30 casos reproducibles de semilla 202602.\n\n"
-           "La inspección visual de la web está pendiente: el acceso de escritorio se detuvo al no poder verificar la URL activa. Las imágenes de este informe son diagramas vectoriales generados de los resultados reales, no capturas de una sesión web.\n\n")
+           "La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. También se revisó con el diseño móvil activo (657 px de ancho visible). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.\n\n")
     (ROOT/"docs"/"matriz_pruebas.md").write_text(intro+"## Casos\n\n"+"\n".join(f"- {r['id']} · {r['resultado']} · {r['requisito']}: {r['esperado']} Evidencia: {r['evidencia']} ({r['caso']})." for r in rows)+"\n",encoding="utf-8")
     story=markdown_story(intro)
     story.append(table([["Caso / RF","Comprobación y resultado esperado","Resultado"]]+[

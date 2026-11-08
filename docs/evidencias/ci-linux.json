@@ -1,0 +1,16 @@
+{
+  "html_url": "https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595",
+  "run_id": 42500246595,
+  "job_id": 128791233206,
+  "head_sha": "9b701d98748bf7d74a41abec130d2e1801e03b95",
+  "conclusion": "success",
+  "platform": "Ubuntu 24.04",
+  "python": "3.13.9",
+  "log_excerpt": [
+    "2026-11-08T16:30:57.6426930Z ##[group]Run pip install -r requirements-dev.txt",
+    "2026-11-08T16:31:01.7770114Z ##[group]Run python -m pytest -q --junitxml=pytest-linux.xml",
+    "2026-11-08T16:31:03.9551427Z 22 passed in 1.88s",
+    "2026-11-08T16:31:03.9582355Z ##[group]Run node --check static/app.js && node tests/check_frontend.cjs",
+    "2026-11-08T16:31:04.2530593Z 4 comprobaciones correctas: tabla escapada, SVG, nombres especiales y cambio de modalidad."
+  ]
+}

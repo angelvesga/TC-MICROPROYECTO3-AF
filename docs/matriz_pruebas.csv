@@ -1,4 +1,4 @@
-id,requisito,caso,esperado,resultado,evidencia
+﻿id,requisito,caso,esperado,resultado,evidencia
 P01,RF-11,test_home_and_health,"página y recursos disponibles, control de salud y políticas HTTP.",APROBADO,docs/evidencias/pytest-windows.xml
 P02,"RF-03,06,09,12",test_process_and_simulate,contrato completo desde petición de construcción hasta simulación.,APROBADO,docs/evidencias/pytest-windows.xml
 P03,"RF-01,02,04",test_api_invalid_requests,"JSON malformado, tipos incorrectos y entradas inválidas devuelven 400.",APROBADO,docs/evidencias/pytest-windows.xml
@@ -21,4 +21,7 @@ P19,"RF-10,11,13",test_traces_mapping_stability,"etapas consultables, trazas, pa
 P20,"RF-06,09,12",test_generated_automata,30 AFN aleatorios reproducibles preservan lenguaje y generan AFD mínimos.,APROBADO,docs/evidencias/pytest-windows.xml
 P21,"RF-09,11",test_already_minimal_and_roundtrip,minimizar dos veces conserva el lenguaje y el número mínimo de estados.,APROBADO,docs/evidencias/pytest-windows.xml
 P22,Despliegue,test_gunicorn_linux,"Gunicorn escucha en 0.0.0.0 y sirve salud, interfaz y procesamiento real.",OMITIDO,docs/evidencias/pytest-windows.xml
-V01,"RF-11,13 / interfaz",revision_visual_web,"Revisar diagramas, controles y adaptación móvil en navegador.",PENDIENTE,Control de escritorio detenido: no pudo verificar la URL activa. No se fabricaron capturas.
+P23,Despliegue Linux,github_actions,"Instalación limpia, suite completa y arranque real de Gunicorn.",APROBADO,https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595
+P24,"RF-11,13 / formato",check_frontend.cjs,"Tabla con caracteres escapados, SVG sin coordenadas inválidas, estados con nombres especiales y limpieza al cambiar de modalidad.",APROBADO,docs/evidencias/frontend.json
+V01,"RF-05,11,12,13 / interfaz",revision_visual_web,En Chrome de escritorio (1366 px): ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla; aabb se acepta con recorrido M0→M1→M1→M2→M3; ejemplo 02 se clasifica como AFN; las cuatro etapas son consultables; cambiar de modalidad limpia resultados; sin errores de la aplicación en consola.,APROBADO,docs/evidencias/capturas/
+V02,RF-11 / interfaz móvil,revision_visual_movil,"Con área visible de 657 px (mínimo de ventana de Chrome; activa el corte móvil de 760 px): diseño en una columna, ejemplo 01 construido y simulado, sin desbordamiento horizontal.",APROBADO,docs/evidencias/capturas/04_vista_movil_657px.jpg

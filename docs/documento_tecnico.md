@@ -150,9 +150,28 @@ La equivalencia entre AFD completo y mínimo se comprueba exactamente mediante B
 
 Se verifican errores de entrada, límites, trazas, reproducibilidad, API y solicitudes concurrentes. La prueba de Gunicorn solo corre en Linux; GitHub Actions instala desde cero y ejecuta toda la suite. La revisión visual web no pudo completarse en esta sesión: el control de escritorio detuvo el acceso al no poder verificar la URL activa. Esa limitación no se registra como prueba aprobada. Los documentos PDF se renderizan para su revisión por separado.
 
+### 12.1 Trazabilidad con el enunciado
+
+| Requisito | Implementación | Evidencia |
+| --- | --- | --- |
+| RF-01 | Validación de alfabeto y símbolos reservados | test_alphabet_validation |
+| RF-02 | Analizador de expresiones y pertenencia al alfabeto | test_regex_validation, test_regex_precedence |
+| RF-03 | Construcción propia de Thompson | test_suffix_abb, test_empty_word_language |
+| RF-04 | Registro de estados y tabla de transiciones | test_manual_nfa, test_manual_validation |
+| RF-05 | Clasificación justificada, incluido AFD incompleto | test_partial_sink, test_epsilon_cycle |
+| RF-06 | Conversión AFN a AFD | test_manual_nfa, test_generated_automata |
+| RF-07 | Búsqueda y eliminación de inaccesibles | test_equivalent_unreachable |
+| RF-09 | Refinamiento de Moore y cociente | test_equivalent_unreachable, test_already_minimal_and_roundtrip |
+| RF-10 | Trazas de construcción, movimientos y particiones | test_traces_mapping_stability |
+| RF-11 | Tabla y diagrama SVG del AFD mínimo | check_frontend.cjs; revisión visual en Chrome (V01) |
+| RF-12 | Simulación con recorrido y aceptación | test_simulation_validation, test_process_and_simulate |
+| RF-13 | Cuatro etapas consultables y comparación final | test_traces_mapping_stability, check_frontend.cjs; revisión visual en Chrome (V01) |
+
+La ejecución Linux registrada en docs/evidencias/ci-linux.json terminó con 22 pruebas aprobadas, incluido Gunicorn, y cuatro comprobaciones de formato del cliente. Estas últimas se ejecutan con un DOM mínimo de prueba; además se revisó la interfaz en Chrome de escritorio (V01, capturas en docs/evidencias/capturas/). El diseño móvil se revisó con 657 px de ancho visible, el mínimo que permite la ventana de Chrome (V02). Los datos de ejecución, enlace y commit verificado se conservan para auditoría.
+
 ## 13. Fuentes
 
-Enunciado proporcionado: MICROPROYECTO1-AF.pdf, contenido «Microproyecto #3», tres páginas, lineamientos 2026/02.
+Enunciado proporcionado: MICROPROYECTO3-AF.pdf, «Microproyecto #3», tres páginas, lineamientos 2026/02.
 
 Documentación de Flask: https://flask.palletsprojects.com/en/stable/
 

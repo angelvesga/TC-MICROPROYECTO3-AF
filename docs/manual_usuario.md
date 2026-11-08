@@ -98,4 +98,4 @@ Límites: alfabeto de 1 a 12 símbolos de un carácter; expresión de hasta 120 
 
 ## 8. Material de entrega y verificación
 
-El repositorio incluye este manual, el documento técnico, la matriz de pruebas, tres entradas JSON, sus resultados y la suite automatizada. Los resultados esperados de los ejemplos están contrastados con pruebas. La revisión visual interactiva de la página quedó pendiente por una restricción del control del navegador de esta sesión; no se incluyen capturas simuladas ni se afirma haber realizado esa revisión.
+El repositorio incluye este manual, el documento técnico, la matriz de pruebas, tres entradas JSON, sus resultados y la suite automatizada. Los resultados esperados de los ejemplos están contrastados con pruebas. La interfaz se revisó en Chrome de escritorio con los ejemplos 01 y 02; las capturas reales están en docs/evidencias/capturas/. También se comprobó el diseño móvil (una columna, sin desplazamiento horizontal).

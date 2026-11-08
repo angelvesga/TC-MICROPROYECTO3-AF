@@ -6,6 +6,7 @@ let mode = "regex", result = null, stageIndex = 0, editorSignature = "", zoom = 
 let processing = false, simulationRequest = 0;
 
 function setMode(next) {
+  invalidate();
   mode = next;
   for (const name of ["regex", "manual"]) {
     $(name + "-pane").hidden = name !== next;

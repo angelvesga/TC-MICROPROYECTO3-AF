@@ -1,0 +1,24 @@
+id,requisito,caso,esperado,resultado,evidencia
+P01,RF-11,test_home_and_health,"página y recursos disponibles, control de salud y políticas HTTP.",APROBADO,docs/evidencias/pytest-windows.xml
+P02,"RF-03,06,09,12",test_process_and_simulate,contrato completo desde petición de construcción hasta simulación.,APROBADO,docs/evidencias/pytest-windows.xml
+P03,"RF-01,02,04",test_api_invalid_requests,"JSON malformado, tipos incorrectos y entradas inválidas devuelven 400.",APROBADO,docs/evidencias/pytest-windows.xml
+P04,"RF-12,13",test_isolation,solicitudes concurrentes de usuarios distintos no comparten resultados.,APROBADO,docs/evidencias/pytest-windows.xml
+P05,"RF-03,04,13",test_shipped_examples,los tres ejemplos de entrega son utilizables a través de la API.,APROBADO,docs/evidencias/pytest-windows.xml
+P06,"RF-02,03,06,09,12",test_suffix_abb,abb produce cuatro estados y reconoce exactamente el sufijo.,APROBADO,docs/evidencias/pytest-windows.xml
+P07,"RF-04,05,06",test_manual_nfa,varios destinos se identifican y determinizar preserva el lenguaje.,APROBADO,docs/evidencias/pytest-windows.xml
+P08,"RF-07,09",test_equivalent_unreachable,"elimina X y fusiona B,C; el AFD mínimo tiene dos estados.",APROBADO,docs/evidencias/pytest-windows.xml
+P09,"RF-02,03",test_regex_precedence,"estrella, concatenación, unión y paréntesis respetan la precedencia.",APROBADO,docs/evidencias/pytest-windows.xml
+P10,"RF-03,09,12",test_empty_word_language,ε acepta solo cadena vacía; ∅ no acepta ninguna cadena.,APROBADO,docs/evidencias/pytest-windows.xml
+P11,"RF-05,06,12",test_epsilon_cycle,ciclos ε terminan y reconocen aceptación sin consumir entrada.,APROBADO,docs/evidencias/pytest-windows.xml
+P12,RF-09,test_no_finals_and_all_finals,particiones vacías no fallan; lenguajes vacío y universal tienen un estado.,APROBADO,docs/evidencias/pytest-windows.xml
+P13,"RF-05,09",test_partial_sink,un AFD incompleto sigue siendo determinista y se completa sin colisiones.,APROBADO,docs/evidencias/pytest-windows.xml
+P14,RF-01,test_alphabet_validation,"rechaza duplicados, operadores reservados, espacios y símbolos múltiples.",APROBADO,docs/evidencias/pytest-windows.xml
+P15,RF-02,test_regex_validation,expresiones inválidas y símbolos externos producen errores con posición.,APROBADO,docs/evidencias/pytest-windows.xml
+P16,RF-04,test_manual_validation,"valida nombres, inicial, finales, destinos, símbolos y estructura de transiciones.",APROBADO,docs/evidencias/pytest-windows.xml
+P17,RF-12,test_simulation_validation,rechaza símbolos externos y distingue campo vacío de ε literal.,APROBADO,docs/evidencias/pytest-windows.xml
+P18,"RF-01,04,06",test_resource_limits,límites explícitos evitan explosión de estados sin resultados truncados.,APROBADO,docs/evidencias/pytest-windows.xml
+P19,"RF-10,11,13",test_traces_mapping_stability,"etapas consultables, trazas, particiones y nombres reproducibles.",APROBADO,docs/evidencias/pytest-windows.xml
+P20,"RF-06,09,12",test_generated_automata,30 AFN aleatorios reproducibles preservan lenguaje y generan AFD mínimos.,APROBADO,docs/evidencias/pytest-windows.xml
+P21,"RF-09,11",test_already_minimal_and_roundtrip,minimizar dos veces conserva el lenguaje y el número mínimo de estados.,APROBADO,docs/evidencias/pytest-windows.xml
+P22,Despliegue,test_gunicorn_linux,"Gunicorn escucha en 0.0.0.0 y sirve salud, interfaz y procesamiento real.",OMITIDO,docs/evidencias/pytest-windows.xml
+V01,"RF-11,13 / interfaz",revision_visual_web,"Revisar diagramas, controles y adaptación móvil en navegador.",PENDIENTE,Control de escritorio detenido: no pudo verificar la URL activa. No se fabricaron capturas.

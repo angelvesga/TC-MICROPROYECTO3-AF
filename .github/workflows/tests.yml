@@ -11,6 +11,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements-dev.txt
       - run: python -m pytest -q --junitxml=pytest-linux.xml
+      - run: node --check static/app.js && node tests/check_frontend.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

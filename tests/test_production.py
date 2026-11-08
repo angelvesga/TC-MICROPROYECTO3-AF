@@ -32,7 +32,7 @@ def test_gunicorn_linux():
                 time.sleep(.1)
         with urllib.request.urlopen(f"http://127.0.0.1:{port}/",timeout=3) as r:
             assert r.status == 200
-        request=urllib.request.Request(f"http://127.0.0.1:{port}/api/process",data=json.dumps({"mode":"regex","alphabet":["a","b"],"expression":"(a|b)*abb"}).encode(),headers={"Content-Type":"application/json"})
+        request=urllib.request.Request(f"http://127.0.0.1:{port}/api/process",data=json.dumps({"mode":"language","alphabet":["0","1"],"rules":"inicia en 1\nfinaliza en 0"}).encode(),headers={"Content-Type":"application/json"})
         with urllib.request.urlopen(request,timeout=5) as r:
             assert json.load(r)["summary"]["minimal_states"] == 4
     finally:

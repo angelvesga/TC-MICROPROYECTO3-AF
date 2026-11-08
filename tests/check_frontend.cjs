@@ -31,7 +31,7 @@ assert(!svg.includes('NaN') && !svg.includes('undefined'));
 assert(svg.includes('&amp;') && svg.includes('&lt;'));
 assert(!svg.includes('<script'));
 element('states').value = '__proto__, constructor';
-element('alphabet').value = '&, <';
+element('automaton-alphabet').value = '&, <';
 vm.runInContext('buildEditor(sample.transitions)', context);
 assert(element('transition-editor').innerHTML.includes('data-state="__proto__"'));
 assert(element('transition-editor').innerHTML.includes('value="constructor"'));

@@ -1,0 +1,905 @@
+{
+  "input": {
+    "mode": "language",
+    "alphabet": [
+      "a",
+      "e",
+      "i",
+      "p"
+    ],
+    "rules": "toda W inicia y finaliza en a\nno repetidos vocales"
+  },
+  "result": {
+    "classification": "AFD",
+    "stages": [
+      {
+        "id": "input",
+        "title": "Construcción desde el lenguaje",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "i",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "B": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "C": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "D": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "E": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Σ = {a, e, i, p}. Se construye un AFD por regla y luego su producto.",
+          "Regla 1 «toda W inicia y finaliza en a»: la palabra inicia y finaliza con a.",
+          "Regla 2 «no repetidos vocales»: ningún símbolo de {a,e,i} aparece dos veces seguidas.",
+          "Estado inicial q0 = A: ninguna regla ha leído símbolos.",
+          "A,a→B  (inició con a; último símbolo en {a}; último símbolo a).",
+          "A,e→ERROR  (incumple la regla 1: la palabra inicia y finaliza con a).",
+          "A,i→ERROR  (incumple la regla 1: la palabra inicia y finaliza con a).",
+          "A,p→ERROR  (incumple la regla 1: la palabra inicia y finaliza con a).",
+          "B,a→ERROR  (incumple la regla 2: ningún símbolo de {a,e,i} aparece dos veces seguidas).",
+          "B,e→C  (inició con a; último símbolo fuera de {a}; último símbolo e).",
+          "B,i→D  (inició con a; último símbolo fuera de {a}; último símbolo i).",
+          "B,p→E  (inició con a; último símbolo fuera de {a}; último símbolo p).",
+          "C,a→B  (inició con a; último símbolo en {a}; último símbolo a).",
+          "C,e→ERROR  (incumple la regla 2: ningún símbolo de {a,e,i} aparece dos veces seguidas).",
+          "C,i→D  (inició con a; último símbolo fuera de {a}; último símbolo i).",
+          "C,p→E  (inició con a; último símbolo fuera de {a}; último símbolo p).",
+          "D,a→B  (inició con a; último símbolo en {a}; último símbolo a).",
+          "D,e→C  (inició con a; último símbolo fuera de {a}; último símbolo e).",
+          "D,i→ERROR  (incumple la regla 2: ningún símbolo de {a,e,i} aparece dos veces seguidas).",
+          "D,p→E  (inició con a; último símbolo fuera de {a}; último símbolo p).",
+          "E,a→B  (inició con a; último símbolo en {a}; último símbolo a).",
+          "E,e→C  (inició con a; último símbolo fuera de {a}; último símbolo e).",
+          "E,i→D  (inició con a; último símbolo fuera de {a}; último símbolo i).",
+          "E,p→E  (inició con a; último símbolo fuera de {a}; último símbolo p).",
+          "Son finales los estados en que todas las reglas aceptan: Qt = {B}.",
+          "ERROR recibe toda palabra que viola alguna regla; no es final y vuelve a sí mismo.",
+          "Resultado: AFD de 6 estados.",
+          "Clasificación: AFD.",
+          "Cada símbolo del alfabeto va a un solo estado (X,a→Y) y no hay transiciones ε.",
+          "El autómata ya es determinista: se indica y se continúa con su minimización."
+        ],
+        "mapping": {
+          "A": [
+            "R1: aún no lee símbolos; último símbolo fuera de {a}",
+            "R2: sin símbolos leídos"
+          ],
+          "B": [
+            "R1: inició con a; último símbolo en {a}",
+            "R2: último símbolo a"
+          ],
+          "C": [
+            "R1: inició con a; último símbolo fuera de {a}",
+            "R2: último símbolo e"
+          ],
+          "D": [
+            "R1: inició con a; último símbolo fuera de {a}",
+            "R2: último símbolo i"
+          ],
+          "E": [
+            "R1: inició con a; último símbolo fuera de {a}",
+            "R2: último símbolo p"
+          ],
+          "ERROR": []
+        }
+      },
+      {
+        "id": "reachable",
+        "title": "Estados accesibles",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "i",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "B": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "C": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "D": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "E": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Se inicia la búsqueda en el estado inicial q0 = A.",
+          "A,a→B: B es accesible.",
+          "A,e→ERROR: ERROR es accesible.",
+          "B,e→C: C es accesible.",
+          "B,i→D: D es accesible.",
+          "B,p→E: E es accesible.",
+          "Estados inaccesibles eliminados: ninguno."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "E": [
+            "E"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        }
+      },
+      {
+        "id": "dfa",
+        "title": "AFD completo",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "i",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "B": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "C": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "D": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "E": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "El autómata ya es un AFD completo: se omite la conversión AFND → AFD y se continúa con la minimización."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "E": [
+            "E"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        }
+      },
+      {
+        "id": "minimal",
+        "title": "AFD mínimo",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "i",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "B": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "C": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "D": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "E": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "C"
+              ],
+              "i": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "i": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "P0 separa estados no terminales y terminales: {A, C, D, E, ERROR} / {B}.",
+          "A,a→B (bloque 2) · A,e→ERROR (bloque 1) · A,i→ERROR (bloque 1) · A,p→ERROR (bloque 1).",
+          "C,a→B (bloque 2) · C,e→ERROR (bloque 1) · C,i→D (bloque 1) · C,p→E (bloque 1).",
+          "D,a→B (bloque 2) · D,e→C (bloque 1) · D,i→ERROR (bloque 1) · D,p→E (bloque 1).",
+          "E,a→B (bloque 2) · E,e→C (bloque 1) · E,i→D (bloque 1) · E,p→E (bloque 1).",
+          "ERROR,a→ERROR (bloque 1) · ERROR,e→ERROR (bloque 1) · ERROR,i→ERROR (bloque 1) · ERROR,p→ERROR (bloque 1).",
+          "B,a→ERROR (bloque 1) · B,e→C (bloque 1) · B,i→D (bloque 1) · B,p→E (bloque 1).",
+          "P1: {A, C, D, E} / {ERROR} / {B}.",
+          "A,a→B (bloque 3) · A,e→ERROR (bloque 2) · A,i→ERROR (bloque 2) · A,p→ERROR (bloque 2).",
+          "C,a→B (bloque 3) · C,e→ERROR (bloque 2) · C,i→D (bloque 1) · C,p→E (bloque 1).",
+          "D,a→B (bloque 3) · D,e→C (bloque 1) · D,i→ERROR (bloque 2) · D,p→E (bloque 1).",
+          "E,a→B (bloque 3) · E,e→C (bloque 1) · E,i→D (bloque 1) · E,p→E (bloque 1).",
+          "ERROR,a→ERROR (bloque 2) · ERROR,e→ERROR (bloque 2) · ERROR,i→ERROR (bloque 2) · ERROR,p→ERROR (bloque 2).",
+          "B,a→ERROR (bloque 2) · B,e→C (bloque 1) · B,i→D (bloque 1) · B,p→E (bloque 1).",
+          "P2: {A} / {C} / {D} / {E} / {ERROR} / {B}.",
+          "A,a→B (bloque 6) · A,e→ERROR (bloque 5) · A,i→ERROR (bloque 5) · A,p→ERROR (bloque 5).",
+          "C,a→B (bloque 6) · C,e→ERROR (bloque 5) · C,i→D (bloque 3) · C,p→E (bloque 4).",
+          "D,a→B (bloque 6) · D,e→C (bloque 2) · D,i→ERROR (bloque 5) · D,p→E (bloque 4).",
+          "E,a→B (bloque 6) · E,e→C (bloque 2) · E,i→D (bloque 3) · E,p→E (bloque 4).",
+          "ERROR,a→ERROR (bloque 5) · ERROR,e→ERROR (bloque 5) · ERROR,i→ERROR (bloque 5) · ERROR,p→ERROR (bloque 5).",
+          "B,a→ERROR (bloque 5) · B,e→C (bloque 2) · B,i→D (bloque 3) · B,p→E (bloque 4).",
+          "P3: {A} / {C} / {D} / {E} / {ERROR} / {B}.",
+          "La partición no cambia: sus bloques son las clases de equivalencia.",
+          "Los estados del AFD mínimo se nombran A, B, C… en orden de recorrido desde q0: A = {A}; B = {B}; C = {C}; D = {D}; E = {E}; ERROR = {ERROR}."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "E": [
+            "E"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        },
+        "original_mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "E": [
+            "E"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        },
+        "partitions": [
+          [
+            [
+              "A",
+              "C",
+              "D",
+              "E",
+              "ERROR"
+            ],
+            [
+              "B"
+            ]
+          ],
+          [
+            [
+              "A",
+              "C",
+              "D",
+              "E"
+            ],
+            [
+              "ERROR"
+            ],
+            [
+              "B"
+            ]
+          ],
+          [
+            [
+              "A"
+            ],
+            [
+              "C"
+            ],
+            [
+              "D"
+            ],
+            [
+              "E"
+            ],
+            [
+              "ERROR"
+            ],
+            [
+              "B"
+            ]
+          ],
+          [
+            [
+              "A"
+            ],
+            [
+              "C"
+            ],
+            [
+              "D"
+            ],
+            [
+              "E"
+            ],
+            [
+              "ERROR"
+            ],
+            [
+              "B"
+            ]
+          ]
+        ]
+      }
+    ],
+    "language": [
+      "a",
+      "aea",
+      "aia",
+      "apa",
+      "aeia",
+      "aepa",
+      "aiea",
+      "aipa"
+    ],
+    "summary": {
+      "original_states": 6,
+      "reachable_states": 6,
+      "dfa_states": 6,
+      "minimal_states": 6
+    }
+  },
+  "simulations": [
+    {
+      "word": "a",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "aea",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "e",
+          "states": [
+            "C"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "aia",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "i",
+          "states": [
+            "D"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "apa",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "p",
+          "states": [
+            "E"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "aa",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "a",
+          "states": [
+            "ERROR"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "pa",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "p",
+          "states": [
+            "ERROR"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "a",
+          "states": [
+            "ERROR"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,1 +1,0 @@
-{"mode":"regex","alphabet":["a","e","i","p"],"expression":"a|a(a|e|i|p)*a"}

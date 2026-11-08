@@ -48,35 +48,42 @@ DATE = "8 de noviembre de 2026"
 # Figuras que se insertan al final de una sección concreta (encabezado del markdown).
 FIGURES = {
     "manual_usuario": {
-        "2. Modalidad A: expresión regular": [("01_abb_afd_minimo.jpg", "AFD mínimo de (a|b)*abb con cuatro estados y su definición formal AF = { {Q}, q0, Σ, {Qt}, δ }")],
-        "3. Modalidad B: autómata manual (AFND de clase)": [
+        "2. Modalidad A: a partir de un lenguaje": [
+            ("01_lenguaje_entrada.jpg", "Modalidad A: alfabeto Σ = {a, e, i, p} y reglas del lenguaje, con los indicadores y la muestra L = {…}"),
+            ("01_lenguaje_construccion.jpg", "Construcción del autómata desde las reglas: cada transición se justifica con la notación X,a→Y"),
+            ("05_lenguaje_digitos_tabla.jpg", "Tabla de transición del AFD mínimo del lenguaje Σ = {0, 1, 2}")],
+        "3. Modalidad B: a partir de un autómata (AFND de clase)": [
             ("02_afnd_conversion_tabla.jpg", "Conversión AFND → AFD del ejercicio de clase: estados A, B, BC, D, BCD, CD, ABCD, AD y AB"),
             ("02_afnd_conversion_pasos.jpg", "Explicación paso a paso con la notación de clase: BC,0→BCD ⟸ B,0→B,C · C,0→D")],
-        "4. Minimizar un AFD existente": [("04_afd_clase_xyzw.jpg", "AFD de clase con estados X, Y, Z y W, que ya es mínimo")],
-        "6. Simular palabras": [("01_abb_simulacion.jpg", "Tabla de transición y simulación de la palabra aabb, aceptada, con su recorrido")],
+        "4. Minimizar un AFD existente": [("04_afd_clase_xyzw.jpg", "Modalidad B con el AFD de clase de estados X, Y, Z y W, que ya es mínimo")],
     },
     "documento_tecnico": {
-        "10.1 Expresión (a|b)*abb": [("01_abb_afd_minimo.jpg", "Diagrama de transición del AFD mínimo generado por la aplicación")],
-        "10.2 AFND de clase: conversión AFND → AFD": [("02_afnd_conversion_pasos.jpg", "Conversión justificada con la notación del material del curso")],
-        "10.4 AFD de clase con estados X, Y, Z, W": [("04_afd_clase_xyzw.jpg", "Diagrama de transición con la presentación de clase")],
+        "6. Construcción del autómata desde el lenguaje": [("01_lenguaje_construccion.jpg", "Construcción por producto de las reglas, con la regla incumplida en cada paso a ERROR")],
+        "10.1 Lenguaje Σ = {a, e, i, p}": [("01_lenguaje_afd_minimo.jpg", "Diagrama de transición del AFD mínimo del lenguaje Σ = {a, e, i, p}")],
+        "10.2 Lenguaje Σ = {0, 1, 2}": [("05_lenguaje_digitos_tabla.jpg", "Tabla de transición del AFD mínimo del lenguaje Σ = {0, 1, 2}")],
+        "10.3 AFND de clase: conversión AFND → AFD": [("02_afnd_conversion_pasos.jpg", "Conversión justificada con la notación del material del curso")],
+        "10.5 AFD de clase con estados X, Y, Z, W": [("04_afd_clase_xyzw.jpg", "Diagrama de transición con la presentación de clase")],
     },
 }
 
-NOTE_TRANSITIONS = "→ señala el estado inicial y los paréntesis, los estados terminales."
+NOTE_TRANSITIONS = "→ señala el estado inicial y los paréntesis, los estados finales."
 
 # Título y nota de cada tabla, en el orden en que aparecen en el markdown.
 TABLES = {
     "documento_tecnico": [
         ("Notación de clase utilizada en el software", None),
+        ("Modalidades de entrada del enunciado", "Adaptado del enunciado del Microproyecto 3 (Universidad Francisco de Paula Santander [UFPS], 2026)."),
         ("Casos de uso del software", None),
-        ("Tabla de transición del AFD mínimo para (a|b)*abb", NOTE_TRANSITIONS),
+        ("Reglas de la sintaxis documentada del lenguaje", "S y T son listas de símbolos o las palabras vocal, consonante o cualquier símbolo; x es un símbolo, w una subcadena y n un número natural."),
+        ("Tabla de transición del AFD mínimo del lenguaje Σ = {a, e, i, p}", NOTE_TRANSITIONS),
         ("Tabla de transición del AFND de clase", NOTE_TRANSITIONS),
         ("AFD obtenido en la conversión del AFND de clase", NOTE_TRANSITIONS + " Adaptado de «Conversión de AFND a AFD», por C. J. Parada, s.f.-b."),
         ("Rutas de la interfaz HTTP", None),
-        ("Trazabilidad de los requisitos del enunciado", "Los requisitos corresponden al enunciado del Microproyecto 3 (Universidad Francisco de Paula Santander [UFPS], 2026); el enunciado no contiene RF-08."),
+        ("Trazabilidad de los requisitos del enunciado", "Los requisitos corresponden al enunciado del Microproyecto 3 (UFPS, 2026); el enunciado no contiene RF-08."),
     ],
     "manual_usuario": [
-        ("Sintaxis de las expresiones regulares", None),
+        ("Modalidades de entrada", None),
+        ("Reglas para escribir el lenguaje", "S es una lista de símbolos separados por comas o las palabras vocal, consonante o cualquier símbolo."),
         ("Tabla de transición de entrada del AFND de clase", "Una casilla con error indica que no hay transición."),
         ("Mensajes frecuentes y cómo corregirlos", None),
     ],
@@ -91,8 +98,10 @@ CITATIONS = {
         ("del material del curso («Autómatas de Estados Finitos» y «Conversión de AFND a AFD»), para que",
          "del material del curso, «Autómatas de Estados Finitos» y «Conversión de AFND a AFD» (Parada, s.f.-a, s.f.-b), para que"),
         ("adaptador HTTP Flask e interfaz", "adaptador HTTP Flask (Pallets, s.f.) e interfaz"),
+        ("Es el ejemplo del material del curso:", "Es el ejemplo del material del curso (Parada, s.f.-a):"),
+        ("Es el enunciado de ejercicios del curso:", "Es el enunciado de ejercicios del curso (Parada, s.f.-c):"),
         ("Es el ejercicio de conversión del material del curso:", "Es el ejercicio de conversión del material del curso (Parada, s.f.-b):"),
-        ("Es la tabla de transición del material del curso:", "Es la tabla de transición del material del curso (Parada, s.f.-c):"),
+        ("Es la tabla de transición del material del curso:", "Es la tabla de transición del material del curso (Parada, s.f.-a):"),
         ("El despliegue usa `render.yaml`, Python 3.13.9,",
          "El despliegue usa `render.yaml` (Render, s.f.-a), Python 3.13.9 (Render, s.f.-c),"),
         ("Las instrucciones completas están en README.md.",
@@ -102,10 +111,12 @@ CITATIONS = {
         ("Si el proyecto ya está desplegado en Render,", "Si el proyecto ya está desplegado en Render (Render, s.f.),"),
         ("sigue el README:", "sigue el README del repositorio (Vesga Sarmiento, 2026):"),
         ("La notación es la de clase:", "La notación es la de clase (Parada, s.f.-a):"),
+        ("Ejemplo del material del curso, Σ = {a, e, i, p}:", "Ejemplo del material del curso (Parada, s.f.-a), Σ = {a, e, i, p}:"),
+        ("cargan los otros enunciados del curso:", "cargan los otros enunciados del curso (Parada, s.f.-c):"),
         ("Ejercicio de conversión AFND → AFD del material del curso:",
          "Ejercicio de conversión AFND → AFD del material del curso (Parada, s.f.-b):"),
         ("del material del curso (Σ = {0, 1, 2}, q0 = X, Qt = {Z}).",
-         "del material del curso (Parada, s.f.-c), con Σ = {0, 1, 2}, q0 = X y Qt = {Z}."),
+         "del material del curso (Parada, s.f.-a), con Σ = {0, 1, 2}, q0 = X y Qt = {Z}."),
     ],
 }
 

@@ -1,8 +1,8 @@
 """Genera los entregables en formato Office a partir de los documentos fuente.
 
-- output/word/documento_tecnico.docx   (desde docs/documento_tecnico.md)
-- output/word/manual_usuario.docx      (desde docs/manual_usuario.md)
 - output/excel/matriz_pruebas.xlsx     (desde docs/matriz_pruebas.csv)
+
+Los documentos Word en normas APA se generan con scripts/build_office_apa.py.
 
 Requiere: python-docx y openpyxl (requirements-dev.txt).
 """
@@ -446,15 +446,8 @@ def build_matrix() -> Path:
 
 
 def main() -> None:
-    made = [
-        markdown_to_docx("documento_tecnico", "Documento técnico y funcional",
-                         "Estructuras de datos, algoritmos, decisiones de diseño y validación"),
-        markdown_to_docx("manual_usuario", "Manual de usuario",
-                         "Guía breve con ejemplos de ambas modalidades"),
-        build_matrix(),
-    ]
-    for path in made:
-        print(path.relative_to(ROOT))
+    # Los documentos Word se generan en normas APA con scripts/build_office_apa.py.
+    print(build_matrix().relative_to(ROOT))
 
 
 if __name__ == "__main__":

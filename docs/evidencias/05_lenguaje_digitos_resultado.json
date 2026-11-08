@@ -1,0 +1,2672 @@
+{
+  "input": {
+    "mode": "language",
+    "alphabet": [
+      "0",
+      "1",
+      "2"
+    ],
+    "rules": "toda W inicia y finaliza en 0\n2 seguido de 0 y precedido de 1\nsuma maxima 6\nlongitud maxima 5"
+  },
+  "result": {
+    "classification": "AFD",
+    "stages": [
+      {
+        "id": "input",
+        "title": "Construcción desde el lenguaje",
+        "automaton": {
+          "states": [
+            "q0",
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5",
+            "q6",
+            "q7",
+            "q8",
+            "q9",
+            "q10",
+            "q11",
+            "q12",
+            "q13",
+            "q14",
+            "q15",
+            "q16",
+            "q17",
+            "q18",
+            "q19",
+            "q20",
+            "q21",
+            "q22",
+            "q23",
+            "q24",
+            "q25",
+            "q26",
+            "q27",
+            "q28",
+            "q29",
+            "ERROR"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "q0",
+          "finals": [
+            "q1",
+            "q2",
+            "q4",
+            "q6",
+            "q9",
+            "q11",
+            "q14",
+            "q17",
+            "q18",
+            "q20",
+            "q23",
+            "q26",
+            "q29"
+          ],
+          "transitions": {
+            "q0": {
+              "0": [
+                "q1"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q1": {
+              "0": [
+                "q2"
+              ],
+              "1": [
+                "q3"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q2": {
+              "0": [
+                "q4"
+              ],
+              "1": [
+                "q5"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q3": {
+              "0": [
+                "q6"
+              ],
+              "1": [
+                "q7"
+              ],
+              "2": [
+                "q8"
+              ]
+            },
+            "q4": {
+              "0": [
+                "q9"
+              ],
+              "1": [
+                "q10"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q5": {
+              "0": [
+                "q11"
+              ],
+              "1": [
+                "q12"
+              ],
+              "2": [
+                "q13"
+              ]
+            },
+            "q6": {
+              "0": [
+                "q11"
+              ],
+              "1": [
+                "q12"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q7": {
+              "0": [
+                "q14"
+              ],
+              "1": [
+                "q15"
+              ],
+              "2": [
+                "q16"
+              ]
+            },
+            "q8": {
+              "0": [
+                "q17"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q9": {
+              "0": [
+                "q18"
+              ],
+              "1": [
+                "q19"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q10": {
+              "0": [
+                "q20"
+              ],
+              "1": [
+                "q21"
+              ],
+              "2": [
+                "q22"
+              ]
+            },
+            "q11": {
+              "0": [
+                "q20"
+              ],
+              "1": [
+                "q21"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q12": {
+              "0": [
+                "q23"
+              ],
+              "1": [
+                "q24"
+              ],
+              "2": [
+                "q25"
+              ]
+            },
+            "q13": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q14": {
+              "0": [
+                "q23"
+              ],
+              "1": [
+                "q24"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q15": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "q27"
+              ],
+              "2": [
+                "q28"
+              ]
+            },
+            "q16": {
+              "0": [
+                "q29"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q17": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "q27"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q18": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q19": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q20": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q21": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q22": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q23": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q24": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q25": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q26": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q27": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q28": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q29": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Σ = {0, 1, 2}. Se construye un AFD por regla y luego su producto.",
+          "Regla 1 «toda W inicia y finaliza en 0»: la palabra inicia y finaliza con 0.",
+          "Regla 2 «2 seguido de 0 y precedido de 1»: cada 2 va seguido de {0} y precedido de 1.",
+          "Regla 3 «suma maxima 6»: la suma de los símbolos es como máximo 6.",
+          "Regla 4 «longitud maxima 5»: la longitud es como máximo 5.",
+          "Estado inicial q0 = q0: ninguna regla ha leído símbolos.",
+          "q0,0→q1  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 0; longitud 1).",
+          "q0,1→ERROR  (incumple la regla 1: la palabra inicia y finaliza con 0).",
+          "q0,2→ERROR  (incumple la regla 1: la palabra inicia y finaliza con 0).",
+          "q1,0→q2  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 0; longitud 2).",
+          "q1,1→q3  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 1; longitud 2).",
+          "q1,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q2,0→q4  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 0; longitud 3).",
+          "q2,1→q5  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 1; longitud 3).",
+          "q2,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q3,0→q6  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 1; longitud 3).",
+          "q3,1→q7  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 2; longitud 3).",
+          "q3,2→q8  (inició con 0; último símbolo fuera de {0}; espera {0} después de 2; último símbolo fuera de {1}; suma 3; longitud 3).",
+          "q4,0→q9  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 0; longitud 4).",
+          "q4,1→q10  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 1; longitud 4).",
+          "q4,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q5,0→q11  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 1; longitud 4).",
+          "q5,1→q12  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 2; longitud 4).",
+          "q5,2→q13  (inició con 0; último símbolo fuera de {0}; espera {0} después de 2; último símbolo fuera de {1}; suma 3; longitud 4).",
+          "q6,0→q11  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 1; longitud 4).",
+          "q6,1→q12  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 2; longitud 4).",
+          "q6,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q7,0→q14  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 2; longitud 4).",
+          "q7,1→q15  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 3; longitud 4).",
+          "q7,2→q16  (inició con 0; último símbolo fuera de {0}; espera {0} después de 2; último símbolo fuera de {1}; suma 4; longitud 4).",
+          "q8,0→q17  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 3; longitud 4).",
+          "q8,1→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q8,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q9,0→q18  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 0; longitud 5).",
+          "q9,1→q19  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 1; longitud 5).",
+          "q9,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q10,0→q20  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 1; longitud 5).",
+          "q10,1→q21  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 2; longitud 5).",
+          "q10,2→q22  (inició con 0; último símbolo fuera de {0}; espera {0} después de 2; último símbolo fuera de {1}; suma 3; longitud 5).",
+          "q11,0→q20  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 1; longitud 5).",
+          "q11,1→q21  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 2; longitud 5).",
+          "q11,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q12,0→q23  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 2; longitud 5).",
+          "q12,1→q24  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 3; longitud 5).",
+          "q12,2→q25  (inició con 0; último símbolo fuera de {0}; espera {0} después de 2; último símbolo fuera de {1}; suma 4; longitud 5).",
+          "q13,0→q26  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 3; longitud 5).",
+          "q13,1→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q13,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q14,0→q23  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 2; longitud 5).",
+          "q14,1→q24  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 3; longitud 5).",
+          "q14,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q15,0→q26  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 3; longitud 5).",
+          "q15,1→q27  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 4; longitud 5).",
+          "q15,2→q28  (inició con 0; último símbolo fuera de {0}; espera {0} después de 2; último símbolo fuera de {1}; suma 5; longitud 5).",
+          "q16,0→q29  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 4; longitud 5).",
+          "q16,1→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q16,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q17,0→q26  (inició con 0; último símbolo en {0}; sin pendientes; último símbolo fuera de {1}; suma 3; longitud 5).",
+          "q17,1→q27  (inició con 0; último símbolo fuera de {0}; sin pendientes; último símbolo en {1}; suma 4; longitud 5).",
+          "q17,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q18,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q18,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q18,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q19,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q19,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q19,2→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q20,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q20,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q20,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q21,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q21,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q21,2→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q22,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q22,1→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q22,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q23,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q23,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q23,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q24,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q24,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q24,2→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q25,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q25,1→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q25,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q26,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q26,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q26,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q27,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q27,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q27,2→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q28,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q28,1→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q28,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "q29,0→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q29,1→ERROR  (incumple la regla 4: la longitud es como máximo 5).",
+          "q29,2→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1).",
+          "Son finales los estados en que todas las reglas aceptan: Qt = {q1, q2, q4, q6, q9, q11, q14, q17, q18, q20, q23, q26, q29}.",
+          "ERROR recibe toda palabra que viola alguna regla; no es final y vuelve a sí mismo.",
+          "Resultado: AFD de 31 estados.",
+          "Clasificación: AFD.",
+          "Cada símbolo del alfabeto va a un solo estado (X,a→Y) y no hay transiciones ε.",
+          "El autómata ya es determinista: se indica y se continúa con su minimización."
+        ],
+        "mapping": {
+          "q0": [
+            "R1: aún no lee símbolos; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 0",
+            "R4: longitud 0"
+          ],
+          "q1": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 0",
+            "R4: longitud 1"
+          ],
+          "q2": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 0",
+            "R4: longitud 2"
+          ],
+          "q3": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 1",
+            "R4: longitud 2"
+          ],
+          "q4": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 0",
+            "R4: longitud 3"
+          ],
+          "q5": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 1",
+            "R4: longitud 3"
+          ],
+          "q6": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 1",
+            "R4: longitud 3"
+          ],
+          "q7": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 2",
+            "R4: longitud 3"
+          ],
+          "q8": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: espera {0} después de 2; último símbolo fuera de {1}",
+            "R3: suma 3",
+            "R4: longitud 3"
+          ],
+          "q9": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 0",
+            "R4: longitud 4"
+          ],
+          "q10": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 1",
+            "R4: longitud 4"
+          ],
+          "q11": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 1",
+            "R4: longitud 4"
+          ],
+          "q12": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 2",
+            "R4: longitud 4"
+          ],
+          "q13": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: espera {0} después de 2; último símbolo fuera de {1}",
+            "R3: suma 3",
+            "R4: longitud 4"
+          ],
+          "q14": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 2",
+            "R4: longitud 4"
+          ],
+          "q15": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 3",
+            "R4: longitud 4"
+          ],
+          "q16": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: espera {0} después de 2; último símbolo fuera de {1}",
+            "R3: suma 4",
+            "R4: longitud 4"
+          ],
+          "q17": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 3",
+            "R4: longitud 4"
+          ],
+          "q18": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 0",
+            "R4: longitud 5"
+          ],
+          "q19": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 1",
+            "R4: longitud 5"
+          ],
+          "q20": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 1",
+            "R4: longitud 5"
+          ],
+          "q21": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 2",
+            "R4: longitud 5"
+          ],
+          "q22": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: espera {0} después de 2; último símbolo fuera de {1}",
+            "R3: suma 3",
+            "R4: longitud 5"
+          ],
+          "q23": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 2",
+            "R4: longitud 5"
+          ],
+          "q24": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 3",
+            "R4: longitud 5"
+          ],
+          "q25": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: espera {0} después de 2; último símbolo fuera de {1}",
+            "R3: suma 4",
+            "R4: longitud 5"
+          ],
+          "q26": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 3",
+            "R4: longitud 5"
+          ],
+          "q27": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: sin pendientes; último símbolo en {1}",
+            "R3: suma 4",
+            "R4: longitud 5"
+          ],
+          "q28": [
+            "R1: inició con 0; último símbolo fuera de {0}",
+            "R2: espera {0} después de 2; último símbolo fuera de {1}",
+            "R3: suma 5",
+            "R4: longitud 5"
+          ],
+          "q29": [
+            "R1: inició con 0; último símbolo en {0}",
+            "R2: sin pendientes; último símbolo fuera de {1}",
+            "R3: suma 4",
+            "R4: longitud 5"
+          ],
+          "ERROR": []
+        }
+      },
+      {
+        "id": "reachable",
+        "title": "Estados accesibles",
+        "automaton": {
+          "states": [
+            "q0",
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5",
+            "q6",
+            "q7",
+            "q8",
+            "q9",
+            "q10",
+            "q11",
+            "q12",
+            "q13",
+            "q14",
+            "q15",
+            "q16",
+            "q17",
+            "q18",
+            "q19",
+            "q20",
+            "q21",
+            "q22",
+            "q23",
+            "q24",
+            "q25",
+            "q26",
+            "q27",
+            "q28",
+            "q29",
+            "ERROR"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "q0",
+          "finals": [
+            "q1",
+            "q2",
+            "q4",
+            "q6",
+            "q9",
+            "q11",
+            "q14",
+            "q17",
+            "q18",
+            "q20",
+            "q23",
+            "q26",
+            "q29"
+          ],
+          "transitions": {
+            "q0": {
+              "0": [
+                "q1"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q1": {
+              "0": [
+                "q2"
+              ],
+              "1": [
+                "q3"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q2": {
+              "0": [
+                "q4"
+              ],
+              "1": [
+                "q5"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q3": {
+              "0": [
+                "q6"
+              ],
+              "1": [
+                "q7"
+              ],
+              "2": [
+                "q8"
+              ]
+            },
+            "q4": {
+              "0": [
+                "q9"
+              ],
+              "1": [
+                "q10"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q5": {
+              "0": [
+                "q11"
+              ],
+              "1": [
+                "q12"
+              ],
+              "2": [
+                "q13"
+              ]
+            },
+            "q6": {
+              "0": [
+                "q11"
+              ],
+              "1": [
+                "q12"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q7": {
+              "0": [
+                "q14"
+              ],
+              "1": [
+                "q15"
+              ],
+              "2": [
+                "q16"
+              ]
+            },
+            "q8": {
+              "0": [
+                "q17"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q9": {
+              "0": [
+                "q18"
+              ],
+              "1": [
+                "q19"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q10": {
+              "0": [
+                "q20"
+              ],
+              "1": [
+                "q21"
+              ],
+              "2": [
+                "q22"
+              ]
+            },
+            "q11": {
+              "0": [
+                "q20"
+              ],
+              "1": [
+                "q21"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q12": {
+              "0": [
+                "q23"
+              ],
+              "1": [
+                "q24"
+              ],
+              "2": [
+                "q25"
+              ]
+            },
+            "q13": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q14": {
+              "0": [
+                "q23"
+              ],
+              "1": [
+                "q24"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q15": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "q27"
+              ],
+              "2": [
+                "q28"
+              ]
+            },
+            "q16": {
+              "0": [
+                "q29"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q17": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "q27"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q18": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q19": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q20": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q21": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q22": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q23": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q24": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q25": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q26": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q27": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q28": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q29": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Se inicia la búsqueda en el estado inicial q0 = q0.",
+          "q0,0→q1: q1 es accesible.",
+          "q0,1→ERROR: ERROR es accesible.",
+          "q1,0→q2: q2 es accesible.",
+          "q1,1→q3: q3 es accesible.",
+          "q2,0→q4: q4 es accesible.",
+          "q2,1→q5: q5 es accesible.",
+          "q3,0→q6: q6 es accesible.",
+          "q3,1→q7: q7 es accesible.",
+          "q3,2→q8: q8 es accesible.",
+          "q4,0→q9: q9 es accesible.",
+          "q4,1→q10: q10 es accesible.",
+          "q5,0→q11: q11 es accesible.",
+          "q5,1→q12: q12 es accesible.",
+          "q5,2→q13: q13 es accesible.",
+          "q7,0→q14: q14 es accesible.",
+          "q7,1→q15: q15 es accesible.",
+          "q7,2→q16: q16 es accesible.",
+          "q8,0→q17: q17 es accesible.",
+          "q9,0→q18: q18 es accesible.",
+          "q9,1→q19: q19 es accesible.",
+          "q10,0→q20: q20 es accesible.",
+          "q10,1→q21: q21 es accesible.",
+          "q10,2→q22: q22 es accesible.",
+          "q12,0→q23: q23 es accesible.",
+          "q12,1→q24: q24 es accesible.",
+          "q12,2→q25: q25 es accesible.",
+          "q13,0→q26: q26 es accesible.",
+          "q15,1→q27: q27 es accesible.",
+          "q15,2→q28: q28 es accesible.",
+          "q16,0→q29: q29 es accesible.",
+          "Estados inaccesibles eliminados: ninguno."
+        ],
+        "mapping": {
+          "q0": [
+            "q0"
+          ],
+          "q1": [
+            "q1"
+          ],
+          "q2": [
+            "q2"
+          ],
+          "q3": [
+            "q3"
+          ],
+          "q4": [
+            "q4"
+          ],
+          "q5": [
+            "q5"
+          ],
+          "q6": [
+            "q6"
+          ],
+          "q7": [
+            "q7"
+          ],
+          "q8": [
+            "q8"
+          ],
+          "q9": [
+            "q9"
+          ],
+          "q10": [
+            "q10"
+          ],
+          "q11": [
+            "q11"
+          ],
+          "q12": [
+            "q12"
+          ],
+          "q13": [
+            "q13"
+          ],
+          "q14": [
+            "q14"
+          ],
+          "q15": [
+            "q15"
+          ],
+          "q16": [
+            "q16"
+          ],
+          "q17": [
+            "q17"
+          ],
+          "q18": [
+            "q18"
+          ],
+          "q19": [
+            "q19"
+          ],
+          "q20": [
+            "q20"
+          ],
+          "q21": [
+            "q21"
+          ],
+          "q22": [
+            "q22"
+          ],
+          "q23": [
+            "q23"
+          ],
+          "q24": [
+            "q24"
+          ],
+          "q25": [
+            "q25"
+          ],
+          "q26": [
+            "q26"
+          ],
+          "q27": [
+            "q27"
+          ],
+          "q28": [
+            "q28"
+          ],
+          "q29": [
+            "q29"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        }
+      },
+      {
+        "id": "dfa",
+        "title": "AFD completo",
+        "automaton": {
+          "states": [
+            "q0",
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5",
+            "q6",
+            "q7",
+            "q8",
+            "q9",
+            "q10",
+            "q11",
+            "q12",
+            "q13",
+            "q14",
+            "q15",
+            "q16",
+            "q17",
+            "q18",
+            "q19",
+            "q20",
+            "q21",
+            "q22",
+            "q23",
+            "q24",
+            "q25",
+            "q26",
+            "q27",
+            "q28",
+            "q29",
+            "ERROR"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "q0",
+          "finals": [
+            "q1",
+            "q2",
+            "q4",
+            "q6",
+            "q9",
+            "q11",
+            "q14",
+            "q17",
+            "q18",
+            "q20",
+            "q23",
+            "q26",
+            "q29"
+          ],
+          "transitions": {
+            "q0": {
+              "0": [
+                "q1"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q1": {
+              "0": [
+                "q2"
+              ],
+              "1": [
+                "q3"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q2": {
+              "0": [
+                "q4"
+              ],
+              "1": [
+                "q5"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q3": {
+              "0": [
+                "q6"
+              ],
+              "1": [
+                "q7"
+              ],
+              "2": [
+                "q8"
+              ]
+            },
+            "q4": {
+              "0": [
+                "q9"
+              ],
+              "1": [
+                "q10"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q5": {
+              "0": [
+                "q11"
+              ],
+              "1": [
+                "q12"
+              ],
+              "2": [
+                "q13"
+              ]
+            },
+            "q6": {
+              "0": [
+                "q11"
+              ],
+              "1": [
+                "q12"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q7": {
+              "0": [
+                "q14"
+              ],
+              "1": [
+                "q15"
+              ],
+              "2": [
+                "q16"
+              ]
+            },
+            "q8": {
+              "0": [
+                "q17"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q9": {
+              "0": [
+                "q18"
+              ],
+              "1": [
+                "q19"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q10": {
+              "0": [
+                "q20"
+              ],
+              "1": [
+                "q21"
+              ],
+              "2": [
+                "q22"
+              ]
+            },
+            "q11": {
+              "0": [
+                "q20"
+              ],
+              "1": [
+                "q21"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q12": {
+              "0": [
+                "q23"
+              ],
+              "1": [
+                "q24"
+              ],
+              "2": [
+                "q25"
+              ]
+            },
+            "q13": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q14": {
+              "0": [
+                "q23"
+              ],
+              "1": [
+                "q24"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q15": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "q27"
+              ],
+              "2": [
+                "q28"
+              ]
+            },
+            "q16": {
+              "0": [
+                "q29"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q17": {
+              "0": [
+                "q26"
+              ],
+              "1": [
+                "q27"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q18": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q19": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q20": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q21": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q22": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q23": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q24": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q25": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q26": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q27": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q28": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "q29": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "El autómata ya es un AFD completo: se omite la conversión AFND → AFD y se continúa con la minimización."
+        ],
+        "mapping": {
+          "q0": [
+            "q0"
+          ],
+          "q1": [
+            "q1"
+          ],
+          "q2": [
+            "q2"
+          ],
+          "q3": [
+            "q3"
+          ],
+          "q4": [
+            "q4"
+          ],
+          "q5": [
+            "q5"
+          ],
+          "q6": [
+            "q6"
+          ],
+          "q7": [
+            "q7"
+          ],
+          "q8": [
+            "q8"
+          ],
+          "q9": [
+            "q9"
+          ],
+          "q10": [
+            "q10"
+          ],
+          "q11": [
+            "q11"
+          ],
+          "q12": [
+            "q12"
+          ],
+          "q13": [
+            "q13"
+          ],
+          "q14": [
+            "q14"
+          ],
+          "q15": [
+            "q15"
+          ],
+          "q16": [
+            "q16"
+          ],
+          "q17": [
+            "q17"
+          ],
+          "q18": [
+            "q18"
+          ],
+          "q19": [
+            "q19"
+          ],
+          "q20": [
+            "q20"
+          ],
+          "q21": [
+            "q21"
+          ],
+          "q22": [
+            "q22"
+          ],
+          "q23": [
+            "q23"
+          ],
+          "q24": [
+            "q24"
+          ],
+          "q25": [
+            "q25"
+          ],
+          "q26": [
+            "q26"
+          ],
+          "q27": [
+            "q27"
+          ],
+          "q28": [
+            "q28"
+          ],
+          "q29": [
+            "q29"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        }
+      },
+      {
+        "id": "minimal",
+        "title": "AFD mínimo",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "ERROR"
+          ],
+          "alphabet": [
+            "0",
+            "1",
+            "2"
+          ],
+          "initial": "A",
+          "finals": [
+            "B",
+            "C",
+            "E",
+            "H",
+            "J"
+          ],
+          "transitions": {
+            "A": {
+              "0": [
+                "B"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "B": {
+              "0": [
+                "C"
+              ],
+              "1": [
+                "D"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "C": {
+              "0": [
+                "E"
+              ],
+              "1": [
+                "F"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "D": {
+              "0": [
+                "E"
+              ],
+              "1": [
+                "F"
+              ],
+              "2": [
+                "G"
+              ]
+            },
+            "E": {
+              "0": [
+                "H"
+              ],
+              "1": [
+                "I"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "F": {
+              "0": [
+                "H"
+              ],
+              "1": [
+                "I"
+              ],
+              "2": [
+                "I"
+              ]
+            },
+            "G": {
+              "0": [
+                "H"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "H": {
+              "0": [
+                "J"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "I": {
+              "0": [
+                "J"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "J": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "0": [
+                "ERROR"
+              ],
+              "1": [
+                "ERROR"
+              ],
+              "2": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "P0 separa estados no terminales y terminales: {q0, q3, q5, q7, q8, q10, q12, q13, q15, q16, q19, q21, q22, q24, q25, q27, q28, ERROR} / {q1, q2, q4, q6, q9, q11, q14, q17, q18, q20, q23, q26, q29}.",
+          "q0,0→q1 (bloque 2) · q0,1→ERROR (bloque 1) · q0,2→ERROR (bloque 1).",
+          "q3,0→q6 (bloque 2) · q3,1→q7 (bloque 1) · q3,2→q8 (bloque 1).",
+          "q5,0→q11 (bloque 2) · q5,1→q12 (bloque 1) · q5,2→q13 (bloque 1).",
+          "q7,0→q14 (bloque 2) · q7,1→q15 (bloque 1) · q7,2→q16 (bloque 1).",
+          "q8,0→q17 (bloque 2) · q8,1→ERROR (bloque 1) · q8,2→ERROR (bloque 1).",
+          "q10,0→q20 (bloque 2) · q10,1→q21 (bloque 1) · q10,2→q22 (bloque 1).",
+          "q12,0→q23 (bloque 2) · q12,1→q24 (bloque 1) · q12,2→q25 (bloque 1).",
+          "q13,0→q26 (bloque 2) · q13,1→ERROR (bloque 1) · q13,2→ERROR (bloque 1).",
+          "q15,0→q26 (bloque 2) · q15,1→q27 (bloque 1) · q15,2→q28 (bloque 1).",
+          "q16,0→q29 (bloque 2) · q16,1→ERROR (bloque 1) · q16,2→ERROR (bloque 1).",
+          "q19,0→ERROR (bloque 1) · q19,1→ERROR (bloque 1) · q19,2→ERROR (bloque 1).",
+          "q21,0→ERROR (bloque 1) · q21,1→ERROR (bloque 1) · q21,2→ERROR (bloque 1).",
+          "q22,0→ERROR (bloque 1) · q22,1→ERROR (bloque 1) · q22,2→ERROR (bloque 1).",
+          "q24,0→ERROR (bloque 1) · q24,1→ERROR (bloque 1) · q24,2→ERROR (bloque 1).",
+          "q25,0→ERROR (bloque 1) · q25,1→ERROR (bloque 1) · q25,2→ERROR (bloque 1).",
+          "q27,0→ERROR (bloque 1) · q27,1→ERROR (bloque 1) · q27,2→ERROR (bloque 1).",
+          "q28,0→ERROR (bloque 1) · q28,1→ERROR (bloque 1) · q28,2→ERROR (bloque 1).",
+          "ERROR,0→ERROR (bloque 1) · ERROR,1→ERROR (bloque 1) · ERROR,2→ERROR (bloque 1).",
+          "q1,0→q2 (bloque 2) · q1,1→q3 (bloque 1) · q1,2→ERROR (bloque 1).",
+          "q2,0→q4 (bloque 2) · q2,1→q5 (bloque 1) · q2,2→ERROR (bloque 1).",
+          "q4,0→q9 (bloque 2) · q4,1→q10 (bloque 1) · q4,2→ERROR (bloque 1).",
+          "q6,0→q11 (bloque 2) · q6,1→q12 (bloque 1) · q6,2→ERROR (bloque 1).",
+          "q9,0→q18 (bloque 2) · q9,1→q19 (bloque 1) · q9,2→ERROR (bloque 1).",
+          "q11,0→q20 (bloque 2) · q11,1→q21 (bloque 1) · q11,2→ERROR (bloque 1).",
+          "q14,0→q23 (bloque 2) · q14,1→q24 (bloque 1) · q14,2→ERROR (bloque 1).",
+          "q17,0→q26 (bloque 2) · q17,1→q27 (bloque 1) · q17,2→ERROR (bloque 1).",
+          "q18,0→ERROR (bloque 1) · q18,1→ERROR (bloque 1) · q18,2→ERROR (bloque 1).",
+          "q20,0→ERROR (bloque 1) · q20,1→ERROR (bloque 1) · q20,2→ERROR (bloque 1).",
+          "q23,0→ERROR (bloque 1) · q23,1→ERROR (bloque 1) · q23,2→ERROR (bloque 1).",
+          "q26,0→ERROR (bloque 1) · q26,1→ERROR (bloque 1) · q26,2→ERROR (bloque 1).",
+          "q29,0→ERROR (bloque 1) · q29,1→ERROR (bloque 1) · q29,2→ERROR (bloque 1).",
+          "P1: {q0, q3, q5, q7, q8, q10, q12, q13, q15, q16} / {q19, q21, q22, q24, q25, q27, q28, ERROR} / {q1, q2, q4, q6, q9, q11, q14, q17} / {q18, q20, q23, q26, q29}.",
+          "q0,0→q1 (bloque 3) · q0,1→ERROR (bloque 2) · q0,2→ERROR (bloque 2).",
+          "q3,0→q6 (bloque 3) · q3,1→q7 (bloque 1) · q3,2→q8 (bloque 1).",
+          "q5,0→q11 (bloque 3) · q5,1→q12 (bloque 1) · q5,2→q13 (bloque 1).",
+          "q7,0→q14 (bloque 3) · q7,1→q15 (bloque 1) · q7,2→q16 (bloque 1).",
+          "q8,0→q17 (bloque 3) · q8,1→ERROR (bloque 2) · q8,2→ERROR (bloque 2).",
+          "q10,0→q20 (bloque 4) · q10,1→q21 (bloque 2) · q10,2→q22 (bloque 2).",
+          "q12,0→q23 (bloque 4) · q12,1→q24 (bloque 2) · q12,2→q25 (bloque 2).",
+          "q13,0→q26 (bloque 4) · q13,1→ERROR (bloque 2) · q13,2→ERROR (bloque 2).",
+          "q15,0→q26 (bloque 4) · q15,1→q27 (bloque 2) · q15,2→q28 (bloque 2).",
+          "q16,0→q29 (bloque 4) · q16,1→ERROR (bloque 2) · q16,2→ERROR (bloque 2).",
+          "q19,0→ERROR (bloque 2) · q19,1→ERROR (bloque 2) · q19,2→ERROR (bloque 2).",
+          "q21,0→ERROR (bloque 2) · q21,1→ERROR (bloque 2) · q21,2→ERROR (bloque 2).",
+          "q22,0→ERROR (bloque 2) · q22,1→ERROR (bloque 2) · q22,2→ERROR (bloque 2).",
+          "q24,0→ERROR (bloque 2) · q24,1→ERROR (bloque 2) · q24,2→ERROR (bloque 2).",
+          "q25,0→ERROR (bloque 2) · q25,1→ERROR (bloque 2) · q25,2→ERROR (bloque 2).",
+          "q27,0→ERROR (bloque 2) · q27,1→ERROR (bloque 2) · q27,2→ERROR (bloque 2).",
+          "q28,0→ERROR (bloque 2) · q28,1→ERROR (bloque 2) · q28,2→ERROR (bloque 2).",
+          "ERROR,0→ERROR (bloque 2) · ERROR,1→ERROR (bloque 2) · ERROR,2→ERROR (bloque 2).",
+          "q1,0→q2 (bloque 3) · q1,1→q3 (bloque 1) · q1,2→ERROR (bloque 2).",
+          "q2,0→q4 (bloque 3) · q2,1→q5 (bloque 1) · q2,2→ERROR (bloque 2).",
+          "q4,0→q9 (bloque 3) · q4,1→q10 (bloque 1) · q4,2→ERROR (bloque 2).",
+          "q6,0→q11 (bloque 3) · q6,1→q12 (bloque 1) · q6,2→ERROR (bloque 2).",
+          "q9,0→q18 (bloque 4) · q9,1→q19 (bloque 2) · q9,2→ERROR (bloque 2).",
+          "q11,0→q20 (bloque 4) · q11,1→q21 (bloque 2) · q11,2→ERROR (bloque 2).",
+          "q14,0→q23 (bloque 4) · q14,1→q24 (bloque 2) · q14,2→ERROR (bloque 2).",
+          "q17,0→q26 (bloque 4) · q17,1→q27 (bloque 2) · q17,2→ERROR (bloque 2).",
+          "q18,0→ERROR (bloque 2) · q18,1→ERROR (bloque 2) · q18,2→ERROR (bloque 2).",
+          "q20,0→ERROR (bloque 2) · q20,1→ERROR (bloque 2) · q20,2→ERROR (bloque 2).",
+          "q23,0→ERROR (bloque 2) · q23,1→ERROR (bloque 2) · q23,2→ERROR (bloque 2).",
+          "q26,0→ERROR (bloque 2) · q26,1→ERROR (bloque 2) · q26,2→ERROR (bloque 2).",
+          "q29,0→ERROR (bloque 2) · q29,1→ERROR (bloque 2) · q29,2→ERROR (bloque 2).",
+          "P2: {q0, q8} / {q3, q5, q7} / {q10, q12, q13, q15, q16} / {q19, q21, q22, q24, q25, q27, q28, ERROR} / {q1, q2, q4, q6} / {q9, q11, q14, q17} / {q18, q20, q23, q26, q29}.",
+          "q0,0→q1 (bloque 5) · q0,1→ERROR (bloque 4) · q0,2→ERROR (bloque 4).",
+          "q8,0→q17 (bloque 6) · q8,1→ERROR (bloque 4) · q8,2→ERROR (bloque 4).",
+          "q3,0→q6 (bloque 5) · q3,1→q7 (bloque 2) · q3,2→q8 (bloque 1).",
+          "q5,0→q11 (bloque 6) · q5,1→q12 (bloque 3) · q5,2→q13 (bloque 3).",
+          "q7,0→q14 (bloque 6) · q7,1→q15 (bloque 3) · q7,2→q16 (bloque 3).",
+          "q10,0→q20 (bloque 7) · q10,1→q21 (bloque 4) · q10,2→q22 (bloque 4).",
+          "q12,0→q23 (bloque 7) · q12,1→q24 (bloque 4) · q12,2→q25 (bloque 4).",
+          "q13,0→q26 (bloque 7) · q13,1→ERROR (bloque 4) · q13,2→ERROR (bloque 4).",
+          "q15,0→q26 (bloque 7) · q15,1→q27 (bloque 4) · q15,2→q28 (bloque 4).",
+          "q16,0→q29 (bloque 7) · q16,1→ERROR (bloque 4) · q16,2→ERROR (bloque 4).",
+          "q19,0→ERROR (bloque 4) · q19,1→ERROR (bloque 4) · q19,2→ERROR (bloque 4).",
+          "q21,0→ERROR (bloque 4) · q21,1→ERROR (bloque 4) · q21,2→ERROR (bloque 4).",
+          "q22,0→ERROR (bloque 4) · q22,1→ERROR (bloque 4) · q22,2→ERROR (bloque 4).",
+          "q24,0→ERROR (bloque 4) · q24,1→ERROR (bloque 4) · q24,2→ERROR (bloque 4).",
+          "q25,0→ERROR (bloque 4) · q25,1→ERROR (bloque 4) · q25,2→ERROR (bloque 4).",
+          "q27,0→ERROR (bloque 4) · q27,1→ERROR (bloque 4) · q27,2→ERROR (bloque 4).",
+          "q28,0→ERROR (bloque 4) · q28,1→ERROR (bloque 4) · q28,2→ERROR (bloque 4).",
+          "ERROR,0→ERROR (bloque 4) · ERROR,1→ERROR (bloque 4) · ERROR,2→ERROR (bloque 4).",
+          "q1,0→q2 (bloque 5) · q1,1→q3 (bloque 2) · q1,2→ERROR (bloque 4).",
+          "q2,0→q4 (bloque 5) · q2,1→q5 (bloque 2) · q2,2→ERROR (bloque 4).",
+          "q4,0→q9 (bloque 6) · q4,1→q10 (bloque 3) · q4,2→ERROR (bloque 4).",
+          "q6,0→q11 (bloque 6) · q6,1→q12 (bloque 3) · q6,2→ERROR (bloque 4).",
+          "q9,0→q18 (bloque 7) · q9,1→q19 (bloque 4) · q9,2→ERROR (bloque 4).",
+          "q11,0→q20 (bloque 7) · q11,1→q21 (bloque 4) · q11,2→ERROR (bloque 4).",
+          "q14,0→q23 (bloque 7) · q14,1→q24 (bloque 4) · q14,2→ERROR (bloque 4).",
+          "q17,0→q26 (bloque 7) · q17,1→q27 (bloque 4) · q17,2→ERROR (bloque 4).",
+          "q18,0→ERROR (bloque 4) · q18,1→ERROR (bloque 4) · q18,2→ERROR (bloque 4).",
+          "q20,0→ERROR (bloque 4) · q20,1→ERROR (bloque 4) · q20,2→ERROR (bloque 4).",
+          "q23,0→ERROR (bloque 4) · q23,1→ERROR (bloque 4) · q23,2→ERROR (bloque 4).",
+          "q26,0→ERROR (bloque 4) · q26,1→ERROR (bloque 4) · q26,2→ERROR (bloque 4).",
+          "q29,0→ERROR (bloque 4) · q29,1→ERROR (bloque 4) · q29,2→ERROR (bloque 4).",
+          "P3: {q0} / {q8} / {q3} / {q5, q7} / {q10, q12, q13, q15, q16} / {q19, q21, q22, q24, q25, q27, q28, ERROR} / {q1, q2} / {q4, q6} / {q9, q11, q14, q17} / {q18, q20, q23, q26, q29}.",
+          "q0,0→q1 (bloque 7) · q0,1→ERROR (bloque 6) · q0,2→ERROR (bloque 6).",
+          "q8,0→q17 (bloque 9) · q8,1→ERROR (bloque 6) · q8,2→ERROR (bloque 6).",
+          "q3,0→q6 (bloque 8) · q3,1→q7 (bloque 4) · q3,2→q8 (bloque 2).",
+          "q5,0→q11 (bloque 9) · q5,1→q12 (bloque 5) · q5,2→q13 (bloque 5).",
+          "q7,0→q14 (bloque 9) · q7,1→q15 (bloque 5) · q7,2→q16 (bloque 5).",
+          "q10,0→q20 (bloque 10) · q10,1→q21 (bloque 6) · q10,2→q22 (bloque 6).",
+          "q12,0→q23 (bloque 10) · q12,1→q24 (bloque 6) · q12,2→q25 (bloque 6).",
+          "q13,0→q26 (bloque 10) · q13,1→ERROR (bloque 6) · q13,2→ERROR (bloque 6).",
+          "q15,0→q26 (bloque 10) · q15,1→q27 (bloque 6) · q15,2→q28 (bloque 6).",
+          "q16,0→q29 (bloque 10) · q16,1→ERROR (bloque 6) · q16,2→ERROR (bloque 6).",
+          "q19,0→ERROR (bloque 6) · q19,1→ERROR (bloque 6) · q19,2→ERROR (bloque 6).",
+          "q21,0→ERROR (bloque 6) · q21,1→ERROR (bloque 6) · q21,2→ERROR (bloque 6).",
+          "q22,0→ERROR (bloque 6) · q22,1→ERROR (bloque 6) · q22,2→ERROR (bloque 6).",
+          "q24,0→ERROR (bloque 6) · q24,1→ERROR (bloque 6) · q24,2→ERROR (bloque 6).",
+          "q25,0→ERROR (bloque 6) · q25,1→ERROR (bloque 6) · q25,2→ERROR (bloque 6).",
+          "q27,0→ERROR (bloque 6) · q27,1→ERROR (bloque 6) · q27,2→ERROR (bloque 6).",
+          "q28,0→ERROR (bloque 6) · q28,1→ERROR (bloque 6) · q28,2→ERROR (bloque 6).",
+          "ERROR,0→ERROR (bloque 6) · ERROR,1→ERROR (bloque 6) · ERROR,2→ERROR (bloque 6).",
+          "q1,0→q2 (bloque 7) · q1,1→q3 (bloque 3) · q1,2→ERROR (bloque 6).",
+          "q2,0→q4 (bloque 8) · q2,1→q5 (bloque 4) · q2,2→ERROR (bloque 6).",
+          "q4,0→q9 (bloque 9) · q4,1→q10 (bloque 5) · q4,2→ERROR (bloque 6).",
+          "q6,0→q11 (bloque 9) · q6,1→q12 (bloque 5) · q6,2→ERROR (bloque 6).",
+          "q9,0→q18 (bloque 10) · q9,1→q19 (bloque 6) · q9,2→ERROR (bloque 6).",
+          "q11,0→q20 (bloque 10) · q11,1→q21 (bloque 6) · q11,2→ERROR (bloque 6).",
+          "q14,0→q23 (bloque 10) · q14,1→q24 (bloque 6) · q14,2→ERROR (bloque 6).",
+          "q17,0→q26 (bloque 10) · q17,1→q27 (bloque 6) · q17,2→ERROR (bloque 6).",
+          "q18,0→ERROR (bloque 6) · q18,1→ERROR (bloque 6) · q18,2→ERROR (bloque 6).",
+          "q20,0→ERROR (bloque 6) · q20,1→ERROR (bloque 6) · q20,2→ERROR (bloque 6).",
+          "q23,0→ERROR (bloque 6) · q23,1→ERROR (bloque 6) · q23,2→ERROR (bloque 6).",
+          "q26,0→ERROR (bloque 6) · q26,1→ERROR (bloque 6) · q26,2→ERROR (bloque 6).",
+          "q29,0→ERROR (bloque 6) · q29,1→ERROR (bloque 6) · q29,2→ERROR (bloque 6).",
+          "P4: {q0} / {q8} / {q3} / {q5, q7} / {q10, q12, q13, q15, q16} / {q19, q21, q22, q24, q25, q27, q28, ERROR} / {q1} / {q2} / {q4, q6} / {q9, q11, q14, q17} / {q18, q20, q23, q26, q29}.",
+          "q0,0→q1 (bloque 7) · q0,1→ERROR (bloque 6) · q0,2→ERROR (bloque 6).",
+          "q8,0→q17 (bloque 10) · q8,1→ERROR (bloque 6) · q8,2→ERROR (bloque 6).",
+          "q3,0→q6 (bloque 9) · q3,1→q7 (bloque 4) · q3,2→q8 (bloque 2).",
+          "q5,0→q11 (bloque 10) · q5,1→q12 (bloque 5) · q5,2→q13 (bloque 5).",
+          "q7,0→q14 (bloque 10) · q7,1→q15 (bloque 5) · q7,2→q16 (bloque 5).",
+          "q10,0→q20 (bloque 11) · q10,1→q21 (bloque 6) · q10,2→q22 (bloque 6).",
+          "q12,0→q23 (bloque 11) · q12,1→q24 (bloque 6) · q12,2→q25 (bloque 6).",
+          "q13,0→q26 (bloque 11) · q13,1→ERROR (bloque 6) · q13,2→ERROR (bloque 6).",
+          "q15,0→q26 (bloque 11) · q15,1→q27 (bloque 6) · q15,2→q28 (bloque 6).",
+          "q16,0→q29 (bloque 11) · q16,1→ERROR (bloque 6) · q16,2→ERROR (bloque 6).",
+          "q19,0→ERROR (bloque 6) · q19,1→ERROR (bloque 6) · q19,2→ERROR (bloque 6).",
+          "q21,0→ERROR (bloque 6) · q21,1→ERROR (bloque 6) · q21,2→ERROR (bloque 6).",
+          "q22,0→ERROR (bloque 6) · q22,1→ERROR (bloque 6) · q22,2→ERROR (bloque 6).",
+          "q24,0→ERROR (bloque 6) · q24,1→ERROR (bloque 6) · q24,2→ERROR (bloque 6).",
+          "q25,0→ERROR (bloque 6) · q25,1→ERROR (bloque 6) · q25,2→ERROR (bloque 6).",
+          "q27,0→ERROR (bloque 6) · q27,1→ERROR (bloque 6) · q27,2→ERROR (bloque 6).",
+          "q28,0→ERROR (bloque 6) · q28,1→ERROR (bloque 6) · q28,2→ERROR (bloque 6).",
+          "ERROR,0→ERROR (bloque 6) · ERROR,1→ERROR (bloque 6) · ERROR,2→ERROR (bloque 6).",
+          "q1,0→q2 (bloque 8) · q1,1→q3 (bloque 3) · q1,2→ERROR (bloque 6).",
+          "q2,0→q4 (bloque 9) · q2,1→q5 (bloque 4) · q2,2→ERROR (bloque 6).",
+          "q4,0→q9 (bloque 10) · q4,1→q10 (bloque 5) · q4,2→ERROR (bloque 6).",
+          "q6,0→q11 (bloque 10) · q6,1→q12 (bloque 5) · q6,2→ERROR (bloque 6).",
+          "q9,0→q18 (bloque 11) · q9,1→q19 (bloque 6) · q9,2→ERROR (bloque 6).",
+          "q11,0→q20 (bloque 11) · q11,1→q21 (bloque 6) · q11,2→ERROR (bloque 6).",
+          "q14,0→q23 (bloque 11) · q14,1→q24 (bloque 6) · q14,2→ERROR (bloque 6).",
+          "q17,0→q26 (bloque 11) · q17,1→q27 (bloque 6) · q17,2→ERROR (bloque 6).",
+          "q18,0→ERROR (bloque 6) · q18,1→ERROR (bloque 6) · q18,2→ERROR (bloque 6).",
+          "q20,0→ERROR (bloque 6) · q20,1→ERROR (bloque 6) · q20,2→ERROR (bloque 6).",
+          "q23,0→ERROR (bloque 6) · q23,1→ERROR (bloque 6) · q23,2→ERROR (bloque 6).",
+          "q26,0→ERROR (bloque 6) · q26,1→ERROR (bloque 6) · q26,2→ERROR (bloque 6).",
+          "q29,0→ERROR (bloque 6) · q29,1→ERROR (bloque 6) · q29,2→ERROR (bloque 6).",
+          "P5: {q0} / {q8} / {q3} / {q5, q7} / {q10, q12, q13, q15, q16} / {q19, q21, q22, q24, q25, q27, q28, ERROR} / {q1} / {q2} / {q4, q6} / {q9, q11, q14, q17} / {q18, q20, q23, q26, q29}.",
+          "La partición no cambia: sus bloques son las clases de equivalencia.",
+          "q4, q6 son equivalentes: se fusionan en E.",
+          "q5, q7 son equivalentes: se fusionan en F.",
+          "q9, q11, q14, q17 son equivalentes: se fusionan en H.",
+          "q10, q12, q13, q15, q16 son equivalentes: se fusionan en I.",
+          "q18, q20, q23, q26, q29 son equivalentes: se fusionan en J.",
+          "q19, q21, q22, q24, q25, q27, q28, ERROR son equivalentes: se fusionan en ERROR.",
+          "Los estados del AFD mínimo se nombran A, B, C… en orden de recorrido desde q0: A = {q0}; B = {q1}; C = {q2}; D = {q3}; E = {q4, q6}; F = {q5, q7}; G = {q8}; H = {q9, q11, q14, q17}; I = {q10, q12, q13, q15, q16}; J = {q18, q20, q23, q26, q29}; ERROR = {q19, q21, q22, q24, q25, q27, q28, ERROR}."
+        ],
+        "mapping": {
+          "A": [
+            "q0"
+          ],
+          "B": [
+            "q1"
+          ],
+          "C": [
+            "q2"
+          ],
+          "D": [
+            "q3"
+          ],
+          "E": [
+            "q4",
+            "q6"
+          ],
+          "F": [
+            "q5",
+            "q7"
+          ],
+          "G": [
+            "q8"
+          ],
+          "H": [
+            "q9",
+            "q11",
+            "q14",
+            "q17"
+          ],
+          "I": [
+            "q10",
+            "q12",
+            "q13",
+            "q15",
+            "q16"
+          ],
+          "J": [
+            "q18",
+            "q20",
+            "q23",
+            "q26",
+            "q29"
+          ],
+          "ERROR": [
+            "q19",
+            "q21",
+            "q22",
+            "q24",
+            "q25",
+            "q27",
+            "q28",
+            "ERROR"
+          ]
+        },
+        "original_mapping": {
+          "A": [
+            "q0"
+          ],
+          "B": [
+            "q1"
+          ],
+          "C": [
+            "q2"
+          ],
+          "D": [
+            "q3"
+          ],
+          "E": [
+            "q4",
+            "q6"
+          ],
+          "F": [
+            "q5",
+            "q7"
+          ],
+          "G": [
+            "q8"
+          ],
+          "H": [
+            "q11",
+            "q14",
+            "q17",
+            "q9"
+          ],
+          "I": [
+            "q10",
+            "q12",
+            "q13",
+            "q15",
+            "q16"
+          ],
+          "J": [
+            "q18",
+            "q20",
+            "q23",
+            "q26",
+            "q29"
+          ],
+          "ERROR": [
+            "ERROR",
+            "q19",
+            "q21",
+            "q22",
+            "q24",
+            "q25",
+            "q27",
+            "q28"
+          ]
+        },
+        "partitions": [
+          [
+            [
+              "q0",
+              "q3",
+              "q5",
+              "q7",
+              "q8",
+              "q10",
+              "q12",
+              "q13",
+              "q15",
+              "q16",
+              "q19",
+              "q21",
+              "q22",
+              "q24",
+              "q25",
+              "q27",
+              "q28",
+              "ERROR"
+            ],
+            [
+              "q1",
+              "q2",
+              "q4",
+              "q6",
+              "q9",
+              "q11",
+              "q14",
+              "q17",
+              "q18",
+              "q20",
+              "q23",
+              "q26",
+              "q29"
+            ]
+          ],
+          [
+            [
+              "q0",
+              "q3",
+              "q5",
+              "q7",
+              "q8",
+              "q10",
+              "q12",
+              "q13",
+              "q15",
+              "q16"
+            ],
+            [
+              "q19",
+              "q21",
+              "q22",
+              "q24",
+              "q25",
+              "q27",
+              "q28",
+              "ERROR"
+            ],
+            [
+              "q1",
+              "q2",
+              "q4",
+              "q6",
+              "q9",
+              "q11",
+              "q14",
+              "q17"
+            ],
+            [
+              "q18",
+              "q20",
+              "q23",
+              "q26",
+              "q29"
+            ]
+          ],
+          [
+            [
+              "q0",
+              "q8"
+            ],
+            [
+              "q3",
+              "q5",
+              "q7"
+            ],
+            [
+              "q10",
+              "q12",
+              "q13",
+              "q15",
+              "q16"
+            ],
+            [
+              "q19",
+              "q21",
+              "q22",
+              "q24",
+              "q25",
+              "q27",
+              "q28",
+              "ERROR"
+            ],
+            [
+              "q1",
+              "q2",
+              "q4",
+              "q6"
+            ],
+            [
+              "q9",
+              "q11",
+              "q14",
+              "q17"
+            ],
+            [
+              "q18",
+              "q20",
+              "q23",
+              "q26",
+              "q29"
+            ]
+          ],
+          [
+            [
+              "q0"
+            ],
+            [
+              "q8"
+            ],
+            [
+              "q3"
+            ],
+            [
+              "q5",
+              "q7"
+            ],
+            [
+              "q10",
+              "q12",
+              "q13",
+              "q15",
+              "q16"
+            ],
+            [
+              "q19",
+              "q21",
+              "q22",
+              "q24",
+              "q25",
+              "q27",
+              "q28",
+              "ERROR"
+            ],
+            [
+              "q1",
+              "q2"
+            ],
+            [
+              "q4",
+              "q6"
+            ],
+            [
+              "q9",
+              "q11",
+              "q14",
+              "q17"
+            ],
+            [
+              "q18",
+              "q20",
+              "q23",
+              "q26",
+              "q29"
+            ]
+          ],
+          [
+            [
+              "q0"
+            ],
+            [
+              "q8"
+            ],
+            [
+              "q3"
+            ],
+            [
+              "q5",
+              "q7"
+            ],
+            [
+              "q10",
+              "q12",
+              "q13",
+              "q15",
+              "q16"
+            ],
+            [
+              "q19",
+              "q21",
+              "q22",
+              "q24",
+              "q25",
+              "q27",
+              "q28",
+              "ERROR"
+            ],
+            [
+              "q1"
+            ],
+            [
+              "q2"
+            ],
+            [
+              "q4",
+              "q6"
+            ],
+            [
+              "q9",
+              "q11",
+              "q14",
+              "q17"
+            ],
+            [
+              "q18",
+              "q20",
+              "q23",
+              "q26",
+              "q29"
+            ]
+          ],
+          [
+            [
+              "q0"
+            ],
+            [
+              "q8"
+            ],
+            [
+              "q3"
+            ],
+            [
+              "q5",
+              "q7"
+            ],
+            [
+              "q10",
+              "q12",
+              "q13",
+              "q15",
+              "q16"
+            ],
+            [
+              "q19",
+              "q21",
+              "q22",
+              "q24",
+              "q25",
+              "q27",
+              "q28",
+              "ERROR"
+            ],
+            [
+              "q1"
+            ],
+            [
+              "q2"
+            ],
+            [
+              "q4",
+              "q6"
+            ],
+            [
+              "q9",
+              "q11",
+              "q14",
+              "q17"
+            ],
+            [
+              "q18",
+              "q20",
+              "q23",
+              "q26",
+              "q29"
+            ]
+          ]
+        ]
+      }
+    ],
+    "language": [
+      "0",
+      "00",
+      "000",
+      "010",
+      "0000",
+      "0010",
+      "0100",
+      "0110"
+    ],
+    "summary": {
+      "original_states": 31,
+      "reachable_states": 31,
+      "dfa_states": 31,
+      "minimal_states": 11
+    }
+  },
+  "simulations": [
+    {
+      "word": "0",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "00",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "0",
+          "states": [
+            "C"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "000",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "0",
+          "states": [
+            "C"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "0",
+          "states": [
+            "E"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "010",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "1",
+          "states": [
+            "D"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "0",
+          "states": [
+            "E"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "20",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "2",
+          "states": [
+            "ERROR"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "0",
+          "states": [
+            "ERROR"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "020",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "0",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "2",
+          "states": [
+            "ERROR"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "0",
+          "states": [
+            "ERROR"
+          ]
+        }
+      ]
+    }
+  ]
+}

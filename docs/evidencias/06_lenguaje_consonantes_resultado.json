@@ -1,0 +1,3117 @@
+{
+  "input": {
+    "mode": "language",
+    "alphabet": [
+      "a",
+      "e",
+      "m",
+      "b",
+      "p"
+    ],
+    "rules": "finaliza en vocal\nno consecutivos consonantes excepto mb, mp\nlongitud maxima 6"
+  },
+  "result": {
+    "classification": "AFD",
+    "stages": [
+      {
+        "id": "input",
+        "title": "Construcción desde el lenguaje",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "m",
+            "b",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B",
+            "F",
+            "J",
+            "N",
+            "R",
+            "V"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "B"
+              ],
+              "m": [
+                "C"
+              ],
+              "b": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "B": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "G"
+              ],
+              "b": [
+                "H"
+              ],
+              "p": [
+                "I"
+              ]
+            },
+            "C": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "H"
+              ],
+              "p": [
+                "I"
+              ]
+            },
+            "D": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "E": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "F": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "K"
+              ],
+              "b": [
+                "L"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "G": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "L"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "H": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "I": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "J": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "O"
+              ],
+              "b": [
+                "P"
+              ],
+              "p": [
+                "Q"
+              ]
+            },
+            "K": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "P"
+              ],
+              "p": [
+                "Q"
+              ]
+            },
+            "L": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "M": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "N": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "S"
+              ],
+              "b": [
+                "T"
+              ],
+              "p": [
+                "U"
+              ]
+            },
+            "O": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "T"
+              ],
+              "p": [
+                "U"
+              ]
+            },
+            "P": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "Q": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "R": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "W"
+              ],
+              "b": [
+                "X"
+              ],
+              "p": [
+                "Y"
+              ]
+            },
+            "S": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "X"
+              ],
+              "p": [
+                "Y"
+              ]
+            },
+            "T": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "U": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "V": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "W": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "X": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "Y": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Σ = {a, e, m, b, p}. Se construye un AFD por regla y luego su producto.",
+          "Regla 1 «finaliza en vocal»: el último símbolo pertenece a {a,e}.",
+          "Regla 2 «no consecutivos consonantes excepto mb, mp»: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp.",
+          "Regla 3 «longitud maxima 6»: la longitud es como máximo 6.",
+          "Estado inicial q0 = A: ninguna regla ha leído símbolos.",
+          "A,a→B  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 1).",
+          "A,e→B  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 1).",
+          "A,m→C  (último símbolo fuera de {a,e}; último símbolo m; longitud 1).",
+          "A,b→D  (último símbolo fuera de {a,e}; último símbolo b; longitud 1).",
+          "A,p→E  (último símbolo fuera de {a,e}; último símbolo p; longitud 1).",
+          "B,a→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "B,e→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "B,m→G  (último símbolo fuera de {a,e}; último símbolo m; longitud 2).",
+          "B,b→H  (último símbolo fuera de {a,e}; último símbolo b; longitud 2).",
+          "B,p→I  (último símbolo fuera de {a,e}; último símbolo p; longitud 2).",
+          "C,a→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "C,e→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "C,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "C,b→H  (último símbolo fuera de {a,e}; último símbolo b; longitud 2).",
+          "C,p→I  (último símbolo fuera de {a,e}; último símbolo p; longitud 2).",
+          "D,a→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "D,e→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "D,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "D,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "D,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "E,a→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "E,e→F  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 2).",
+          "E,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "E,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "E,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "F,a→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "F,e→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "F,m→K  (último símbolo fuera de {a,e}; último símbolo m; longitud 3).",
+          "F,b→L  (último símbolo fuera de {a,e}; último símbolo b; longitud 3).",
+          "F,p→M  (último símbolo fuera de {a,e}; último símbolo p; longitud 3).",
+          "G,a→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "G,e→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "G,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "G,b→L  (último símbolo fuera de {a,e}; último símbolo b; longitud 3).",
+          "G,p→M  (último símbolo fuera de {a,e}; último símbolo p; longitud 3).",
+          "H,a→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "H,e→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "H,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "H,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "H,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "I,a→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "I,e→J  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 3).",
+          "I,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "I,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "I,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "J,a→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "J,e→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "J,m→O  (último símbolo fuera de {a,e}; último símbolo m; longitud 4).",
+          "J,b→P  (último símbolo fuera de {a,e}; último símbolo b; longitud 4).",
+          "J,p→Q  (último símbolo fuera de {a,e}; último símbolo p; longitud 4).",
+          "K,a→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "K,e→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "K,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "K,b→P  (último símbolo fuera de {a,e}; último símbolo b; longitud 4).",
+          "K,p→Q  (último símbolo fuera de {a,e}; último símbolo p; longitud 4).",
+          "L,a→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "L,e→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "L,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "L,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "L,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "M,a→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "M,e→N  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 4).",
+          "M,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "M,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "M,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "N,a→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "N,e→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "N,m→S  (último símbolo fuera de {a,e}; último símbolo m; longitud 5).",
+          "N,b→T  (último símbolo fuera de {a,e}; último símbolo b; longitud 5).",
+          "N,p→U  (último símbolo fuera de {a,e}; último símbolo p; longitud 5).",
+          "O,a→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "O,e→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "O,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "O,b→T  (último símbolo fuera de {a,e}; último símbolo b; longitud 5).",
+          "O,p→U  (último símbolo fuera de {a,e}; último símbolo p; longitud 5).",
+          "P,a→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "P,e→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "P,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "P,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "P,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "Q,a→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "Q,e→R  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 5).",
+          "Q,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "Q,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "Q,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "R,a→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "R,e→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "R,m→W  (último símbolo fuera de {a,e}; último símbolo m; longitud 6).",
+          "R,b→X  (último símbolo fuera de {a,e}; último símbolo b; longitud 6).",
+          "R,p→Y  (último símbolo fuera de {a,e}; último símbolo p; longitud 6).",
+          "S,a→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "S,e→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "S,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "S,b→X  (último símbolo fuera de {a,e}; último símbolo b; longitud 6).",
+          "S,p→Y  (último símbolo fuera de {a,e}; último símbolo p; longitud 6).",
+          "T,a→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "T,e→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "T,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "T,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "T,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "U,a→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "U,e→V  (último símbolo en {a,e}; último símbolo fuera del conjunto; longitud 6).",
+          "U,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "U,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "U,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "V,a→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "V,e→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "V,m→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "V,b→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "V,p→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "W,a→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "W,e→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "W,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "W,b→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "W,p→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "X,a→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "X,e→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "X,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "X,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "X,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "Y,a→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "Y,e→ERROR  (incumple la regla 3: la longitud es como máximo 6).",
+          "Y,m→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "Y,b→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "Y,p→ERROR  (incumple la regla 2: no hay dos símbolos seguidos de {b,m,p}, salvo mb, mp).",
+          "Son finales los estados en que todas las reglas aceptan: Qt = {B, F, J, N, R, V}.",
+          "ERROR recibe toda palabra que viola alguna regla; no es final y vuelve a sí mismo.",
+          "Resultado: AFD de 26 estados.",
+          "Clasificación: AFD.",
+          "Cada símbolo del alfabeto va a un solo estado (X,a→Y) y no hay transiciones ε.",
+          "El autómata ya es determinista: se indica y se continúa con su minimización."
+        ],
+        "mapping": {
+          "A": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo fuera del conjunto",
+            "R3: longitud 0"
+          ],
+          "B": [
+            "R1: último símbolo en {a,e}",
+            "R2: último símbolo fuera del conjunto",
+            "R3: longitud 1"
+          ],
+          "C": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo m",
+            "R3: longitud 1"
+          ],
+          "D": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo b",
+            "R3: longitud 1"
+          ],
+          "E": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo p",
+            "R3: longitud 1"
+          ],
+          "F": [
+            "R1: último símbolo en {a,e}",
+            "R2: último símbolo fuera del conjunto",
+            "R3: longitud 2"
+          ],
+          "G": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo m",
+            "R3: longitud 2"
+          ],
+          "H": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo b",
+            "R3: longitud 2"
+          ],
+          "I": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo p",
+            "R3: longitud 2"
+          ],
+          "J": [
+            "R1: último símbolo en {a,e}",
+            "R2: último símbolo fuera del conjunto",
+            "R3: longitud 3"
+          ],
+          "K": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo m",
+            "R3: longitud 3"
+          ],
+          "L": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo b",
+            "R3: longitud 3"
+          ],
+          "M": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo p",
+            "R3: longitud 3"
+          ],
+          "N": [
+            "R1: último símbolo en {a,e}",
+            "R2: último símbolo fuera del conjunto",
+            "R3: longitud 4"
+          ],
+          "O": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo m",
+            "R3: longitud 4"
+          ],
+          "P": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo b",
+            "R3: longitud 4"
+          ],
+          "Q": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo p",
+            "R3: longitud 4"
+          ],
+          "R": [
+            "R1: último símbolo en {a,e}",
+            "R2: último símbolo fuera del conjunto",
+            "R3: longitud 5"
+          ],
+          "S": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo m",
+            "R3: longitud 5"
+          ],
+          "T": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo b",
+            "R3: longitud 5"
+          ],
+          "U": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo p",
+            "R3: longitud 5"
+          ],
+          "V": [
+            "R1: último símbolo en {a,e}",
+            "R2: último símbolo fuera del conjunto",
+            "R3: longitud 6"
+          ],
+          "W": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo m",
+            "R3: longitud 6"
+          ],
+          "X": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo b",
+            "R3: longitud 6"
+          ],
+          "Y": [
+            "R1: último símbolo fuera de {a,e}",
+            "R2: último símbolo p",
+            "R3: longitud 6"
+          ],
+          "ERROR": []
+        }
+      },
+      {
+        "id": "reachable",
+        "title": "Estados accesibles",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "m",
+            "b",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B",
+            "F",
+            "J",
+            "N",
+            "R",
+            "V"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "B"
+              ],
+              "m": [
+                "C"
+              ],
+              "b": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "B": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "G"
+              ],
+              "b": [
+                "H"
+              ],
+              "p": [
+                "I"
+              ]
+            },
+            "C": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "H"
+              ],
+              "p": [
+                "I"
+              ]
+            },
+            "D": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "E": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "F": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "K"
+              ],
+              "b": [
+                "L"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "G": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "L"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "H": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "I": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "J": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "O"
+              ],
+              "b": [
+                "P"
+              ],
+              "p": [
+                "Q"
+              ]
+            },
+            "K": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "P"
+              ],
+              "p": [
+                "Q"
+              ]
+            },
+            "L": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "M": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "N": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "S"
+              ],
+              "b": [
+                "T"
+              ],
+              "p": [
+                "U"
+              ]
+            },
+            "O": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "T"
+              ],
+              "p": [
+                "U"
+              ]
+            },
+            "P": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "Q": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "R": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "W"
+              ],
+              "b": [
+                "X"
+              ],
+              "p": [
+                "Y"
+              ]
+            },
+            "S": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "X"
+              ],
+              "p": [
+                "Y"
+              ]
+            },
+            "T": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "U": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "V": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "W": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "X": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "Y": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "Se inicia la búsqueda en el estado inicial q0 = A.",
+          "A,a→B: B es accesible.",
+          "A,m→C: C es accesible.",
+          "A,b→D: D es accesible.",
+          "A,p→E: E es accesible.",
+          "B,a→F: F es accesible.",
+          "B,m→G: G es accesible.",
+          "B,b→H: H es accesible.",
+          "B,p→I: I es accesible.",
+          "C,m→ERROR: ERROR es accesible.",
+          "F,a→J: J es accesible.",
+          "F,m→K: K es accesible.",
+          "F,b→L: L es accesible.",
+          "F,p→M: M es accesible.",
+          "J,a→N: N es accesible.",
+          "J,m→O: O es accesible.",
+          "J,b→P: P es accesible.",
+          "J,p→Q: Q es accesible.",
+          "N,a→R: R es accesible.",
+          "N,m→S: S es accesible.",
+          "N,b→T: T es accesible.",
+          "N,p→U: U es accesible.",
+          "R,a→V: V es accesible.",
+          "R,m→W: W es accesible.",
+          "R,b→X: X es accesible.",
+          "R,p→Y: Y es accesible.",
+          "Estados inaccesibles eliminados: ninguno."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "E": [
+            "E"
+          ],
+          "F": [
+            "F"
+          ],
+          "G": [
+            "G"
+          ],
+          "H": [
+            "H"
+          ],
+          "I": [
+            "I"
+          ],
+          "J": [
+            "J"
+          ],
+          "K": [
+            "K"
+          ],
+          "L": [
+            "L"
+          ],
+          "M": [
+            "M"
+          ],
+          "N": [
+            "N"
+          ],
+          "O": [
+            "O"
+          ],
+          "P": [
+            "P"
+          ],
+          "Q": [
+            "Q"
+          ],
+          "R": [
+            "R"
+          ],
+          "S": [
+            "S"
+          ],
+          "T": [
+            "T"
+          ],
+          "U": [
+            "U"
+          ],
+          "V": [
+            "V"
+          ],
+          "W": [
+            "W"
+          ],
+          "X": [
+            "X"
+          ],
+          "Y": [
+            "Y"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        }
+      },
+      {
+        "id": "dfa",
+        "title": "AFD completo",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "m",
+            "b",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B",
+            "F",
+            "J",
+            "N",
+            "R",
+            "V"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "B"
+              ],
+              "m": [
+                "C"
+              ],
+              "b": [
+                "D"
+              ],
+              "p": [
+                "E"
+              ]
+            },
+            "B": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "G"
+              ],
+              "b": [
+                "H"
+              ],
+              "p": [
+                "I"
+              ]
+            },
+            "C": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "H"
+              ],
+              "p": [
+                "I"
+              ]
+            },
+            "D": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "E": {
+              "a": [
+                "F"
+              ],
+              "e": [
+                "F"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "F": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "K"
+              ],
+              "b": [
+                "L"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "G": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "L"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "H": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "I": {
+              "a": [
+                "J"
+              ],
+              "e": [
+                "J"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "J": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "O"
+              ],
+              "b": [
+                "P"
+              ],
+              "p": [
+                "Q"
+              ]
+            },
+            "K": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "P"
+              ],
+              "p": [
+                "Q"
+              ]
+            },
+            "L": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "M": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "N": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "S"
+              ],
+              "b": [
+                "T"
+              ],
+              "p": [
+                "U"
+              ]
+            },
+            "O": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "T"
+              ],
+              "p": [
+                "U"
+              ]
+            },
+            "P": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "Q": {
+              "a": [
+                "R"
+              ],
+              "e": [
+                "R"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "R": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "W"
+              ],
+              "b": [
+                "X"
+              ],
+              "p": [
+                "Y"
+              ]
+            },
+            "S": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "X"
+              ],
+              "p": [
+                "Y"
+              ]
+            },
+            "T": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "U": {
+              "a": [
+                "V"
+              ],
+              "e": [
+                "V"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "V": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "W": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "X": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "Y": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "El autómata ya es un AFD completo: se omite la conversión AFND → AFD y se continúa con la minimización."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D"
+          ],
+          "E": [
+            "E"
+          ],
+          "F": [
+            "F"
+          ],
+          "G": [
+            "G"
+          ],
+          "H": [
+            "H"
+          ],
+          "I": [
+            "I"
+          ],
+          "J": [
+            "J"
+          ],
+          "K": [
+            "K"
+          ],
+          "L": [
+            "L"
+          ],
+          "M": [
+            "M"
+          ],
+          "N": [
+            "N"
+          ],
+          "O": [
+            "O"
+          ],
+          "P": [
+            "P"
+          ],
+          "Q": [
+            "Q"
+          ],
+          "R": [
+            "R"
+          ],
+          "S": [
+            "S"
+          ],
+          "T": [
+            "T"
+          ],
+          "U": [
+            "U"
+          ],
+          "V": [
+            "V"
+          ],
+          "W": [
+            "W"
+          ],
+          "X": [
+            "X"
+          ],
+          "Y": [
+            "Y"
+          ],
+          "ERROR": [
+            "ERROR"
+          ]
+        }
+      },
+      {
+        "id": "minimal",
+        "title": "AFD mínimo",
+        "automaton": {
+          "states": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "ERROR"
+          ],
+          "alphabet": [
+            "a",
+            "e",
+            "m",
+            "b",
+            "p"
+          ],
+          "initial": "A",
+          "finals": [
+            "B",
+            "E",
+            "H",
+            "K",
+            "N",
+            "P"
+          ],
+          "transitions": {
+            "A": {
+              "a": [
+                "B"
+              ],
+              "e": [
+                "B"
+              ],
+              "m": [
+                "C"
+              ],
+              "b": [
+                "D"
+              ],
+              "p": [
+                "D"
+              ]
+            },
+            "B": {
+              "a": [
+                "E"
+              ],
+              "e": [
+                "E"
+              ],
+              "m": [
+                "F"
+              ],
+              "b": [
+                "G"
+              ],
+              "p": [
+                "G"
+              ]
+            },
+            "C": {
+              "a": [
+                "E"
+              ],
+              "e": [
+                "E"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "G"
+              ],
+              "p": [
+                "G"
+              ]
+            },
+            "D": {
+              "a": [
+                "E"
+              ],
+              "e": [
+                "E"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "E": {
+              "a": [
+                "H"
+              ],
+              "e": [
+                "H"
+              ],
+              "m": [
+                "I"
+              ],
+              "b": [
+                "J"
+              ],
+              "p": [
+                "J"
+              ]
+            },
+            "F": {
+              "a": [
+                "H"
+              ],
+              "e": [
+                "H"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "J"
+              ],
+              "p": [
+                "J"
+              ]
+            },
+            "G": {
+              "a": [
+                "H"
+              ],
+              "e": [
+                "H"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "H": {
+              "a": [
+                "K"
+              ],
+              "e": [
+                "K"
+              ],
+              "m": [
+                "L"
+              ],
+              "b": [
+                "M"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "I": {
+              "a": [
+                "K"
+              ],
+              "e": [
+                "K"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "M"
+              ],
+              "p": [
+                "M"
+              ]
+            },
+            "J": {
+              "a": [
+                "K"
+              ],
+              "e": [
+                "K"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "K": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "O"
+              ],
+              "b": [
+                "O"
+              ],
+              "p": [
+                "O"
+              ]
+            },
+            "L": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "O"
+              ],
+              "p": [
+                "O"
+              ]
+            },
+            "M": {
+              "a": [
+                "N"
+              ],
+              "e": [
+                "N"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "N": {
+              "a": [
+                "P"
+              ],
+              "e": [
+                "P"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "O": {
+              "a": [
+                "P"
+              ],
+              "e": [
+                "P"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "P": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            },
+            "ERROR": {
+              "a": [
+                "ERROR"
+              ],
+              "e": [
+                "ERROR"
+              ],
+              "m": [
+                "ERROR"
+              ],
+              "b": [
+                "ERROR"
+              ],
+              "p": [
+                "ERROR"
+              ]
+            }
+          }
+        },
+        "steps": [
+          "P0 separa estados no terminales y terminales: {A, C, D, E, G, H, I, K, L, M, O, P, Q, S, T, U, W, X, Y, ERROR} / {B, F, J, N, R, V}.",
+          "A,a→B (bloque 2) · A,e→B (bloque 2) · A,m→C (bloque 1) · A,b→D (bloque 1) · A,p→E (bloque 1).",
+          "C,a→F (bloque 2) · C,e→F (bloque 2) · C,m→ERROR (bloque 1) · C,b→H (bloque 1) · C,p→I (bloque 1).",
+          "D,a→F (bloque 2) · D,e→F (bloque 2) · D,m→ERROR (bloque 1) · D,b→ERROR (bloque 1) · D,p→ERROR (bloque 1).",
+          "E,a→F (bloque 2) · E,e→F (bloque 2) · E,m→ERROR (bloque 1) · E,b→ERROR (bloque 1) · E,p→ERROR (bloque 1).",
+          "G,a→J (bloque 2) · G,e→J (bloque 2) · G,m→ERROR (bloque 1) · G,b→L (bloque 1) · G,p→M (bloque 1).",
+          "H,a→J (bloque 2) · H,e→J (bloque 2) · H,m→ERROR (bloque 1) · H,b→ERROR (bloque 1) · H,p→ERROR (bloque 1).",
+          "I,a→J (bloque 2) · I,e→J (bloque 2) · I,m→ERROR (bloque 1) · I,b→ERROR (bloque 1) · I,p→ERROR (bloque 1).",
+          "K,a→N (bloque 2) · K,e→N (bloque 2) · K,m→ERROR (bloque 1) · K,b→P (bloque 1) · K,p→Q (bloque 1).",
+          "L,a→N (bloque 2) · L,e→N (bloque 2) · L,m→ERROR (bloque 1) · L,b→ERROR (bloque 1) · L,p→ERROR (bloque 1).",
+          "M,a→N (bloque 2) · M,e→N (bloque 2) · M,m→ERROR (bloque 1) · M,b→ERROR (bloque 1) · M,p→ERROR (bloque 1).",
+          "O,a→R (bloque 2) · O,e→R (bloque 2) · O,m→ERROR (bloque 1) · O,b→T (bloque 1) · O,p→U (bloque 1).",
+          "P,a→R (bloque 2) · P,e→R (bloque 2) · P,m→ERROR (bloque 1) · P,b→ERROR (bloque 1) · P,p→ERROR (bloque 1).",
+          "Q,a→R (bloque 2) · Q,e→R (bloque 2) · Q,m→ERROR (bloque 1) · Q,b→ERROR (bloque 1) · Q,p→ERROR (bloque 1).",
+          "S,a→V (bloque 2) · S,e→V (bloque 2) · S,m→ERROR (bloque 1) · S,b→X (bloque 1) · S,p→Y (bloque 1).",
+          "T,a→V (bloque 2) · T,e→V (bloque 2) · T,m→ERROR (bloque 1) · T,b→ERROR (bloque 1) · T,p→ERROR (bloque 1).",
+          "U,a→V (bloque 2) · U,e→V (bloque 2) · U,m→ERROR (bloque 1) · U,b→ERROR (bloque 1) · U,p→ERROR (bloque 1).",
+          "W,a→ERROR (bloque 1) · W,e→ERROR (bloque 1) · W,m→ERROR (bloque 1) · W,b→ERROR (bloque 1) · W,p→ERROR (bloque 1).",
+          "X,a→ERROR (bloque 1) · X,e→ERROR (bloque 1) · X,m→ERROR (bloque 1) · X,b→ERROR (bloque 1) · X,p→ERROR (bloque 1).",
+          "Y,a→ERROR (bloque 1) · Y,e→ERROR (bloque 1) · Y,m→ERROR (bloque 1) · Y,b→ERROR (bloque 1) · Y,p→ERROR (bloque 1).",
+          "ERROR,a→ERROR (bloque 1) · ERROR,e→ERROR (bloque 1) · ERROR,m→ERROR (bloque 1) · ERROR,b→ERROR (bloque 1) · ERROR,p→ERROR (bloque 1).",
+          "B,a→F (bloque 2) · B,e→F (bloque 2) · B,m→G (bloque 1) · B,b→H (bloque 1) · B,p→I (bloque 1).",
+          "F,a→J (bloque 2) · F,e→J (bloque 2) · F,m→K (bloque 1) · F,b→L (bloque 1) · F,p→M (bloque 1).",
+          "J,a→N (bloque 2) · J,e→N (bloque 2) · J,m→O (bloque 1) · J,b→P (bloque 1) · J,p→Q (bloque 1).",
+          "N,a→R (bloque 2) · N,e→R (bloque 2) · N,m→S (bloque 1) · N,b→T (bloque 1) · N,p→U (bloque 1).",
+          "R,a→V (bloque 2) · R,e→V (bloque 2) · R,m→W (bloque 1) · R,b→X (bloque 1) · R,p→Y (bloque 1).",
+          "V,a→ERROR (bloque 1) · V,e→ERROR (bloque 1) · V,m→ERROR (bloque 1) · V,b→ERROR (bloque 1) · V,p→ERROR (bloque 1).",
+          "P1: {A, C, D, E, G, H, I, K, L, M, O, P, Q, S, T, U} / {W, X, Y, ERROR} / {B, F, J, N, R} / {V}.",
+          "A,a→B (bloque 3) · A,e→B (bloque 3) · A,m→C (bloque 1) · A,b→D (bloque 1) · A,p→E (bloque 1).",
+          "C,a→F (bloque 3) · C,e→F (bloque 3) · C,m→ERROR (bloque 2) · C,b→H (bloque 1) · C,p→I (bloque 1).",
+          "D,a→F (bloque 3) · D,e→F (bloque 3) · D,m→ERROR (bloque 2) · D,b→ERROR (bloque 2) · D,p→ERROR (bloque 2).",
+          "E,a→F (bloque 3) · E,e→F (bloque 3) · E,m→ERROR (bloque 2) · E,b→ERROR (bloque 2) · E,p→ERROR (bloque 2).",
+          "G,a→J (bloque 3) · G,e→J (bloque 3) · G,m→ERROR (bloque 2) · G,b→L (bloque 1) · G,p→M (bloque 1).",
+          "H,a→J (bloque 3) · H,e→J (bloque 3) · H,m→ERROR (bloque 2) · H,b→ERROR (bloque 2) · H,p→ERROR (bloque 2).",
+          "I,a→J (bloque 3) · I,e→J (bloque 3) · I,m→ERROR (bloque 2) · I,b→ERROR (bloque 2) · I,p→ERROR (bloque 2).",
+          "K,a→N (bloque 3) · K,e→N (bloque 3) · K,m→ERROR (bloque 2) · K,b→P (bloque 1) · K,p→Q (bloque 1).",
+          "L,a→N (bloque 3) · L,e→N (bloque 3) · L,m→ERROR (bloque 2) · L,b→ERROR (bloque 2) · L,p→ERROR (bloque 2).",
+          "M,a→N (bloque 3) · M,e→N (bloque 3) · M,m→ERROR (bloque 2) · M,b→ERROR (bloque 2) · M,p→ERROR (bloque 2).",
+          "O,a→R (bloque 3) · O,e→R (bloque 3) · O,m→ERROR (bloque 2) · O,b→T (bloque 1) · O,p→U (bloque 1).",
+          "P,a→R (bloque 3) · P,e→R (bloque 3) · P,m→ERROR (bloque 2) · P,b→ERROR (bloque 2) · P,p→ERROR (bloque 2).",
+          "Q,a→R (bloque 3) · Q,e→R (bloque 3) · Q,m→ERROR (bloque 2) · Q,b→ERROR (bloque 2) · Q,p→ERROR (bloque 2).",
+          "S,a→V (bloque 4) · S,e→V (bloque 4) · S,m→ERROR (bloque 2) · S,b→X (bloque 2) · S,p→Y (bloque 2).",
+          "T,a→V (bloque 4) · T,e→V (bloque 4) · T,m→ERROR (bloque 2) · T,b→ERROR (bloque 2) · T,p→ERROR (bloque 2).",
+          "U,a→V (bloque 4) · U,e→V (bloque 4) · U,m→ERROR (bloque 2) · U,b→ERROR (bloque 2) · U,p→ERROR (bloque 2).",
+          "W,a→ERROR (bloque 2) · W,e→ERROR (bloque 2) · W,m→ERROR (bloque 2) · W,b→ERROR (bloque 2) · W,p→ERROR (bloque 2).",
+          "X,a→ERROR (bloque 2) · X,e→ERROR (bloque 2) · X,m→ERROR (bloque 2) · X,b→ERROR (bloque 2) · X,p→ERROR (bloque 2).",
+          "Y,a→ERROR (bloque 2) · Y,e→ERROR (bloque 2) · Y,m→ERROR (bloque 2) · Y,b→ERROR (bloque 2) · Y,p→ERROR (bloque 2).",
+          "ERROR,a→ERROR (bloque 2) · ERROR,e→ERROR (bloque 2) · ERROR,m→ERROR (bloque 2) · ERROR,b→ERROR (bloque 2) · ERROR,p→ERROR (bloque 2).",
+          "B,a→F (bloque 3) · B,e→F (bloque 3) · B,m→G (bloque 1) · B,b→H (bloque 1) · B,p→I (bloque 1).",
+          "F,a→J (bloque 3) · F,e→J (bloque 3) · F,m→K (bloque 1) · F,b→L (bloque 1) · F,p→M (bloque 1).",
+          "J,a→N (bloque 3) · J,e→N (bloque 3) · J,m→O (bloque 1) · J,b→P (bloque 1) · J,p→Q (bloque 1).",
+          "N,a→R (bloque 3) · N,e→R (bloque 3) · N,m→S (bloque 1) · N,b→T (bloque 1) · N,p→U (bloque 1).",
+          "R,a→V (bloque 4) · R,e→V (bloque 4) · R,m→W (bloque 2) · R,b→X (bloque 2) · R,p→Y (bloque 2).",
+          "V,a→ERROR (bloque 2) · V,e→ERROR (bloque 2) · V,m→ERROR (bloque 2) · V,b→ERROR (bloque 2) · V,p→ERROR (bloque 2).",
+          "P2: {A} / {C, G, K, O} / {D, E, H, I, L, M, P, Q} / {S, T, U} / {W, X, Y, ERROR} / {B, F, J, N} / {R} / {V}.",
+          "A,a→B (bloque 6) · A,e→B (bloque 6) · A,m→C (bloque 2) · A,b→D (bloque 3) · A,p→E (bloque 3).",
+          "C,a→F (bloque 6) · C,e→F (bloque 6) · C,m→ERROR (bloque 5) · C,b→H (bloque 3) · C,p→I (bloque 3).",
+          "G,a→J (bloque 6) · G,e→J (bloque 6) · G,m→ERROR (bloque 5) · G,b→L (bloque 3) · G,p→M (bloque 3).",
+          "K,a→N (bloque 6) · K,e→N (bloque 6) · K,m→ERROR (bloque 5) · K,b→P (bloque 3) · K,p→Q (bloque 3).",
+          "O,a→R (bloque 7) · O,e→R (bloque 7) · O,m→ERROR (bloque 5) · O,b→T (bloque 4) · O,p→U (bloque 4).",
+          "D,a→F (bloque 6) · D,e→F (bloque 6) · D,m→ERROR (bloque 5) · D,b→ERROR (bloque 5) · D,p→ERROR (bloque 5).",
+          "E,a→F (bloque 6) · E,e→F (bloque 6) · E,m→ERROR (bloque 5) · E,b→ERROR (bloque 5) · E,p→ERROR (bloque 5).",
+          "H,a→J (bloque 6) · H,e→J (bloque 6) · H,m→ERROR (bloque 5) · H,b→ERROR (bloque 5) · H,p→ERROR (bloque 5).",
+          "I,a→J (bloque 6) · I,e→J (bloque 6) · I,m→ERROR (bloque 5) · I,b→ERROR (bloque 5) · I,p→ERROR (bloque 5).",
+          "L,a→N (bloque 6) · L,e→N (bloque 6) · L,m→ERROR (bloque 5) · L,b→ERROR (bloque 5) · L,p→ERROR (bloque 5).",
+          "M,a→N (bloque 6) · M,e→N (bloque 6) · M,m→ERROR (bloque 5) · M,b→ERROR (bloque 5) · M,p→ERROR (bloque 5).",
+          "P,a→R (bloque 7) · P,e→R (bloque 7) · P,m→ERROR (bloque 5) · P,b→ERROR (bloque 5) · P,p→ERROR (bloque 5).",
+          "Q,a→R (bloque 7) · Q,e→R (bloque 7) · Q,m→ERROR (bloque 5) · Q,b→ERROR (bloque 5) · Q,p→ERROR (bloque 5).",
+          "S,a→V (bloque 8) · S,e→V (bloque 8) · S,m→ERROR (bloque 5) · S,b→X (bloque 5) · S,p→Y (bloque 5).",
+          "T,a→V (bloque 8) · T,e→V (bloque 8) · T,m→ERROR (bloque 5) · T,b→ERROR (bloque 5) · T,p→ERROR (bloque 5).",
+          "U,a→V (bloque 8) · U,e→V (bloque 8) · U,m→ERROR (bloque 5) · U,b→ERROR (bloque 5) · U,p→ERROR (bloque 5).",
+          "W,a→ERROR (bloque 5) · W,e→ERROR (bloque 5) · W,m→ERROR (bloque 5) · W,b→ERROR (bloque 5) · W,p→ERROR (bloque 5).",
+          "X,a→ERROR (bloque 5) · X,e→ERROR (bloque 5) · X,m→ERROR (bloque 5) · X,b→ERROR (bloque 5) · X,p→ERROR (bloque 5).",
+          "Y,a→ERROR (bloque 5) · Y,e→ERROR (bloque 5) · Y,m→ERROR (bloque 5) · Y,b→ERROR (bloque 5) · Y,p→ERROR (bloque 5).",
+          "ERROR,a→ERROR (bloque 5) · ERROR,e→ERROR (bloque 5) · ERROR,m→ERROR (bloque 5) · ERROR,b→ERROR (bloque 5) · ERROR,p→ERROR (bloque 5).",
+          "B,a→F (bloque 6) · B,e→F (bloque 6) · B,m→G (bloque 2) · B,b→H (bloque 3) · B,p→I (bloque 3).",
+          "F,a→J (bloque 6) · F,e→J (bloque 6) · F,m→K (bloque 2) · F,b→L (bloque 3) · F,p→M (bloque 3).",
+          "J,a→N (bloque 6) · J,e→N (bloque 6) · J,m→O (bloque 2) · J,b→P (bloque 3) · J,p→Q (bloque 3).",
+          "N,a→R (bloque 7) · N,e→R (bloque 7) · N,m→S (bloque 4) · N,b→T (bloque 4) · N,p→U (bloque 4).",
+          "R,a→V (bloque 8) · R,e→V (bloque 8) · R,m→W (bloque 5) · R,b→X (bloque 5) · R,p→Y (bloque 5).",
+          "V,a→ERROR (bloque 5) · V,e→ERROR (bloque 5) · V,m→ERROR (bloque 5) · V,b→ERROR (bloque 5) · V,p→ERROR (bloque 5).",
+          "P3: {A} / {C, G, K} / {O} / {D, E, H, I, L, M} / {P, Q} / {S, T, U} / {W, X, Y, ERROR} / {B, F, J} / {N} / {R} / {V}.",
+          "A,a→B (bloque 8) · A,e→B (bloque 8) · A,m→C (bloque 2) · A,b→D (bloque 4) · A,p→E (bloque 4).",
+          "C,a→F (bloque 8) · C,e→F (bloque 8) · C,m→ERROR (bloque 7) · C,b→H (bloque 4) · C,p→I (bloque 4).",
+          "G,a→J (bloque 8) · G,e→J (bloque 8) · G,m→ERROR (bloque 7) · G,b→L (bloque 4) · G,p→M (bloque 4).",
+          "K,a→N (bloque 9) · K,e→N (bloque 9) · K,m→ERROR (bloque 7) · K,b→P (bloque 5) · K,p→Q (bloque 5).",
+          "O,a→R (bloque 10) · O,e→R (bloque 10) · O,m→ERROR (bloque 7) · O,b→T (bloque 6) · O,p→U (bloque 6).",
+          "D,a→F (bloque 8) · D,e→F (bloque 8) · D,m→ERROR (bloque 7) · D,b→ERROR (bloque 7) · D,p→ERROR (bloque 7).",
+          "E,a→F (bloque 8) · E,e→F (bloque 8) · E,m→ERROR (bloque 7) · E,b→ERROR (bloque 7) · E,p→ERROR (bloque 7).",
+          "H,a→J (bloque 8) · H,e→J (bloque 8) · H,m→ERROR (bloque 7) · H,b→ERROR (bloque 7) · H,p→ERROR (bloque 7).",
+          "I,a→J (bloque 8) · I,e→J (bloque 8) · I,m→ERROR (bloque 7) · I,b→ERROR (bloque 7) · I,p→ERROR (bloque 7).",
+          "L,a→N (bloque 9) · L,e→N (bloque 9) · L,m→ERROR (bloque 7) · L,b→ERROR (bloque 7) · L,p→ERROR (bloque 7).",
+          "M,a→N (bloque 9) · M,e→N (bloque 9) · M,m→ERROR (bloque 7) · M,b→ERROR (bloque 7) · M,p→ERROR (bloque 7).",
+          "P,a→R (bloque 10) · P,e→R (bloque 10) · P,m→ERROR (bloque 7) · P,b→ERROR (bloque 7) · P,p→ERROR (bloque 7).",
+          "Q,a→R (bloque 10) · Q,e→R (bloque 10) · Q,m→ERROR (bloque 7) · Q,b→ERROR (bloque 7) · Q,p→ERROR (bloque 7).",
+          "S,a→V (bloque 11) · S,e→V (bloque 11) · S,m→ERROR (bloque 7) · S,b→X (bloque 7) · S,p→Y (bloque 7).",
+          "T,a→V (bloque 11) · T,e→V (bloque 11) · T,m→ERROR (bloque 7) · T,b→ERROR (bloque 7) · T,p→ERROR (bloque 7).",
+          "U,a→V (bloque 11) · U,e→V (bloque 11) · U,m→ERROR (bloque 7) · U,b→ERROR (bloque 7) · U,p→ERROR (bloque 7).",
+          "W,a→ERROR (bloque 7) · W,e→ERROR (bloque 7) · W,m→ERROR (bloque 7) · W,b→ERROR (bloque 7) · W,p→ERROR (bloque 7).",
+          "X,a→ERROR (bloque 7) · X,e→ERROR (bloque 7) · X,m→ERROR (bloque 7) · X,b→ERROR (bloque 7) · X,p→ERROR (bloque 7).",
+          "Y,a→ERROR (bloque 7) · Y,e→ERROR (bloque 7) · Y,m→ERROR (bloque 7) · Y,b→ERROR (bloque 7) · Y,p→ERROR (bloque 7).",
+          "ERROR,a→ERROR (bloque 7) · ERROR,e→ERROR (bloque 7) · ERROR,m→ERROR (bloque 7) · ERROR,b→ERROR (bloque 7) · ERROR,p→ERROR (bloque 7).",
+          "B,a→F (bloque 8) · B,e→F (bloque 8) · B,m→G (bloque 2) · B,b→H (bloque 4) · B,p→I (bloque 4).",
+          "F,a→J (bloque 8) · F,e→J (bloque 8) · F,m→K (bloque 2) · F,b→L (bloque 4) · F,p→M (bloque 4).",
+          "J,a→N (bloque 9) · J,e→N (bloque 9) · J,m→O (bloque 3) · J,b→P (bloque 5) · J,p→Q (bloque 5).",
+          "N,a→R (bloque 10) · N,e→R (bloque 10) · N,m→S (bloque 6) · N,b→T (bloque 6) · N,p→U (bloque 6).",
+          "R,a→V (bloque 11) · R,e→V (bloque 11) · R,m→W (bloque 7) · R,b→X (bloque 7) · R,p→Y (bloque 7).",
+          "V,a→ERROR (bloque 7) · V,e→ERROR (bloque 7) · V,m→ERROR (bloque 7) · V,b→ERROR (bloque 7) · V,p→ERROR (bloque 7).",
+          "P4: {A} / {C, G} / {K} / {O} / {D, E, H, I} / {L, M} / {P, Q} / {S, T, U} / {W, X, Y, ERROR} / {B, F} / {J} / {N} / {R} / {V}.",
+          "A,a→B (bloque 10) · A,e→B (bloque 10) · A,m→C (bloque 2) · A,b→D (bloque 5) · A,p→E (bloque 5).",
+          "C,a→F (bloque 10) · C,e→F (bloque 10) · C,m→ERROR (bloque 9) · C,b→H (bloque 5) · C,p→I (bloque 5).",
+          "G,a→J (bloque 11) · G,e→J (bloque 11) · G,m→ERROR (bloque 9) · G,b→L (bloque 6) · G,p→M (bloque 6).",
+          "K,a→N (bloque 12) · K,e→N (bloque 12) · K,m→ERROR (bloque 9) · K,b→P (bloque 7) · K,p→Q (bloque 7).",
+          "O,a→R (bloque 13) · O,e→R (bloque 13) · O,m→ERROR (bloque 9) · O,b→T (bloque 8) · O,p→U (bloque 8).",
+          "D,a→F (bloque 10) · D,e→F (bloque 10) · D,m→ERROR (bloque 9) · D,b→ERROR (bloque 9) · D,p→ERROR (bloque 9).",
+          "E,a→F (bloque 10) · E,e→F (bloque 10) · E,m→ERROR (bloque 9) · E,b→ERROR (bloque 9) · E,p→ERROR (bloque 9).",
+          "H,a→J (bloque 11) · H,e→J (bloque 11) · H,m→ERROR (bloque 9) · H,b→ERROR (bloque 9) · H,p→ERROR (bloque 9).",
+          "I,a→J (bloque 11) · I,e→J (bloque 11) · I,m→ERROR (bloque 9) · I,b→ERROR (bloque 9) · I,p→ERROR (bloque 9).",
+          "L,a→N (bloque 12) · L,e→N (bloque 12) · L,m→ERROR (bloque 9) · L,b→ERROR (bloque 9) · L,p→ERROR (bloque 9).",
+          "M,a→N (bloque 12) · M,e→N (bloque 12) · M,m→ERROR (bloque 9) · M,b→ERROR (bloque 9) · M,p→ERROR (bloque 9).",
+          "P,a→R (bloque 13) · P,e→R (bloque 13) · P,m→ERROR (bloque 9) · P,b→ERROR (bloque 9) · P,p→ERROR (bloque 9).",
+          "Q,a→R (bloque 13) · Q,e→R (bloque 13) · Q,m→ERROR (bloque 9) · Q,b→ERROR (bloque 9) · Q,p→ERROR (bloque 9).",
+          "S,a→V (bloque 14) · S,e→V (bloque 14) · S,m→ERROR (bloque 9) · S,b→X (bloque 9) · S,p→Y (bloque 9).",
+          "T,a→V (bloque 14) · T,e→V (bloque 14) · T,m→ERROR (bloque 9) · T,b→ERROR (bloque 9) · T,p→ERROR (bloque 9).",
+          "U,a→V (bloque 14) · U,e→V (bloque 14) · U,m→ERROR (bloque 9) · U,b→ERROR (bloque 9) · U,p→ERROR (bloque 9).",
+          "W,a→ERROR (bloque 9) · W,e→ERROR (bloque 9) · W,m→ERROR (bloque 9) · W,b→ERROR (bloque 9) · W,p→ERROR (bloque 9).",
+          "X,a→ERROR (bloque 9) · X,e→ERROR (bloque 9) · X,m→ERROR (bloque 9) · X,b→ERROR (bloque 9) · X,p→ERROR (bloque 9).",
+          "Y,a→ERROR (bloque 9) · Y,e→ERROR (bloque 9) · Y,m→ERROR (bloque 9) · Y,b→ERROR (bloque 9) · Y,p→ERROR (bloque 9).",
+          "ERROR,a→ERROR (bloque 9) · ERROR,e→ERROR (bloque 9) · ERROR,m→ERROR (bloque 9) · ERROR,b→ERROR (bloque 9) · ERROR,p→ERROR (bloque 9).",
+          "B,a→F (bloque 10) · B,e→F (bloque 10) · B,m→G (bloque 2) · B,b→H (bloque 5) · B,p→I (bloque 5).",
+          "F,a→J (bloque 11) · F,e→J (bloque 11) · F,m→K (bloque 3) · F,b→L (bloque 6) · F,p→M (bloque 6).",
+          "J,a→N (bloque 12) · J,e→N (bloque 12) · J,m→O (bloque 4) · J,b→P (bloque 7) · J,p→Q (bloque 7).",
+          "N,a→R (bloque 13) · N,e→R (bloque 13) · N,m→S (bloque 8) · N,b→T (bloque 8) · N,p→U (bloque 8).",
+          "R,a→V (bloque 14) · R,e→V (bloque 14) · R,m→W (bloque 9) · R,b→X (bloque 9) · R,p→Y (bloque 9).",
+          "V,a→ERROR (bloque 9) · V,e→ERROR (bloque 9) · V,m→ERROR (bloque 9) · V,b→ERROR (bloque 9) · V,p→ERROR (bloque 9).",
+          "P5: {A} / {C} / {G} / {K} / {O} / {D, E} / {H, I} / {L, M} / {P, Q} / {S, T, U} / {W, X, Y, ERROR} / {B} / {F} / {J} / {N} / {R} / {V}.",
+          "A,a→B (bloque 12) · A,e→B (bloque 12) · A,m→C (bloque 2) · A,b→D (bloque 6) · A,p→E (bloque 6).",
+          "C,a→F (bloque 13) · C,e→F (bloque 13) · C,m→ERROR (bloque 11) · C,b→H (bloque 7) · C,p→I (bloque 7).",
+          "G,a→J (bloque 14) · G,e→J (bloque 14) · G,m→ERROR (bloque 11) · G,b→L (bloque 8) · G,p→M (bloque 8).",
+          "K,a→N (bloque 15) · K,e→N (bloque 15) · K,m→ERROR (bloque 11) · K,b→P (bloque 9) · K,p→Q (bloque 9).",
+          "O,a→R (bloque 16) · O,e→R (bloque 16) · O,m→ERROR (bloque 11) · O,b→T (bloque 10) · O,p→U (bloque 10).",
+          "D,a→F (bloque 13) · D,e→F (bloque 13) · D,m→ERROR (bloque 11) · D,b→ERROR (bloque 11) · D,p→ERROR (bloque 11).",
+          "E,a→F (bloque 13) · E,e→F (bloque 13) · E,m→ERROR (bloque 11) · E,b→ERROR (bloque 11) · E,p→ERROR (bloque 11).",
+          "H,a→J (bloque 14) · H,e→J (bloque 14) · H,m→ERROR (bloque 11) · H,b→ERROR (bloque 11) · H,p→ERROR (bloque 11).",
+          "I,a→J (bloque 14) · I,e→J (bloque 14) · I,m→ERROR (bloque 11) · I,b→ERROR (bloque 11) · I,p→ERROR (bloque 11).",
+          "L,a→N (bloque 15) · L,e→N (bloque 15) · L,m→ERROR (bloque 11) · L,b→ERROR (bloque 11) · L,p→ERROR (bloque 11).",
+          "M,a→N (bloque 15) · M,e→N (bloque 15) · M,m→ERROR (bloque 11) · M,b→ERROR (bloque 11) · M,p→ERROR (bloque 11).",
+          "P,a→R (bloque 16) · P,e→R (bloque 16) · P,m→ERROR (bloque 11) · P,b→ERROR (bloque 11) · P,p→ERROR (bloque 11).",
+          "Q,a→R (bloque 16) · Q,e→R (bloque 16) · Q,m→ERROR (bloque 11) · Q,b→ERROR (bloque 11) · Q,p→ERROR (bloque 11).",
+          "S,a→V (bloque 17) · S,e→V (bloque 17) · S,m→ERROR (bloque 11) · S,b→X (bloque 11) · S,p→Y (bloque 11).",
+          "T,a→V (bloque 17) · T,e→V (bloque 17) · T,m→ERROR (bloque 11) · T,b→ERROR (bloque 11) · T,p→ERROR (bloque 11).",
+          "U,a→V (bloque 17) · U,e→V (bloque 17) · U,m→ERROR (bloque 11) · U,b→ERROR (bloque 11) · U,p→ERROR (bloque 11).",
+          "W,a→ERROR (bloque 11) · W,e→ERROR (bloque 11) · W,m→ERROR (bloque 11) · W,b→ERROR (bloque 11) · W,p→ERROR (bloque 11).",
+          "X,a→ERROR (bloque 11) · X,e→ERROR (bloque 11) · X,m→ERROR (bloque 11) · X,b→ERROR (bloque 11) · X,p→ERROR (bloque 11).",
+          "Y,a→ERROR (bloque 11) · Y,e→ERROR (bloque 11) · Y,m→ERROR (bloque 11) · Y,b→ERROR (bloque 11) · Y,p→ERROR (bloque 11).",
+          "ERROR,a→ERROR (bloque 11) · ERROR,e→ERROR (bloque 11) · ERROR,m→ERROR (bloque 11) · ERROR,b→ERROR (bloque 11) · ERROR,p→ERROR (bloque 11).",
+          "B,a→F (bloque 13) · B,e→F (bloque 13) · B,m→G (bloque 3) · B,b→H (bloque 7) · B,p→I (bloque 7).",
+          "F,a→J (bloque 14) · F,e→J (bloque 14) · F,m→K (bloque 4) · F,b→L (bloque 8) · F,p→M (bloque 8).",
+          "J,a→N (bloque 15) · J,e→N (bloque 15) · J,m→O (bloque 5) · J,b→P (bloque 9) · J,p→Q (bloque 9).",
+          "N,a→R (bloque 16) · N,e→R (bloque 16) · N,m→S (bloque 10) · N,b→T (bloque 10) · N,p→U (bloque 10).",
+          "R,a→V (bloque 17) · R,e→V (bloque 17) · R,m→W (bloque 11) · R,b→X (bloque 11) · R,p→Y (bloque 11).",
+          "V,a→ERROR (bloque 11) · V,e→ERROR (bloque 11) · V,m→ERROR (bloque 11) · V,b→ERROR (bloque 11) · V,p→ERROR (bloque 11).",
+          "P6: {A} / {C} / {G} / {K} / {O} / {D, E} / {H, I} / {L, M} / {P, Q} / {S, T, U} / {W, X, Y, ERROR} / {B} / {F} / {J} / {N} / {R} / {V}.",
+          "La partición no cambia: sus bloques son las clases de equivalencia.",
+          "D, E son equivalentes: se fusionan en D.",
+          "H, I son equivalentes: se fusionan en G.",
+          "L, M son equivalentes: se fusionan en J.",
+          "P, Q son equivalentes: se fusionan en M.",
+          "S, T, U son equivalentes: se fusionan en O.",
+          "W, X, Y, ERROR son equivalentes: se fusionan en ERROR.",
+          "Los estados del AFD mínimo se nombran A, B, C… en orden de recorrido desde q0: A = {A}; B = {B}; C = {C}; D = {D, E}; E = {F}; F = {G}; G = {H, I}; H = {J}; I = {K}; J = {L, M}; K = {N}; L = {O}; M = {P, Q}; N = {R}; O = {S, T, U}; P = {V}; ERROR = {W, X, Y, ERROR}."
+        ],
+        "mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D",
+            "E"
+          ],
+          "E": [
+            "F"
+          ],
+          "F": [
+            "G"
+          ],
+          "G": [
+            "H",
+            "I"
+          ],
+          "H": [
+            "J"
+          ],
+          "I": [
+            "K"
+          ],
+          "J": [
+            "L",
+            "M"
+          ],
+          "K": [
+            "N"
+          ],
+          "L": [
+            "O"
+          ],
+          "M": [
+            "P",
+            "Q"
+          ],
+          "N": [
+            "R"
+          ],
+          "O": [
+            "S",
+            "T",
+            "U"
+          ],
+          "P": [
+            "V"
+          ],
+          "ERROR": [
+            "W",
+            "X",
+            "Y",
+            "ERROR"
+          ]
+        },
+        "original_mapping": {
+          "A": [
+            "A"
+          ],
+          "B": [
+            "B"
+          ],
+          "C": [
+            "C"
+          ],
+          "D": [
+            "D",
+            "E"
+          ],
+          "E": [
+            "F"
+          ],
+          "F": [
+            "G"
+          ],
+          "G": [
+            "H",
+            "I"
+          ],
+          "H": [
+            "J"
+          ],
+          "I": [
+            "K"
+          ],
+          "J": [
+            "L",
+            "M"
+          ],
+          "K": [
+            "N"
+          ],
+          "L": [
+            "O"
+          ],
+          "M": [
+            "P",
+            "Q"
+          ],
+          "N": [
+            "R"
+          ],
+          "O": [
+            "S",
+            "T",
+            "U"
+          ],
+          "P": [
+            "V"
+          ],
+          "ERROR": [
+            "ERROR",
+            "W",
+            "X",
+            "Y"
+          ]
+        },
+        "partitions": [
+          [
+            [
+              "A",
+              "C",
+              "D",
+              "E",
+              "G",
+              "H",
+              "I",
+              "K",
+              "L",
+              "M",
+              "O",
+              "P",
+              "Q",
+              "S",
+              "T",
+              "U",
+              "W",
+              "X",
+              "Y",
+              "ERROR"
+            ],
+            [
+              "B",
+              "F",
+              "J",
+              "N",
+              "R",
+              "V"
+            ]
+          ],
+          [
+            [
+              "A",
+              "C",
+              "D",
+              "E",
+              "G",
+              "H",
+              "I",
+              "K",
+              "L",
+              "M",
+              "O",
+              "P",
+              "Q",
+              "S",
+              "T",
+              "U"
+            ],
+            [
+              "W",
+              "X",
+              "Y",
+              "ERROR"
+            ],
+            [
+              "B",
+              "F",
+              "J",
+              "N",
+              "R"
+            ],
+            [
+              "V"
+            ]
+          ],
+          [
+            [
+              "A"
+            ],
+            [
+              "C",
+              "G",
+              "K",
+              "O"
+            ],
+            [
+              "D",
+              "E",
+              "H",
+              "I",
+              "L",
+              "M",
+              "P",
+              "Q"
+            ],
+            [
+              "S",
+              "T",
+              "U"
+            ],
+            [
+              "W",
+              "X",
+              "Y",
+              "ERROR"
+            ],
+            [
+              "B",
+              "F",
+              "J",
+              "N"
+            ],
+            [
+              "R"
+            ],
+            [
+              "V"
+            ]
+          ],
+          [
+            [
+              "A"
+            ],
+            [
+              "C",
+              "G",
+              "K"
+            ],
+            [
+              "O"
+            ],
+            [
+              "D",
+              "E",
+              "H",
+              "I",
+              "L",
+              "M"
+            ],
+            [
+              "P",
+              "Q"
+            ],
+            [
+              "S",
+              "T",
+              "U"
+            ],
+            [
+              "W",
+              "X",
+              "Y",
+              "ERROR"
+            ],
+            [
+              "B",
+              "F",
+              "J"
+            ],
+            [
+              "N"
+            ],
+            [
+              "R"
+            ],
+            [
+              "V"
+            ]
+          ],
+          [
+            [
+              "A"
+            ],
+            [
+              "C",
+              "G"
+            ],
+            [
+              "K"
+            ],
+            [
+              "O"
+            ],
+            [
+              "D",
+              "E",
+              "H",
+              "I"
+            ],
+            [
+              "L",
+              "M"
+            ],
+            [
+              "P",
+              "Q"
+            ],
+            [
+              "S",
+              "T",
+              "U"
+            ],
+            [
+              "W",
+              "X",
+              "Y",
+              "ERROR"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "J"
+            ],
+            [
+              "N"
+            ],
+            [
+              "R"
+            ],
+            [
+              "V"
+            ]
+          ],
+          [
+            [
+              "A"
+            ],
+            [
+              "C"
+            ],
+            [
+              "G"
+            ],
+            [
+              "K"
+            ],
+            [
+              "O"
+            ],
+            [
+              "D",
+              "E"
+            ],
+            [
+              "H",
+              "I"
+            ],
+            [
+              "L",
+              "M"
+            ],
+            [
+              "P",
+              "Q"
+            ],
+            [
+              "S",
+              "T",
+              "U"
+            ],
+            [
+              "W",
+              "X",
+              "Y",
+              "ERROR"
+            ],
+            [
+              "B"
+            ],
+            [
+              "F"
+            ],
+            [
+              "J"
+            ],
+            [
+              "N"
+            ],
+            [
+              "R"
+            ],
+            [
+              "V"
+            ]
+          ],
+          [
+            [
+              "A"
+            ],
+            [
+              "C"
+            ],
+            [
+              "G"
+            ],
+            [
+              "K"
+            ],
+            [
+              "O"
+            ],
+            [
+              "D",
+              "E"
+            ],
+            [
+              "H",
+              "I"
+            ],
+            [
+              "L",
+              "M"
+            ],
+            [
+              "P",
+              "Q"
+            ],
+            [
+              "S",
+              "T",
+              "U"
+            ],
+            [
+              "W",
+              "X",
+              "Y",
+              "ERROR"
+            ],
+            [
+              "B"
+            ],
+            [
+              "F"
+            ],
+            [
+              "J"
+            ],
+            [
+              "N"
+            ],
+            [
+              "R"
+            ],
+            [
+              "V"
+            ]
+          ]
+        ]
+      }
+    ],
+    "language": [
+      "a",
+      "e",
+      "aa",
+      "ae",
+      "ea",
+      "ee",
+      "ma",
+      "me"
+    ],
+    "summary": {
+      "original_states": 26,
+      "reachable_states": 26,
+      "dfa_states": 26,
+      "minimal_states": 17
+    }
+  },
+  "simulations": [
+    {
+      "word": "a",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "e",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "e",
+          "states": [
+            "B"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "aa",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "a",
+          "states": [
+            "E"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "ae",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "e",
+          "states": [
+            "E"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "",
+      "accepted": false,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "pa",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "p",
+          "states": [
+            "D"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "a",
+          "states": [
+            "E"
+          ]
+        }
+      ]
+    },
+    {
+      "word": "apa",
+      "accepted": true,
+      "path": [
+        {
+          "position": 0,
+          "symbol": null,
+          "states": [
+            "A"
+          ]
+        },
+        {
+          "position": 1,
+          "symbol": "a",
+          "states": [
+            "B"
+          ]
+        },
+        {
+          "position": 2,
+          "symbol": "p",
+          "states": [
+            "G"
+          ]
+        },
+        {
+          "position": 3,
+          "symbol": "a",
+          "states": [
+            "H"
+          ]
+        }
+      ]
+    }
+  ]
+}

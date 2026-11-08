@@ -2,31 +2,39 @@
 const $ = id => document.getElementById(id);
 const esc = value => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const list = text => text.trim() ? text.split(",").map(x => x.trim()) : [];
-let mode = "regex", result = null, stageIndex = 0, editorSignature = "", zoom = 1;
+let mode = "language", result = null, stageIndex = 0, editorSignature = "", zoom = 1;
 let processing = false, simulationRequest = 0;
+// Textos de las dos modalidades del enunciado: A. a partir de un lenguaje; B. a partir de un autómata.
+const MODES = {
+  language: {title: "Modalidad A · Define tu lenguaje", button: "Construir, convertir y minimizar", first: "Construcción"},
+  manual: {title: "Modalidad B · Define tu autómata", button: "Identificar, convertir y minimizar", first: "Identificación"}
+};
+function processLabel() { $("process-button").innerHTML = `${MODES[mode].button} <span>→</span>`; }
 
 function setMode(next) {
   invalidate();
   mode = next;
-  for (const name of ["regex", "manual"]) {
+  for (const name of ["language", "manual"]) {
     $(name + "-pane").hidden = name !== next;
     $(name + "-tab").classList.toggle("active", name === next);
     $(name + "-tab").setAttribute("aria-selected", String(name === next));
     $(name + "-tab").tabIndex = name === next ? 0 : -1;
   }
+  $("input-title").textContent = MODES[next].title;
+  processLabel();
   if (next === "manual" && !editorSignature) buildEditor();
 }
-for (const name of ["regex", "manual"]) {
+for (const name of ["language", "manual"]) {
   $(name + "-tab").onclick = () => setMode(name);
   $(name + "-tab").onkeydown = e => {
     if (["ArrowLeft", "ArrowRight"].includes(e.key)) {
-      e.preventDefault(); const next = mode === "regex" ? "manual" : "regex";
+      e.preventDefault(); const next = mode === "language" ? "manual" : "language";
       setMode(next); $(next + "-tab").focus();
     }
   };
 }
 function error(message) { $("error").textContent = message; $("error").hidden = !message; }
-function signature() { return JSON.stringify([list($("states").value), list($("alphabet").value)]); }
+function signature() { return JSON.stringify([list($("states").value), list($("automaton-alphabet").value)]); }
 function editorData() {
   const edges = Object.create(null), states = list($("states").value);
   document.querySelectorAll("#transition-editor input").forEach(input => {
@@ -37,30 +45,38 @@ function editorData() {
   return edges;
 }
 function buildEditor(edges = null) {
-  const states = list($("states").value), alphabet = list($("alphabet").value);
+  const states = list($("states").value), alphabet = list($("automaton-alphabet").value);
   if (!states.length || states.length > 80 || !alphabet.length || alphabet.length > 12) {
     error("Para crear la tabla, ingresa entre 1 y 80 estados y entre 1 y 12 símbolos."); return;
   }
   edges ||= editorData();
-  const symbols = [...alphabet, "ε"];
+  const symbols = alphabet;
   $("transition-editor").innerHTML = `<table class="class-table"><thead><tr><th>Q</th>${symbols.map(s=>`<th>${esc(s)}</th>`).join("")}</tr></thead><tbody>${states.map(q=>`<tr><th>${esc(q)}</th>${symbols.map(s=>`<td><input aria-label="Destinos de ${esc(q)} con ${esc(s)}" data-state="${esc(q)}" data-symbol="${esc(s)}" placeholder="error" value="${esc((edges[q]?.[s] || []).join(","))}"></td>`).join("")}</tr>`).join("")}</tbody></table>`;
   editorSignature = signature(); error("");
 }
 $("build-table").onclick = () => buildEditor();
+// Botones de reglas: insertan una línea con la sintaxis documentada usando símbolos de Σ.
+document.querySelectorAll("[data-rule]").forEach(button => button.onclick = () => {
+  const sigma = list($("alphabet").value), a = sigma[0] || "a", b = sigma[1] || a;
+  const rule = button.dataset.rule.replaceAll("{a}", a).replaceAll("{b}", b);
+  const box = $("rules"), text = box.value.replace(/\s+$/, "");
+  box.value = (text ? text + "\n" : "") + rule; box.focus(); invalidate();
+});
 
 const examples = {
-  suffix: {mode:"regex", alphabet:["a","b"], expression:"(a|b)*abb", word:"aabb"},
+  vowels: {mode:"language", alphabet:["a","e","i","p"], rules:"toda W inicia y finaliza en a\nno repetidos vocales", word:"apa"},
+  digits: {mode:"language", alphabet:["0","1","2"], rules:"toda W inicia y finaliza en 0\n2 seguido de 0 y precedido de 1\nsuma maxima 6\nlongitud maxima 5", word:"01120"},
+  consonants: {mode:"language", alphabet:["a","e","m","b","p"], rules:"finaliza en vocal\nno consecutivos consonantes excepto mb, mp\nlongitud maxima 6", word:"ampa"},
   nfa: {mode:"manual", word:"010", automaton:{states:["A","B","C","D"], alphabet:["0","1"], initial:"A", finals:["A"], transitions:{A:{"0":["B"],"1":["A"]},B:{"0":["B","C"],"1":["D"]},C:{"0":["D"],"1":["C"]},D:{"0":["A"],"1":["B"]}}}},
   dfa: {mode:"manual", word:"ab", automaton:{states:["A","B","C","D"], alphabet:["a","b"], initial:"A", finals:["B","C"], transitions:{A:{a:["B"],b:["C"]},B:{a:["B"],b:["C"]},C:{a:["B"],b:["C"]},D:{a:["D"],b:["D"]}}}},
   xyzw: {mode:"manual", word:"00", automaton:{states:["X","Y","Z","W"], alphabet:["0","1","2"], initial:"X", finals:["Z"], transitions:{X:{"0":["Y"],"1":["Z"],"2":["W"]},Y:{"0":["Z"],"1":["Y"],"2":["X"]},Z:{"0":["W"],"1":["Y"],"2":["W"]},W:{"0":["X"],"1":["W"],"2":["Y"]}}}},
-  vowels: {mode:"regex", alphabet:["a","e","i","p"], expression:"a|a(a|e|i|p)*a", word:"apa"}
 };
 document.querySelectorAll("[data-example]").forEach(button => button.onclick = () => {
   const data = examples[button.dataset.example];
   setMode(data.mode);
-  $("alphabet").value = (data.alphabet || data.automaton.alphabet).join(", ");
-  if (data.mode === "regex") $("expression").value = data.expression;
+  if (data.mode === "language") { $("alphabet").value = data.alphabet.join(", "); $("rules").value = data.rules; }
   else {
+    $("automaton-alphabet").value = data.automaton.alphabet.join(", ");
     $("states").value = data.automaton.states.join(", ");
     $("initial").value = data.automaton.initial;
     $("finals").value = data.automaton.finals.join(", ");
@@ -84,12 +100,12 @@ async function post(url, data) {
 $("process-form").onsubmit = async event => {
   event.preventDefault(); if (processing) return;
   error("");
-  if (mode === "manual" && signature() !== editorSignature) {error("Cambiaste estados o alfabeto. Pulsa «Actualizar tabla de entrada» y revisa sus destinos."); return;}
-  const payload = mode === "regex" ? {mode, alphabet:list($("alphabet").value), expression:$("expression").value} :
-    {mode, automaton:{states:list($("states").value),alphabet:list($("alphabet").value),initial:$("initial").value.trim(),finals:list($("finals").value),transitions:editorData()}};
+  if (mode === "manual" && signature() !== editorSignature) {error("Cambiaste los estados o el alfabeto. Pulsa «Generar / actualizar tabla de transiciones» y revisa sus destinos."); return;}
+  const payload = mode === "language" ? {mode, alphabet:list($("alphabet").value), rules:$("rules").value} :
+    {mode, automaton:{states:list($("states").value),alphabet:list($("automaton-alphabet").value),initial:$("initial").value.trim(),finals:list($("finals").value),transitions:editorData()}};
   processing = true; $("process-button").disabled = true; $("process-button").textContent = "Procesando…";
   // Bloquear la entrada impide asociar un resultado con datos editados durante la petición.
-  const controls = document.querySelectorAll(".input-panel input, .input-panel button");
+  const controls = document.querySelectorAll(".input-panel input, .input-panel textarea, .input-panel button");
   controls.forEach(c=>c.disabled = true);
   try {
     result = await post("/api/process", payload);
@@ -99,18 +115,18 @@ $("process-form").onsubmit = async event => {
     $("metrics").innerHTML = [["original_states","Estados de entrada"],["reachable_states","Accesibles"],["dfa_states",afnd?"AFD (conversión)":"AFD"],["minimal_states","AFD mínimo"]].map(([key,label])=>`<div class="metric"><b>${result.summary[key]}</b><span>${label}</span></div>`).join("");
     $("language").textContent = `L = {${result.language.join(", ")}${result.language.length >= 8 ? ", …" : ""}}`;
     $("language").hidden = !result.language.length;
-    $("stage-nav").innerHTML = ["Entrada", "Accesibles", afnd ? "AFND → AFD" : "AFD", "Mínimo"].map((name,i)=>`<button type="button" data-stage="${i}">${i+1}. ${name}</button>`).join("");
+    $("stage-nav").innerHTML = [MODES[mode].first, "Accesibles", afnd ? "AFND → AFD" : "AFD", "Mínimo"].map((name,i)=>`<button type="button" data-stage="${i}">${i+1}. ${name}</button>`).join("");
     $("stage-nav").querySelectorAll("button").forEach(b=>b.onclick=()=>showStage(Number(b.dataset.stage)));
     showStage(3);
   } catch (e) {invalidate(); error(e.message || "No hay conexión con el servidor.");}
-  finally {processing=false; controls.forEach(c=>c.disabled=false); $("process-button").innerHTML="Construir y minimizar <span>→</span>";}
+  finally {processing=false; controls.forEach(c=>c.disabled=false); processLabel();}
 };
 // Tabla de transición como en clase: columna Q, flecha en el inicial,
 // estado terminal encerrado en un círculo, «C,F» para varios destinos y «error» sin destino.
 function table(a) {
   const symbols = [...a.alphabet];
   if (a.states.some(q=>a.transitions[q]?.["ε"]?.length)) symbols.push("ε");
-  const name = q => a.finals.includes(q) ? `<span class="terminal" title="Estado terminal">${esc(q)}</span>` : esc(q);
+  const name = q => a.finals.includes(q) ? `<span class="terminal" title="Estado final">${esc(q)}</span>` : esc(q);
   return `<table class="class-table"><thead><tr><th>Q</th>${symbols.map(s=>`<th>${esc(s)}</th>`).join("")}</tr></thead><tbody>${a.states.map(q=>`<tr><td class="state-cell">${q===a.initial?`<b class="initial-arrow" title="Estado inicial">→</b>`:""}${name(q)}</td>${symbols.map(s=>{const t=a.transitions[q]?.[s]||[];return `<td class="${t.length?"":"error-cell"}">${esc(t.join(",") || "error")}</td>`;}).join("")}</tr>`).join("")}</tbody></table>`;
 }
 // AF = { {Q}, q0, Σ, {Qt}, δ }
@@ -182,10 +198,10 @@ function drawDiagram(a) {
     const [x,y]=pos[q],final=a.finals.includes(q),rq=r(q);
     if(q===a.initial)nodes+=`<path d="M ${x-rq-48} ${y} L ${x-rq-5} ${y}" stroke="${INK.edge}" stroke-width="2.2" marker-end="url(#arrow)"/>`;
     const label=q.length>14?q.slice(0,13)+"…":q;
-    nodes+=`<g><title>${esc(q)}${q===a.initial?" (inicial)":""}${final?" (terminal)":""}</title><circle cx="${x}" cy="${y}" r="${rq}" fill="${final?INK.terminal:INK.fill}" stroke="${INK.node}" stroke-width="2.6"/>${final?`<circle cx="${x}" cy="${y}" r="${rq-5}" fill="none" stroke="${INK.node}" stroke-width="1.8"/>`:""}<text x="${x}" y="${y+5}" text-anchor="middle" font-family="Arial,sans-serif" font-size="${label.length>6?12:15}" fill="${INK.name}">${esc(label)}</text></g>`;
+    nodes+=`<g><title>${esc(q)}${q===a.initial?" (inicial)":""}${final?" (final)":""}</title><circle cx="${x}" cy="${y}" r="${rq}" fill="${final?INK.terminal:INK.fill}" stroke="${INK.node}" stroke-width="2.6"/>${final?`<circle cx="${x}" cy="${y}" r="${rq-5}" fill="none" stroke="${INK.node}" stroke-width="1.8"/>`:""}<text x="${x}" y="${y+5}" text-anchor="middle" font-family="Arial,sans-serif" font-size="${label.length>6?12:15}" fill="${INK.name}">${esc(label)}</text></g>`;
   }
   const shown=Math.max(350,Math.min(size,680));
-  $("diagram").innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${shown}" height="${shown}" role="img" aria-label="Diagrama de transición de ${n} estados" data-size="${shown}"><title>Diagrama de transición con ${n} estados; inicial ${esc(a.initial)}; terminales ${esc(a.finals.join(", ") || "ninguno")}</title><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="${INK.edge}"/></marker></defs>${paths}${labels}${nodes}</svg>`;
+  $("diagram").innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${shown}" height="${shown}" role="img" aria-label="Diagrama de transición de ${n} estados" data-size="${shown}"><title>Diagrama de transición con ${n} estados; inicial ${esc(a.initial)}; finales ${esc(a.finals.join(", ") || "ninguno")}</title><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="${INK.edge}"/></marker></defs>${paths}${labels}${nodes}</svg>`;
 }
 function changeZoom(factor){const svg=$("diagram").querySelector("svg");if(!svg)return;zoom=Math.max(.5,Math.min(6,zoom*factor));svg.setAttribute("width",svg.dataset.size*zoom);svg.setAttribute("height",svg.dataset.size*zoom);}
 $("zoom-in").onclick=()=>changeZoom(1.3);$("zoom-out").onclick=()=>changeZoom(1/1.3);

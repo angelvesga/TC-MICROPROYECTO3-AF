@@ -3,10 +3,9 @@ import copy
 import json
 from pathlib import Path
 import random
-import re
 import pytest
 from automata.core import (InputError, alphabet_from, automaton_from, classify,
-                          closure, complete, determinize, minimize, process, simulate, thompson)
+                          closure, minimize, process, simulate)
 from tests.oracles import accepts, assert_equivalent_and_minimal, words
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,25 +15,89 @@ def example(name):
     return json.loads((ROOT / "examples" / name).read_text(encoding="utf-8"))
 
 
-def pipeline(payload):
+def pipeline(payload, predicate=None, limit=6):
+    """Procesa la entrada y verifica que todas las etapas acepten el mismo lenguaje."""
     result = process(payload)
     stages = [automaton_from(s["automaton"], 256, generated=True) for s in result["stages"]]
-    for word in words(stages[0].alphabet):
+    for word in words(stages[0].alphabet, limit):
         expected = accepts(stages[0], word)
+        if predicate is not None:
+            assert expected == predicate(word), (payload.get("rules"), word)
         for stage in stages:
             assert simulate(stage, word)["accepted"] == expected, word
     assert_equivalent_and_minimal(stages[-2], stages[-1])
     return result, stages
 
 
-def test_suffix_abb():
-    """RF-02,03,06,09,12: abb produce cuatro estados y reconoce exactamente el sufijo."""
-    result, stages = pipeline(example("01_expresion_abb.json"))
-    assert len(stages[-1].states) == 4
-    for word in words("ab", 8):
-        assert accepts(stages[-1], word) == word.endswith("abb")
-    assert result["classification"] == "AFND-ε"
-    assert result["language"][:3] == ["abb", "aabb", "babb"]
+def vowels_rule(w):
+    """Σ = {a,e,i,p}: inicia y finaliza en a; vocales consecutivas no pueden repetirse."""
+    return bool(w) and w[0] == "a" and w[-1] == "a" and not any(x == y and x in "aei" for x, y in zip(w, w[1:]))
+
+
+def digits_rule(w):
+    """Σ = {0,1,2}: inicia y finaliza en 0; cada 2 precedido de 1 y seguido de 0; suma ≤ 6; longitud ≤ 5."""
+    twos_ok = all(0 < i < len(w) - 1 and w[i - 1] == "1" and w[i + 1] == "0" for i, c in enumerate(w) if c == "2")
+    return bool(w) and w[0] == "0" and w[-1] == "0" and twos_ok and sum(map(int, w)) <= 6 and len(w) <= 5
+
+
+def consonants_rule(w):
+    """Σ = {a,e,m,b,p}: finaliza en vocal; sin consonantes consecutivas salvo mb y mp; longitud ≤ 6."""
+    pairs_ok = all(not (x in "mbp" and y in "mbp") or x + y in ("mb", "mp") for x, y in zip(w, w[1:]))
+    return bool(w) and w[-1] in "ae" and pairs_ok and len(w) <= 6
+
+
+def test_language_vowels():
+    """RF-01,02,03,09,12: lenguaje de clase Σ={a,e,i,p}: inicia y finaliza en a, vocales seguidas no se repiten."""
+    result, stages = pipeline(example("01_lenguaje_vocales.json"), vowels_rule)
+    assert result["classification"] == "AFD"
+    assert result["language"][:4] == ["a", "aea", "aia", "apa"]
+    minimum = stages[-1]
+    assert minimum.initial == "A" and "ERROR" in minimum.states
+    for word, expected in [("a", True), ("apa", True), ("aeia", True), ("aeeia", False), ("aa", False)]:
+        assert simulate(minimum, word)["accepted"] == expected
+
+
+def test_language_digits():
+    """RF-02,03,09,12: lenguaje de clase Σ={0,1,2}: 2 precedido de 1 y seguido de 0, suma ≤ 6, longitud ≤ 5."""
+    result, stages = pipeline(example("05_lenguaje_digitos.json"), digits_rule)
+    minimum = stages[-1]
+    assert minimum.states[:2] == ("A", "B") and minimum.states[-1] == "ERROR"
+    assert simulate(minimum, "01120")["accepted"] and simulate(minimum, "01110")["accepted"]
+    assert not simulate(minimum, "0210")["accepted"]
+
+
+def test_language_consonants():
+    """RF-02,03,09,12: lenguaje de clase Σ={a,e,m,b,p}: finaliza en vocal, consonantes seguidas solo mb y mp."""
+    _, stages = pipeline(example("06_lenguaje_consonantes.json"), consonants_rule)
+    for word in ["a", "e", "aeaeae", "ampa", "mapa"]:
+        assert simulate(stages[-1], word)["accepted"]
+    assert not simulate(stages[-1], "mbpa")["accepted"]
+
+
+def test_rule_kinds():
+    """RF-02,03: cada forma documentada de regla reconoce exactamente su lenguaje."""
+    cases = [
+        (["a", "b", "c"], "inicia en a,b", lambda w: w[:1] in ("a", "b") and bool(w)),
+        (["a", "b"], "finaliza en b", lambda w: w.endswith("b")),
+        (["a", "b"], "contiene ab", lambda w: "ab" in w),
+        (["a", "b"], "no contiene aba", lambda w: "aba" not in w),
+        (["a", "b"], "cantidad de a impar", lambda w: w.count("a") % 2 == 1),
+        (["a", "b"], "el numero de a debe ser par", lambda w: w.count("a") % 2 == 0),
+        (["a", "b"], "cantidad de a impar si existe", lambda w: w.count("a") == 0 or w.count("a") % 2 == 1),
+        (["a", "b"], "longitud minima 3", lambda w: len(w) >= 3),
+        (["a", "b"], "la longitud maxima de W debe ser de 4", lambda w: len(w) <= 4),
+        (["a", "b"], "bloque maximo de a 2", lambda w: "aaa" not in w),
+        (["a", "b"], "b precedido de a", lambda w: all(i > 0 and w[i - 1] == "a" for i, c in enumerate(w) if c == "b")),
+        (["a", "b"], "a seguido de b", lambda w: all(i + 1 < len(w) and w[i + 1] == "b" for i, c in enumerate(w) if c == "a")),
+        (["a", "b", "c"], "no consecutivos a,b", lambda w: not any(x in "ab" and y in "ab" for x, y in zip(w, w[1:]))),
+        (["a", "b", "c"], "no repetidos a,b", lambda w: not any(x == y and x in "ab" for x, y in zip(w, w[1:]))),
+        (["0", "1", "2"], "suma menor a 4", lambda w: sum(map(int, w)) < 4),
+        (["a", "e", "p"], "- toda W inicia con cualquier símbolo y finaliza en vocal # comentario",
+         lambda w: bool(w) and w[-1] in "ae"),
+    ]
+    for sigma, rules, predicate in cases:
+        result, _ = pipeline({"mode": "language", "alphabet": sigma, "rules": rules}, predicate)
+        assert result["classification"] == "AFD"
 
 
 def test_manual_nfa():
@@ -57,38 +120,18 @@ def test_equivalent_unreachable():
     assert result["classification"] == "AFD"
     assert "D" not in stages[1].states
     assert len(stages[-1].states) == 2
-    assert any(set(group) == {"B", "C"} for group in result["stages"][-1]["mapping"].values())
     assert any("omite" in step for step in result["stages"][2]["steps"])
     assert result["stages"][-1]["mapping"]["B"] == ["B", "C"]
 
 
-def test_regex_precedence():
-    """RF-02,03: estrella, concatenación, unión y paréntesis respetan la precedencia."""
-    for expression in ["a|bb*", "(ab)*", "a(b|a)*b", "(a|b)*", "ab|ba", "a**", "(a|ε)b", "∅|a"]:
-        _, stages = pipeline({"mode":"regex", "alphabet":["a","b"], "expression":expression})
-        python_regex = expression.replace("ε", "").replace("∅", "(?!)").replace("**", "*")
-        for word in words("ab", 6):
-            assert accepts(stages[-1], word) == bool(re.fullmatch(python_regex, word))
-
-
-def test_empty_word_language():
-    """RF-03,09,12: ε acepta solo cadena vacía; ∅ no acepta ninguna cadena."""
-    for expression, count in [("ε", 2), ("∅", 1), ("∅*", 2), ("a∅", 1), ("ε*", 2)]:
-        _, stages = pipeline({"mode":"regex", "alphabet":["a"], "expression":expression})
-        assert len(stages[-1].states) == count
-        assert accepts(stages[-1], "") == (expression in ["ε", "∅*", "ε*"])
-        assert not accepts(stages[-1], "a")
-
-
 def test_epsilon_cycle():
-    """RF-05,06,12: ciclos ε terminan y reconocen aceptación sin consumir entrada."""
+    """RF-05,06,12: la API también admite transiciones ε; los ciclos ε terminan."""
     payload = {"mode":"manual", "automaton":{"states":["p","q"], "alphabet":["a"], "initial":"p", "finals":["q"],
                "transitions":{"p":{"ε":["q"]}, "q":{"ε":["p"], "a":["q"]}}}}
     result, stages = pipeline(payload)
     assert result["classification"] == "AFND-ε"
     assert closure(stages[0], {"p"}) == {"p", "q"}
     assert len(stages[-1].states) == 1
-    assert accepts(stages[-1], "aaaa")
 
 
 def test_no_finals_and_all_finals():
@@ -111,21 +154,24 @@ def test_partial_sink():
 
 
 def test_alphabet_validation():
-    """RF-01: rechaza duplicados, operadores reservados, espacios y símbolos múltiples."""
-    for bad in [None, [], "ab", ["a", "a"], ["ab"], [" "], ["ε"], ["∅"], ["|"], ["*"], ["("], [","] , ["\\"], [1], list("abcdefghijklm")]:
+    """RF-01: rechaza duplicados, símbolos reservados, espacios y símbolos múltiples."""
+    for bad in [None, [], "ab", ["a", "a"], ["ab"], [" "], ["ε"], ["∅"], ["|"], ["*"], ["("], [","], ["#"], ["\\"], [1], list("abcdefghijklm")]:
         with pytest.raises(InputError):
             alphabet_from(bad)
     assert alphabet_from(["0", "1"]) == ("0", "1")
     assert alphabet_from(["ñ", "🙂"]) == ("ñ", "🙂")
 
 
-def test_regex_validation():
-    """RF-02: expresiones inválidas y símbolos externos producen errores con posición."""
-    for bad in ["", None, "a|", "|a", "()", "(a", "a)", "*a", "a b", "c", "a||b", "a"*121]:
-        with pytest.raises(InputError):
-            process({"mode":"regex", "alphabet":["a","b"], "expression":bad})
-    with pytest.raises(InputError, match="posición 2"):
-        process({"mode":"regex", "alphabet":["a"], "expression":"ab"})
+def test_rule_validation():
+    """RF-02: reglas desconocidas o con símbolos fuera de Σ producen errores con el número de regla."""
+    sigma = ["a", "b"]
+    for bad, message in [("", "al menos una regla"), (None, "reglas"), ("hola mundo", "Regla 1: no se reconoce"),
+                         ("inicia en a\ninicia en x", "Regla 2: «x» no pertenece"), ("suma maxima 3", "dígitos"),
+                         ("no consecutivos a,b excepto abc", "par de símbolos"), ("longitud maxima 99", "entre 0 y 60"),
+                         ("cantidad de c par", "«c» no pertenece"), ("contiene ac", "símbolos de Σ"),
+                         ("\n".join(["inicia en a"] * 13), "12 reglas")]:
+        with pytest.raises(InputError, match=message):
+            process({"mode": "language", "alphabet": sigma, "rules": bad})
 
 
 def test_manual_validation():
@@ -143,25 +189,29 @@ def test_manual_validation():
 
 def test_simulation_validation():
     """RF-12: rechaza símbolos externos y distingue campo vacío de ε literal."""
-    _, stages = pipeline(example("01_expresion_abb.json"))
+    _, stages = pipeline(example("01_lenguaje_vocales.json"))
     for bad in ["abc", "ε", " ", None, "a"*1001]:
         with pytest.raises(InputError):
             simulate(stages[-1], bad)
-    assert simulate(stages[-1], "aabb")["path"][-1]["position"] == 4
+    assert simulate(stages[-1], "apa")["path"][-1]["position"] == 3
 
 
 def test_resource_limits():
     """RF-01,04,06: límites explícitos evitan explosión de estados sin resultados truncados."""
     with pytest.raises(InputError):
         automaton_from({"states":[f"q{i}" for i in range(81)], "alphabet":["a"],"initial":"q0","finals":[],"transitions":{}})
-    # El octavo símbolo desde el final es a: requiere 256 estados deterministas.
+    # «El octavo símbolo desde el final es a»: su AFD necesita 256 estados.
+    states = [f"q{i}" for i in range(9)]
+    transitions = {"q0": {"a": ["q0", "q1"], "b": ["q0"]}, **{f"q{i}": {"a": [f"q{i+1}"], "b": [f"q{i+1}"]} for i in range(1, 8)}}
     with pytest.raises(InputError, match="128"):
-        process({"mode":"regex","alphabet":["a","b"],"expression":"(a|b)*a"+"(a|b)"*7})
+        process({"mode":"manual","automaton":{"states":states,"alphabet":["a","b"],"initial":"q0","finals":["q8"],"transitions":transitions}})
+    with pytest.raises(InputError, match="256"):
+        process({"mode":"language","alphabet":["0","1"],"rules":"longitud maxima 60\nsuma maxima 60"})
 
 
 def test_traces_mapping_stability():
     """RF-10,11,13: etapas consultables, trazas, particiones y nombres reproducibles."""
-    payload = example("01_expresion_abb.json")
+    payload = example("05_lenguaje_digitos.json")
     before = copy.deepcopy(payload)
     result = process(payload)
     assert result == process(payload)
@@ -171,13 +221,14 @@ def test_traces_mapping_stability():
         assert stage["steps"]
         assert set(stage["mapping"]) == set(stage["automaton"]["states"])
     assert result["stages"][-1]["partitions"][-1] == result["stages"][-1]["partitions"][-2]
-    assert result["stages"][0]["automaton"]["states"][:3] == ["A", "B", "C"]
-    assert result["stages"][2]["automaton"]["initial"] == "ABCEGI"
-    assert result["stages"][-1]["mapping"]["ABCEGI"] == ["ABCEGI", "BCDEGHI"]
+    steps = result["stages"][0]["steps"]
+    assert any(step.startswith("Regla 2 «2 seguido de 0 y precedido de 1»") for step in steps)
+    assert any("→ERROR  (incumple la regla 2: cada 2 va seguido de {0} y precedido de 1)" in step for step in steps)
+    assert all(line.startswith("R") for members in result["stages"][0]["mapping"].values() for line in members)
 
 
 def test_generated_automata():
-    """RF-06,09,12: 30 AFN aleatorios reproducibles preservan lenguaje y generan AFD mínimos."""
+    """RF-06,09,12: 30 AFND aleatorios reproducibles preservan lenguaje y generan AFD mínimos."""
     rng = random.Random(202602)
     for _ in range(30):
         states = [f"q{i}" for i in range(rng.randint(1, 5))]
@@ -188,7 +239,7 @@ def test_generated_automata():
 
 def test_already_minimal_and_roundtrip():
     """RF-09,11: minimizar dos veces conserva el lenguaje y el número mínimo de estados."""
-    _, stages = pipeline(example("01_expresion_abb.json"))
+    _, stages = pipeline(example("05_lenguaje_digitos.json"))
     minimum, _, _, _ = minimize(stages[-1])
     assert len(minimum.states) == len(stages[-1].states)
     assert_equivalent_and_minimal(stages[-1], minimum)
@@ -197,11 +248,10 @@ def test_already_minimal_and_roundtrip():
 
 def test_class_notation():
     """RF-03,05,06,10: notación de clase: estados A, B, C…; X,a→Y; subconjuntos concatenados; ERROR; L = {…}."""
-    a, log = thompson("ab", ("a", "b"))
-    assert a.states == ("A", "B", "C", "D") and a.initial == "A" and a.finals == {"D"}
-    assert "Fragmento a: A,a→B." in log
-    big, _ = thompson("a" * 14, ("a",))
-    assert big.states[0] == "q0" and len(big.states) == 28
+    built = process({"mode":"language","alphabet":["a","b"],"rules":"inicia en a"})
+    first = built["stages"][0]["automaton"]
+    assert first["states"] == ["A", "B", "ERROR"] and first["initial"] == "A" and first["finals"] == ["B"]
+    assert "A,b→ERROR  (incumple la regla 1: el primer símbolo pertenece a {a})." in built["stages"][0]["steps"]
     kind, reasons = classify(automaton_from(example("02_afnd_clase.json")["automaton"]))
     assert kind == "AFND" and reasons == ["B,0→B,C: el símbolo 0 va a MÁS de un estado."]
     result = process({"mode":"manual","automaton":{"states":["A","B"],"alphabet":["0","1"],"initial":"A","finals":["B"],

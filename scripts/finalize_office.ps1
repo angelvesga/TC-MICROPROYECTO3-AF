@@ -6,7 +6,7 @@ $root = Split-Path -Parent $PSScriptRoot
 
 $word = New-Object -ComObject Word.Application
 $word.Visible = $false; $word.DisplayAlerts = 0
-foreach ($name in 'documento_tecnico', 'manual_usuario') {
+foreach ($name in 'documento_tecnico_APA', 'manual_usuario_APA') {
     $doc = $word.Documents.Open("$root\output\word\$name.docx")
     $doc.Fields.Update() | Out-Null
     foreach ($toc in $doc.TablesOfContents) { $toc.Update() }

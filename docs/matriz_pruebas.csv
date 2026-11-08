@@ -3,26 +3,27 @@ P01,RF-11,test_home_and_health,"página y recursos disponibles, control de salud
 P02,"RF-03,06,09,12",test_process_and_simulate,contrato completo desde petición de construcción hasta simulación.,APROBADO,docs/evidencias/pytest-windows.xml
 P03,"RF-01,02,04",test_api_invalid_requests,"JSON malformado, tipos incorrectos y entradas inválidas devuelven 400.",APROBADO,docs/evidencias/pytest-windows.xml
 P04,"RF-12,13",test_isolation,solicitudes concurrentes de usuarios distintos no comparten resultados.,APROBADO,docs/evidencias/pytest-windows.xml
-P05,"RF-03,04,13",test_shipped_examples,los cinco ejemplos de entrega (incluidos los de clase) son utilizables a través de la API.,APROBADO,docs/evidencias/pytest-windows.xml
-P06,"RF-02,03,06,09,12",test_suffix_abb,abb produce cuatro estados y reconoce exactamente el sufijo.,APROBADO,docs/evidencias/pytest-windows.xml
-P07,"RF-04,05,06",test_manual_nfa,"el AFND de clase da exactamente la tabla AFD de la docente (A, B, BC, D, BCD, CD, ABCD, AD, AB).",APROBADO,docs/evidencias/pytest-windows.xml
-P08,"RF-07,09",test_equivalent_unreachable,"elimina D (inaccesible) y fusiona B,C en B; el AFD mínimo tiene dos estados.",APROBADO,docs/evidencias/pytest-windows.xml
-P09,"RF-02,03",test_regex_precedence,"estrella, concatenación, unión y paréntesis respetan la precedencia.",APROBADO,docs/evidencias/pytest-windows.xml
-P10,"RF-03,09,12",test_empty_word_language,ε acepta solo cadena vacía; ∅ no acepta ninguna cadena.,APROBADO,docs/evidencias/pytest-windows.xml
-P11,"RF-05,06,12",test_epsilon_cycle,ciclos ε terminan y reconocen aceptación sin consumir entrada.,APROBADO,docs/evidencias/pytest-windows.xml
-P12,RF-09,test_no_finals_and_all_finals,particiones vacías no fallan; lenguajes vacío y universal tienen un estado.,APROBADO,docs/evidencias/pytest-windows.xml
-P13,"RF-05,09",test_partial_sink,un AFD incompleto sigue siendo determinista y se completa con el estado ERROR sin colisiones.,APROBADO,docs/evidencias/pytest-windows.xml
-P14,RF-01,test_alphabet_validation,"rechaza duplicados, operadores reservados, espacios y símbolos múltiples.",APROBADO,docs/evidencias/pytest-windows.xml
-P15,RF-02,test_regex_validation,expresiones inválidas y símbolos externos producen errores con posición.,APROBADO,docs/evidencias/pytest-windows.xml
-P16,RF-04,test_manual_validation,"valida nombres, inicial, finales, destinos, símbolos y estructura de transiciones.",APROBADO,docs/evidencias/pytest-windows.xml
-P17,RF-12,test_simulation_validation,rechaza símbolos externos y distingue campo vacío de ε literal.,APROBADO,docs/evidencias/pytest-windows.xml
-P18,"RF-01,04,06",test_resource_limits,límites explícitos evitan explosión de estados sin resultados truncados.,APROBADO,docs/evidencias/pytest-windows.xml
-P19,"RF-10,11,13",test_traces_mapping_stability,"etapas consultables, trazas, particiones y nombres reproducibles.",APROBADO,docs/evidencias/pytest-windows.xml
-P20,"RF-06,09,12",test_generated_automata,30 AFN aleatorios reproducibles preservan lenguaje y generan AFD mínimos.,APROBADO,docs/evidencias/pytest-windows.xml
-P21,"RF-09,11",test_already_minimal_and_roundtrip,minimizar dos veces conserva el lenguaje y el número mínimo de estados.,APROBADO,docs/evidencias/pytest-windows.xml
-P22,"RF-03,05,06,10",test_class_notation,"notación de clase: estados A, B, C…; X,a→Y; subconjuntos concatenados; ERROR; L = {…}.",APROBADO,docs/evidencias/pytest-windows.xml
-P23,Despliegue,test_gunicorn_linux,"Gunicorn escucha en 0.0.0.0 y sirve salud, interfaz y procesamiento real.",OMITIDO,docs/evidencias/pytest-windows.xml
-P24,Despliegue Linux,github_actions,"Instalación limpia, suite completa y arranque real de Gunicorn.",APROBADO,https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595
-P25,"RF-11,13 / formato",check_frontend.cjs,"Tabla con caracteres escapados, SVG sin coordenadas inválidas, estados con nombres especiales y limpieza al cambiar de modalidad.",APROBADO,docs/evidencias/frontend.json
-V01,"RF-05,11,12,13 / interfaz",revision_visual_web,"En Chrome de escritorio (1366 px): notación de clase (Q, q0, Σ, Qt; A,0→B; estados A, B, C…). Ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla y acepta aabb con su recorrido; ejemplo 02 (AFND de clase) se clasifica AFND y su conversión reproduce la tabla A, B, BC, D, BCD, CD, ABCD, AD, AB; las cuatro etapas son consultables; sin errores de la aplicación en consola.",APROBADO,docs/evidencias/capturas/
-V02,RF-11 / interfaz móvil,revision_visual_movil,"Revisar en ancho de teléfono la versión con notación de clase (una columna, sin desplazamiento horizontal).",PENDIENTE,La versión anterior se aprobó con 657 px de ancho; tras los cambios de notación no se pudo redimensionar la ventana maximizada de Chrome. No se fabricaron capturas.
+P05,"RF-03,04,13",test_shipped_examples,los seis ejemplos de entrega (lenguajes y autómatas de clase) son utilizables a través de la API.,APROBADO,docs/evidencias/pytest-windows.xml
+P06,"RF-01,02,03,09,12",test_language_vowels,"lenguaje de clase Σ={a,e,i,p}: inicia y finaliza en a, vocales seguidas no se repiten.",APROBADO,docs/evidencias/pytest-windows.xml
+P07,"RF-02,03,09,12",test_language_digits,"lenguaje de clase Σ={0,1,2}: 2 precedido de 1 y seguido de 0, suma ≤ 6, longitud ≤ 5.",APROBADO,docs/evidencias/pytest-windows.xml
+P08,"RF-02,03,09,12",test_language_consonants,"lenguaje de clase Σ={a,e,m,b,p}: finaliza en vocal, consonantes seguidas solo mb y mp.",APROBADO,docs/evidencias/pytest-windows.xml
+P09,"RF-02,03",test_rule_kinds,cada forma documentada de regla reconoce exactamente su lenguaje.,APROBADO,docs/evidencias/pytest-windows.xml
+P10,"RF-04,05,06",test_manual_nfa,"el AFND de clase da exactamente la tabla AFD de la docente (A, B, BC, D, BCD, CD, ABCD, AD, AB).",APROBADO,docs/evidencias/pytest-windows.xml
+P11,"RF-07,09",test_equivalent_unreachable,"elimina D (inaccesible) y fusiona B,C en B; el AFD mínimo tiene dos estados.",APROBADO,docs/evidencias/pytest-windows.xml
+P12,"RF-05,06,12",test_epsilon_cycle,la API también admite transiciones ε; los ciclos ε terminan.,APROBADO,docs/evidencias/pytest-windows.xml
+P13,RF-09,test_no_finals_and_all_finals,particiones vacías no fallan; lenguajes vacío y universal tienen un estado.,APROBADO,docs/evidencias/pytest-windows.xml
+P14,"RF-05,09",test_partial_sink,un AFD incompleto sigue siendo determinista y se completa con el estado ERROR sin colisiones.,APROBADO,docs/evidencias/pytest-windows.xml
+P15,RF-01,test_alphabet_validation,"rechaza duplicados, símbolos reservados, espacios y símbolos múltiples.",APROBADO,docs/evidencias/pytest-windows.xml
+P16,RF-02,test_rule_validation,reglas desconocidas o con símbolos fuera de Σ producen errores con el número de regla.,APROBADO,docs/evidencias/pytest-windows.xml
+P17,RF-04,test_manual_validation,"valida nombres, inicial, finales, destinos, símbolos y estructura de transiciones.",APROBADO,docs/evidencias/pytest-windows.xml
+P18,RF-12,test_simulation_validation,rechaza símbolos externos y distingue campo vacío de ε literal.,APROBADO,docs/evidencias/pytest-windows.xml
+P19,"RF-01,04,06",test_resource_limits,límites explícitos evitan explosión de estados sin resultados truncados.,APROBADO,docs/evidencias/pytest-windows.xml
+P20,"RF-10,11,13",test_traces_mapping_stability,"etapas consultables, trazas, particiones y nombres reproducibles.",APROBADO,docs/evidencias/pytest-windows.xml
+P21,"RF-06,09,12",test_generated_automata,30 AFND aleatorios reproducibles preservan lenguaje y generan AFD mínimos.,APROBADO,docs/evidencias/pytest-windows.xml
+P22,"RF-09,11",test_already_minimal_and_roundtrip,minimizar dos veces conserva el lenguaje y el número mínimo de estados.,APROBADO,docs/evidencias/pytest-windows.xml
+P23,"RF-03,05,06,10",test_class_notation,"notación de clase: estados A, B, C…; X,a→Y; subconjuntos concatenados; ERROR; L = {…}.",APROBADO,docs/evidencias/pytest-windows.xml
+P24,Despliegue,test_gunicorn_linux,"Gunicorn escucha en 0.0.0.0 y sirve salud, interfaz y procesamiento real.",OMITIDO,docs/evidencias/pytest-windows.xml
+P25,Despliegue Linux,github_actions,"Instalación limpia, suite completa y arranque real de Gunicorn.",APROBADO,https://github.com/angelvesga/TC-MICROPROYECTO3-AF/actions/runs/42500246595
+P26,"RF-11,13 / formato",check_frontend.cjs,"Tabla con caracteres escapados, SVG sin coordenadas inválidas, estados con nombres especiales y limpieza al cambiar de modalidad.",APROBADO,docs/evidencias/frontend.json
+V01,"RF-05,11,12,13 / interfaz",revision_visual_web,"En Chrome de escritorio (1366 px): modalidad A con alfabeto y reglas del lenguaje (botones de reglas, construcción justificada, AFD mínimo A, B, C… con ERROR al final); modalidad B con el AFND de clase, cuya conversión reproduce la tabla A, B, BC, D, BCD, CD, ABCD, AD, AB; notación de clase (Q, q0, Σ, Qt; A,0→B); las cuatro etapas son consultables; sin errores de la aplicación en consola.",APROBADO,docs/evidencias/capturas/
+V02,RF-11 / interfaz móvil,revision_visual_movil,"Teléfono emulado de 390 px (protocolo de depuración de Chrome): una sola columna, sin desplazamiento horizontal (scrollWidth = 390); el ejemplo 01 se construye y apa se acepta con su recorrido.",APROBADO,docs/evidencias/capturas/07_vista_movil_390px.jpg

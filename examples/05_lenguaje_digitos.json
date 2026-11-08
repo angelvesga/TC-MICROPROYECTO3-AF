@@ -1,0 +1,1 @@
+{"mode": "language", "alphabet": ["0", "1", "2"], "rules": "toda W inicia y finaliza en 0\n2 seguido de 0 y precedido de 1\nsuma maxima 6\nlongitud maxima 5"}

@@ -58,7 +58,7 @@
     "stages": [
       {
         "id": "input",
-        "title": "Entrada y clasificación",
+        "title": "Identificación del autómata",
         "automaton": {
           "states": [
             "A",

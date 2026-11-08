@@ -259,11 +259,11 @@ def matrix_rows():
                      "esperado":frontend["description"],"resultado":"APROBADO" if frontend["result"]=="success" else "FALLÓ",
                      "evidencia":"docs/evidencias/frontend.json"})
     rows.append({"id":"V01","requisito":"RF-05,11,12,13 / interfaz","caso":"revision_visual_web",
-                 "esperado":"En Chrome de escritorio (1366 px): notación de clase (Q, q0, Σ, Qt; A,0→B; estados A, B, C…). Ejemplo 01 da AFD mínimo de 4 estados con diagrama y tabla y acepta aabb con su recorrido; ejemplo 02 (AFND de clase) se clasifica AFND y su conversión reproduce la tabla A, B, BC, D, BCD, CD, ABCD, AD, AB; las cuatro etapas son consultables; sin errores de la aplicación en consola.",
+                 "esperado":"En Chrome de escritorio (1366 px): modalidad A con alfabeto y reglas del lenguaje (botones de reglas, construcción justificada, AFD mínimo A, B, C… con ERROR al final); modalidad B con el AFND de clase, cuya conversión reproduce la tabla A, B, BC, D, BCD, CD, ABCD, AD, AB; notación de clase (Q, q0, Σ, Qt; A,0→B); las cuatro etapas son consultables; sin errores de la aplicación en consola.",
                  "resultado":"APROBADO","evidencia":"docs/evidencias/capturas/"})
     rows.append({"id":"V02","requisito":"RF-11 / interfaz móvil","caso":"revision_visual_movil",
-                 "esperado":"Revisar en ancho de teléfono la versión con notación de clase (una columna, sin desplazamiento horizontal).","resultado":"PENDIENTE",
-                 "evidencia":"La versión anterior se aprobó con 657 px de ancho; tras los cambios de notación no se pudo redimensionar la ventana maximizada de Chrome. No se fabricaron capturas."})
+                 "esperado":"Teléfono emulado de 390 px (protocolo de depuración de Chrome): una sola columna, sin desplazamiento horizontal (scrollWidth = 390); el ejemplo 01 se construye y apa se acepta con su recorrido.",
+                 "resultado":"APROBADO","evidencia":"docs/evidencias/capturas/07_vista_movil_390px.jpg"})
     return rows
 
 
@@ -294,9 +294,11 @@ def render_path(simulation):
 
 def main():
     samples=generate_evidence()
-    for name in ["documento_tecnico","manual_usuario"]:
-        text=(ROOT/"docs"/(name+".md")).read_text(encoding="utf-8")
-        pdf(name+".pdf",markdown_story(text),name.replace("_"," ").title())
+    make_pdf="--pdf" in sys.argv  # Los entregables oficiales son Word (APA) y Excel; los PDF son opcionales.
+    if make_pdf:
+        for name in ["documento_tecnico","manual_usuario"]:
+            text=(ROOT/"docs"/(name+".md")).read_text(encoding="utf-8")
+            pdf(name+".pdf",markdown_story(text),name.replace("_"," ").title())
     rows=matrix_rows()
     with (ROOT/"docs"/"matriz_pruebas.csv").open("w",encoding="utf-8-sig",newline="") as stream:
         writer=csv.DictWriter(stream,fieldnames=list(rows[0]),lineterminator="\n");writer.writeheader();writer.writerows(rows)
@@ -307,7 +309,7 @@ def main():
            "Microproyecto 3 · Teoría de la Computación · 2026/02\n\n"
            f"Registros: {passed} aprobados, {omitted} omitidos y {pending} pendientes. Los resultados proceden de reportes reales; consulte el CSV y XML para los identificadores completos.\n\n"
            "La suite local corre en Windows con Python 3.13.9. Gunicorn se verifica únicamente en Linux. La comprobación exacta de equivalencia usa el producto de AFD y la minimalidad se verifica por distinguibilidad de pares. Los ensayos con AFND incluyen 30 casos reproducibles de semilla 202602.\n\n"
-           "La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. La revisión en ancho de teléfono de esta versión queda pendiente (V02). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.\n\n")
+           "La interfaz web se revisó visualmente en Chrome de escritorio; las capturas reales están en docs/evidencias/capturas/. También se revisó en un teléfono emulado de 390 px (V02). Las imágenes de este informe son diagramas vectoriales generados de los resultados reales.\n\n")
     (ROOT/"docs"/"matriz_pruebas.md").write_text(intro+"## Casos\n\n"+"\n".join(f"- {r['id']} · {r['resultado']} · {r['requisito']}: {r['esperado']} Evidencia: {r['evidencia']} ({r['caso']})." for r in rows)+"\n",encoding="utf-8")
     story=markdown_story(intro)
     story.append(table([["Caso / RF","Comprobación y resultado esperado","Resultado"]]+[
@@ -327,8 +329,9 @@ def main():
         story.append(p("→ estado inicial q0; (X) estado terminal de Qt.","SmallBody"))
         story.extend([Spacer(1,12),p("Simulaciones comprobadas","Subsection"),table([["Palabra W","Resultado","Recorrido"]]+[
             [s["word"] or "ε","Aceptada" if s["accepted"] else "Rechazada",render_path(s)] for s in evidence["simulations"]],[70,80,WIDTH-150]),Spacer(1,10),p("Datos y pasos completos: docs/evidencias/"+name+"_resultado.json","SmallBody")])
-    pdf("matriz_pruebas.pdf",story,"Matriz de pruebas y evidencias")
-    print(json.dumps({"pdfs":[p.name for p in OUTPUT.glob("*.pdf")],"approved":passed,"omitted":omitted,"pending":pending}))
+    if make_pdf:
+        pdf("matriz_pruebas.pdf",story,"Matriz de pruebas y evidencias")
+    print(json.dumps({"pdf":make_pdf,"approved":passed,"omitted":omitted,"pending":pending}))
 
 
 if __name__=="__main__":

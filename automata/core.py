@@ -13,12 +13,11 @@ from dataclasses import dataclass
 import re
 
 EPSILON = "ε"
-RESERVED = set("|*()ε∅,\\")
+RESERVED = set("|*()ε∅,#\\")
 MAX_ALPHABET = 12
 MAX_INPUT_STATES = 80
 MAX_STATES = 256
 MAX_DFA_STATES = 128
-MAX_REGEX = 120
 MAX_WORD = 1000
 ERROR_STATE = "ERROR"
 STRICT_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_-]{0,31}")
@@ -38,7 +37,7 @@ def alphabet_from(value):
     for symbol in value:
         if (not isinstance(symbol, str) or len(symbol) != 1
                 or not symbol.isprintable() or symbol.isspace() or symbol in RESERVED):
-            raise InputError("Cada símbolo debe ser un carácter visible; no use espacios, comas, \\, |, *, (, ), ε o ∅.")
+            raise InputError("Cada símbolo debe ser un carácter visible; no use espacios, comas, #, \\, |, *, (, ), ε o ∅.")
     if len(set(value)) != len(value):
         raise InputError("El alfabeto contiene símbolos duplicados.")
     return tuple(value)
@@ -254,8 +253,12 @@ def complete(a):
     return Automaton((*a.states, sink), a.alphabet, a.initial, a.finals, transitions), log, {**{q: [q] for q in a.states}, sink: []}
 
 
-def minimize(a):
-    """Moore: separar bloques por sus firmas de destinos hasta un punto fijo."""
+def minimize(a, rename=False):
+    """Moore: separar bloques por sus firmas de destinos hasta un punto fijo.
+
+    Con rename=True las clases se nombran A, B, C… en orden de recorrido (ERROR conserva
+    su nombre); si no, cada clase conserva el nombre de su primer estado.
+    """
     if classify(a)[0] != "AFD":
         raise InputError("La minimización necesita un AFD completo.")
     blocks = [tuple(q for q in a.states if (q in a.finals) == final) for final in (False, True)]
@@ -296,9 +299,17 @@ def minimize(a):
     # Cada clase conserva el nombre de su primer estado: así el AFD mínimo se lee
     # con los mismos nombres de la etapa anterior.
     names = {i: blocks[i][0] for i in order}
+    if rename:
+        # ERROR va al final de Q, como en los ejercicios de clase.
+        order = [i for i in order if ERROR_STATE not in blocks[i]] + [i for i in order if ERROR_STATE in blocks[i]]
+        letters = iter(state_names(len(order)))
+        names = {i: ERROR_STATE if ERROR_STATE in blocks[i] else next(letters) for i in order}
     for i in order:
         if len(blocks[i]) > 1:
             log.append(f"{', '.join(blocks[i])} son equivalentes: se fusionan en {names[i]}.")
+    if rename:
+        log.append("Los estados del AFD mínimo se nombran A, B, C… en orden de recorrido desde q0: "
+                   + "; ".join(f"{names[i]} = {format_set(blocks[i], a)}" for i in order) + ".")
     transitions = {names[i]: {s: frozenset({names[block_of[next(iter(a.targets(blocks[i][0], s)))]]})
                               for s in a.alphabet} for i in order}
     result = Automaton(tuple(names.values()), a.alphabet, names[start],
@@ -306,124 +317,11 @@ def minimize(a):
     return result, log, {names[i]: list(blocks[i]) for i in order}, partitions
 
 
-class RegexParser:
-    """Descenso recursivo: unión < concatenación < estrella."""
-
-    def __init__(self, expression, alphabet):
-        if not isinstance(expression, str) or not expression:
-            raise InputError("Ingrese una expresión; use ε para la cadena vacía.")
-        if len(expression) > MAX_REGEX:
-            raise InputError(f"La expresión admite como máximo {MAX_REGEX} caracteres.")
-        self.text, self.alphabet, self.pos = expression, alphabet, 0
-
-    def error(self, message):
-        raise InputError(f"Expresión, posición {self.pos + 1}: {message}")
-
-    def peek(self):
-        return self.text[self.pos] if self.pos < len(self.text) else None
-
-    def parse(self):
-        result = self.union()
-        if self.peek() is not None:
-            self.error(f"símbolo inesperado '{self.peek()}'.")
-        return result
-
-    def union(self):
-        left = self.concat()
-        while self.peek() == "|":
-            self.pos += 1
-            left = ("union", left, self.concat())
-        return left
-
-    def concat(self):
-        parts = []
-        while self.peek() is not None and self.peek() not in ")|":
-            parts.append(self.repeat())
-        if not parts:
-            self.error("falta un operando; use ε si desea representar la cadena vacía.")
-        result = parts[0]
-        for part in parts[1:]:
-            result = ("concat", result, part)
-        return result
-
-    def repeat(self):
-        atom = self.atom()
-        while self.peek() == "*":
-            self.pos += 1
-            atom = ("star", atom)
-        return atom
-
-    def atom(self):
-        token = self.peek()
-        if token == "(":
-            self.pos += 1
-            result = self.union()
-            if self.peek() != ")":
-                self.error("falta cerrar el paréntesis.")
-            self.pos += 1
-            return result
-        if token in self.alphabet or token in (EPSILON, "∅"):
-            self.pos += 1
-            return ("symbol", token)
-        self.error(f"'{token}' no es un operando válido o no pertenece al alfabeto.")
-
-
 def state_names(count):
     """A, B, C… como en clase; con más de 26 estados se usa q0, q1, q2…"""
     if count <= 26:
         return [chr(ord("A") + i) for i in range(count)]
     return [f"q{i}" for i in range(count)]
-
-
-def thompson(expression, alphabet):
-    ast = RegexParser(expression, alphabet).parse()
-    transitions, log = [], []  # Estados numerados; se nombran al final.
-
-    def state():
-        if len(transitions) >= MAX_STATES:
-            raise InputError(f"La construcción supera {MAX_STATES} estados.")
-        transitions.append({})
-        return len(transitions) - 1
-
-    def edge(source, symbol, target):
-        transitions[source].setdefault(symbol, set()).add(target)
-
-    def build(node):
-        op = node[0]
-        if op == "symbol":
-            start, end = state(), state()
-            if node[1] != "∅":
-                edge(start, node[1], end)
-                log.append((f"Fragmento {node[1]}: {{0}},{node[1]}→{{1}}.", (start, end)))
-            else:
-                log.append(("Fragmento ∅: {0} y {1} sin transición (lenguaje vacío).", (start, end)))
-        elif op == "concat":
-            start, middle = build(node[1])
-            other, end = build(node[2])
-            edge(middle, EPSILON, other)
-            log.append(("Concatenación: {0},ε→{1}; el fragmento va de {2} a {3}.", (middle, other, start, end)))
-        elif op == "union":
-            start, end = state(), state()
-            a, b = build(node[1])
-            c, d = build(node[2])
-            for x, y in ((start, a), (start, c), (b, end), (d, end)):
-                edge(x, EPSILON, y)
-            log.append(("Unión: {0},ε→{1},{2}; {3},ε→{5} y {4},ε→{5}.", (start, a, c, b, d, end)))
-        else:
-            start, end = state(), state()
-            a, b = build(node[1])
-            for x, y in ((start, a), (start, end), (b, a), (b, end)):
-                edge(x, EPSILON, y)
-            log.append(("Estrella: {0},ε→{1},{2}; {3},ε→{1},{2}; permite cero o más repeticiones.", (start, a, end, b)))
-        return start, end
-
-    start, end = build(ast)
-    names = state_names(len(transitions))
-    text = [template.format(*(names[i] for i in ids)) for template, ids in log]
-    text.append(f"Resultado: Q = {{{', '.join(names)}}}, q0 = {names[start]}, Qt = {{{names[end]}}}.")
-    return Automaton(tuple(names), alphabet, names[start], frozenset({names[end]}),
-                     {names[q]: {s: frozenset(names[t] for t in targets) for s, targets in edges.items()}
-                      for q, edges in enumerate(transitions)}), text
 
 
 def simulate(a, word):
@@ -462,22 +360,24 @@ def process(data):
     if not isinstance(data, dict):
         raise InputError("Envíe un objeto JSON.")
     mode = data.get("mode")
-    if mode == "regex":
+    meaning = None
+    if mode == "language":
+        from .language import build_from_rules  # Modalidad A: a partir de un lenguaje.
         alphabet = alphabet_from(data.get("alphabet"))
-        a, construction = thompson(data.get("expression"), alphabet)
+        a, construction, meaning = build_from_rules(alphabet, data.get("rules"))
     elif mode == "manual":
         a = automaton_from(data.get("automaton"))
         construction = ["Se registran los componentes ingresados sin cambiar sus nombres."]
     else:
-        raise InputError("Seleccione la modalidad regex o manual.")
+        raise InputError("Seleccione la modalidad: language (A, a partir de un lenguaje) o manual (B, a partir de un autómata).")
     kind, reasons = classify(a)
 
     def stage(key, title, automaton, steps, mapping=None, **extra):
         return {"id": key, "title": title, "automaton": automaton.to_dict(),
                 "steps": steps, "mapping": mapping or {q: [q] for q in automaton.states}, **extra}
 
-    stages = [stage("input", "Construcción y clasificación" if mode == "regex" else "Entrada y clasificación",
-                    a, construction + [f"Clasificación: {kind}."] + reasons)]
+    stages = [stage("input", "Construcción desde el lenguaje" if mode == "language" else "Identificación del autómata",
+                    a, construction + [f"Clasificación: {kind}."] + reasons, meaning)]
     if kind == "AFD":
         stages[0]["steps"].append("El autómata ya es determinista: se indica y se continúa con su minimización.")
     accessible, trace = reachable(a)
@@ -487,7 +387,7 @@ def process(data):
     else:
         dfa, trace, mapping = complete(accessible)
     stages.append(stage("dfa", "Conversión AFND → AFD" if kind.startswith("AFND") else "AFD completo", dfa, trace, mapping))
-    minimal, trace, groups, partitions = minimize(dfa)
+    minimal, trace, groups, partitions = minimize(dfa, rename=mode == "language")
     original = {q: sorted({original for member in members for original in mapping[member]}) for q, members in groups.items()}
     stages.append(stage("minimal", "AFD mínimo", minimal, trace, groups,
                         original_mapping=original, partitions=partitions))

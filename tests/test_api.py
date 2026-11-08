@@ -7,7 +7,7 @@ from app import app
 
 
 def payload():
-    return {"mode":"regex","alphabet":["a","b"],"expression":"(a|b)*abb"}
+    return {"mode":"language","alphabet":["a","e","i","p"],"rules":"toda W inicia y finaliza en a\nno repetidos vocales"}
 
 
 def test_home_and_health():
@@ -28,8 +28,8 @@ def test_process_and_simulate():
         response = client.post("/api/process", json=payload())
         assert response.status_code == 200
         minimum = response.json["stages"][-1]["automaton"]
-        assert len(minimum["states"]) == 4
-        for word, expected in [("abb",True),("aabb",True),("abba",False),("",False)]:
+        assert minimum["initial"] == "A"
+        for word, expected in [("a",True),("apa",True),("aa",False),("",False)]:
             sim = client.post("/api/simulate", json={"automaton":minimum,"word":word})
             assert sim.status_code == 200 and sim.json["accepted"] == expected
 
@@ -37,7 +37,7 @@ def test_process_and_simulate():
 def test_api_invalid_requests():
     """RF-01,02,04: JSON malformado, tipos incorrectos y entradas inválidas devuelven 400."""
     with app.test_client() as client:
-        for body in [None, [], {}, {"mode":"unknown"}, {"mode":"regex","alphabet":["a"],"expression":"b"}]:
+        for body in [None, [], {}, {"mode":"unknown"}, {"mode":"language","alphabet":["a"],"rules":"inicia en b"}]:
             response = client.post("/api/process", data=json.dumps(body), content_type="application/json")
             assert response.status_code == 400 and response.json.get("error")
         assert client.post("/api/process", data="{", content_type="application/json").status_code == 400
@@ -48,17 +48,17 @@ def test_api_invalid_requests():
 
 def test_isolation():
     """RF-12,13: solicitudes concurrentes de usuarios distintos no comparten resultados."""
-    def run(expression):
+    def run(rules):
         with app.test_client() as client:
-            response = client.post("/api/process", json={"mode":"regex","alphabet":["a"],"expression":expression})
+            response = client.post("/api/process", json={"mode":"language","alphabet":["a"],"rules":rules})
             minimum = response.json["stages"][-1]["automaton"]
             return client.post("/api/simulate", json={"automaton":minimum,"word":""}).json["accepted"]
     with ThreadPoolExecutor(max_workers=4) as pool:
-        assert list(pool.map(run, ["ε","a","ε","a"]*3)) == [True,False,True,False]*3
+        assert list(pool.map(run, ["longitud maxima 0","inicia en a"]*6)) == [True,False]*6
 
 
 def test_shipped_examples():
-    """RF-03,04,13: los cinco ejemplos de entrega (incluidos los de clase) son utilizables a través de la API."""
+    """RF-03,04,13: los seis ejemplos de entrega (lenguajes y autómatas de clase) son utilizables a través de la API."""
     with app.test_client() as client:
         for path in sorted((Path(__file__).resolve().parents[1]/"examples").glob("*.json")):
             response = client.post("/api/process", json=json.loads(path.read_text(encoding="utf-8")))

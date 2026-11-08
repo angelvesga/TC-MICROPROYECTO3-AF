@@ -6,14 +6,18 @@ import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 FILES=["README.md","app.py","requirements.txt","requirements-dev.txt","render.yaml",".python-version",".gitignore","pytest.ini"]
-FOLDERS=["automata","templates","static","examples","tests","docs","output/pdf","scripts",".github/workflows"]
+FOLDERS=["automata","templates","static","examples","tests","docs","scripts",".github/workflows"]
+# Entregables: documentos Word en normas APA, matriz en Excel y presentación en PDF.
+DELIVERABLES=["output/word/documento_tecnico_APA.docx","output/word/manual_usuario_APA.docx",
+              "output/excel/matriz_pruebas.xlsx","output/pdf/presentacion_sustentacion.pdf"]
 
 
 def main():
-    required=[ROOT/"output/pdf"/name for name in ["documento_tecnico.pdf","manual_usuario.pdf","matriz_pruebas.pdf"]]
-    if not all(p.is_file() for p in required):
-        raise SystemExit("Genere primero los tres PDF con scripts/build_deliverables.py")
-    files={ROOT/name for name in FILES}
+    required=[ROOT/name for name in DELIVERABLES]
+    missing=[p.relative_to(ROOT).as_posix() for p in required if not p.is_file()]
+    if missing:
+        raise SystemExit("Genere primero los entregables: "+", ".join(missing))
+    files={ROOT/name for name in FILES}|set(required)
     for folder in FOLDERS:
         files.update(p for p in (ROOT/folder).rglob("*") if p.is_file() and "__pycache__" not in p.parts and p.suffix!=".pyc")
     out=ROOT/"dist";out.mkdir(exist_ok=True)
